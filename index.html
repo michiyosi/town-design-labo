@@ -649,6 +649,50 @@ footer {
 /* ------- Reveal ------- */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s, transform .9s; }
 .reveal.shown { opacity: 1; transform: translateY(0); }
+
+/* ---- Works Lightbox ---- */
+.works-grid .work { position: relative; }
+.work[data-count]::after {
+  content: attr(data-count) "\679a";
+  position: absolute; top: 12px; right: 12px; z-index: 3;
+  font-family: "Inter", monospace; font-size: 10px; letter-spacing: .12em;
+  color: #fff; background: rgba(17,17,17,.6);
+  padding: 3px 8px; border-radius: 2px; pointer-events: none;
+}
+.lb {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(10,10,10,.95);
+  display: none; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity .25s ease;
+}
+.lb.open { display: flex; opacity: 1; }
+.lb-stage { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 16px; max-width: 92vw; }
+.lb-stage img {
+  max-width: 92vw; max-height: 80vh; object-fit: contain;
+  box-shadow: 0 24px 70px rgba(0,0,0,.55); background: #1a1a1a;
+}
+.lb-cap { display: flex; gap: 18px; align-items: baseline; color: rgba(255,255,255,.82); text-align: center; }
+.lb-cap .lb-title { font-size: 12px; letter-spacing: .1em; }
+.lb-cap .lb-count { font-family: "Inter", monospace; font-size: 11px; letter-spacing: .16em; color: rgba(255,255,255,.5); }
+.lb-close {
+  position: absolute; top: 18px; right: 24px; z-index: 2;
+  background: none; border: 0; color: #fff; font-size: 32px; line-height: 1;
+  cursor: pointer; opacity: .75; transition: opacity .2s;
+}
+.lb-close:hover { opacity: 1; }
+.lb-nav {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+  background: none; border: 0; color: #fff; font-size: 50px; line-height: 1;
+  cursor: pointer; opacity: .55; padding: 12px 20px; transition: opacity .2s;
+  font-family: "Cormorant Garamond", serif;
+}
+.lb-nav:hover { opacity: 1; }
+.lb-prev { left: 10px; } .lb-next { right: 10px; }
+@media (max-width: 640px) {
+  .lb-nav { font-size: 34px; padding: 8px 10px; }
+  .lb-stage img { max-height: 70vh; }
+  .lb-close { top: 12px; right: 14px; }
+}
 </style>
 </head>
 <body>
@@ -838,42 +882,42 @@ footer {
       </div>
     </div>
     <div class="works-grid">
-      <a class="work w1 reveal" href="./eagle-01.jpg" target="_blank">
+      <a class="work w1 reveal" href="./eagle-01.jpg" data-gallery="w1" onclick="return openLB('w1')">
         <img src="./eagle-01.jpg" alt="wick Bar">
         <div class="label">001 · Bar</div>
         <div class="cap">WICK BAR — 都市の余白に置かれた小さなバー。Slit Park YURAKUCHOで稼働中。メンテナンスを経て再び現場へ。</div>
       </a>
-      <a class="work w2 reveal" href="./CppfyPsv4kN_01.jpg" target="_blank">
+      <a class="work w2 reveal" href="./CppfyPsv4kN_01.jpg" data-gallery="w2" data-count="5" onclick="return openLB('w2')">
         <img src="./CppfyPsv4kN_01.jpg" alt="Mountain cabin trailer being towed for delivery">
         <div class="label">002 · House</div>
         <div class="cap">Second House Delivery — セカンドハウスとしての納車事例。キャンピングトレーラー登録で、いつでもどこでも牽引可能な仕様。</div>
       </a>
-      <a class="work w3 reveal" href="./eagle-11.jpg" target="_blank">
+      <a class="work w3 reveal" href="./eagle-11.jpg" data-gallery="w3" onclick="return openLB('w3')">
         <img src="./eagle-11.jpg" alt="Pizzeria Calcifer">
         <div class="label">003 · Pizzeria</div>
         <div class="cap">PIZZERIA Calcifer — 北海道ルスツへ。床暖房付き極寒仕様、ハウルの城モチーフのデザイン。</div>
       </a>
-      <a class="work w4 reveal" href="./CG2E9eDB-z0_01.jpg" target="_blank">
+      <a class="work w4 reveal" href="./CG2E9eDB-z0_01.jpg" data-gallery="w4" data-count="5" onclick="return openLB('w4')">
         <img src="./CG2E9eDB-z0_01.jpg" alt="PARA-SOL kitchen stand food truck">
         <div class="label">004 · Food Truck</div>
         <div class="cap">PARA-SOL Kitchen Stand — 東京東エリアの軽トラベースフードトラック。古材ボードと左官モルタル仕上げで構成。</div>
       </a>
-      <a class="work w5 reveal" href="./eagle-04.jpg" target="_blank">
+      <a class="work w5 reveal" href="./eagle-04.jpg" data-gallery="w5" data-count="3" onclick="return openLB('w5')">
         <img src="./eagle-04.jpg" alt="Leather atelier">
         <div class="label">005 · Atelier</div>
         <div class="cap">レザークラフト移動工房 — 黒塗り杉板・アイアン建具・古材造作。施主のアイデアからシャーシ設計。</div>
       </a>
-      <a class="work w6 reveal" href="./hotel-02.jpg" target="_blank">
+      <a class="work w6 reveal" href="./hotel-02.jpg" data-gallery="w6" data-count="4" onclick="return openLB('w6')">
         <img src="./hotel-02.jpg" alt="HOTEL DU BLANC interior dining">
         <div class="label">006 · Hotel</div>
         <div class="cap">HOTEL DU BLANC — ヨーロピアン様式の館内造作。木天井・モールディング壁・シャンデリアまで一貫設計。</div>
       </a>
-      <a class="work w7 reveal" href="./CERIUKlhGWp_01.jpg" target="_blank">
+      <a class="work w7 reveal" href="./CERIUKlhGWp_01.jpg" data-gallery="w7" data-count="4" onclick="return openLB('w7')">
         <img src="./CERIUKlhGWp_01.jpg" alt="Saratoga mark2 industrial food trailer">
         <div class="label">007 · Industrial</div>
         <div class="cap">Saratoga Mark2 — 鉄骨フレーム×大開口ガラス×古材造作の重厚なフードトレーラー。建築としての存在感を持つ一台。</div>
       </a>
-      <a class="work w8 reveal" href="./CrGPYCqvxna_01.jpg" target="_blank">
+      <a class="work w8 reveal" href="./CrGPYCqvxna_01.jpg" data-gallery="w8" data-count="5" onclick="return openLB('w8')">
         <img src="./CrGPYCqvxna_01.jpg" alt="Trailer being towed on highway to delivery destination">
         <div class="label">008 · Delivery</div>
         <div class="cap">納車・陸送 — 千葉本社から日本各地まで。岡山県倉敷市のお寿司トレーラー納車時の高速道路上の1コマ。</div>
@@ -1154,6 +1198,20 @@ footer {
   </div>
 </footer>
 
+<!-- WORKS LIGHTBOX -->
+<div class="lb" id="lb" aria-hidden="true" role="dialog" aria-modal="true" aria-label="製造実績ギャラリー">
+  <button class="lb-close" id="lbClose" type="button" aria-label="閉じる">&times;</button>
+  <button class="lb-nav lb-prev" id="lbPrev" type="button" aria-label="前の写真">&lsaquo;</button>
+  <figure class="lb-stage">
+    <img id="lbImg" src="" alt="">
+    <figcaption class="lb-cap">
+      <span class="lb-title" id="lbTitle"></span>
+      <span class="lb-count" id="lbCount"></span>
+    </figcaption>
+  </figure>
+  <button class="lb-nav lb-next" id="lbNext" type="button" aria-label="次の写真">&rsaquo;</button>
+</div>
+
 <script>
 const hdr = document.getElementById('hdr');
 window.addEventListener('scroll', () => hdr.classList.toggle('scrolled', window.scrollY > 8));
@@ -1183,7 +1241,64 @@ function submitForm(e) {
   window.location.href = "mailto:michiyosi34@gmail.com?subject=" + subj + "&body=" + body;
   return false;
 }
+
+/* ---- Works Lightbox ---- */
+const galleries = {
+  w1: { title: "001 · Bar — WICK BAR", imgs: ["eagle-01.jpg"] },
+  w2: { title: "002 · House — Second House", imgs: ["CppfyPsv4kN_01.jpg","CppfyPsv4kN_02.jpg","CppfyPsv4kN_03.jpg","CppfyPsv4kN_04.jpg","CppfyPsv4kN_05.jpg"] },
+  w3: { title: "003 · Pizzeria — PIZZERIA Calcifer", imgs: ["eagle-11.jpg"] },
+  w4: { title: "004 · Food Truck — PARA-SOL Kitchen Stand", imgs: ["CG2E9eDB-z0_01.jpg","CG2E9eDB-z0_02.jpg","CG2E9eDB-z0_03.jpg","CG2E9eDB-z0_04.jpg","CG2E9eDB-z0_05.jpg"] },
+  w5: { title: "005 · Atelier — レザークラフト移動工房", imgs: ["eagle-04.jpg","eagle-05.jpg","eagle-10.jpg"] },
+  w6: { title: "006 · Hotel — HOTEL DU BLANC", imgs: ["hotel-02.jpg","hotel-01.jpg","hotel-03.jpg","hotel-04.jpg"] },
+  w7: { title: "007 · Industrial — Saratoga Mark2", imgs: ["CERIUKlhGWp_01.jpg","CERIUKlhGWp_02.jpg","CERIUKlhGWp_03.jpg","CERIUKlhGWp_04.jpg"] },
+  w8: { title: "008 · Delivery — 納車・陸送", imgs: ["CrGPYCqvxna_01.jpg","CrGPYCqvxna_02.jpg","CrGPYCqvxna_03.jpg","CrGPYCqvxna_04.jpg","CrGPYCqvxna_05.jpg"] }
+};
+const IMG_BASE = "./";
+const lb = document.getElementById('lb');
+const lbImg = document.getElementById('lbImg');
+const lbTitle = document.getElementById('lbTitle');
+const lbCount = document.getElementById('lbCount');
+const lbPrev = document.getElementById('lbPrev');
+const lbNext = document.getElementById('lbNext');
+let lbKey = null, lbIdx = 0;
+function lbRender() {
+  const g = galleries[lbKey]; if (!g) return;
+  const multi = g.imgs.length > 1;
+  lbImg.src = IMG_BASE + g.imgs[lbIdx];
+  lbImg.alt = g.title + " — " + (lbIdx + 1);
+  lbTitle.textContent = g.title;
+  lbCount.textContent = multi ? (lbIdx + 1) + " / " + g.imgs.length : "";
+  lbPrev.style.visibility = multi ? "visible" : "hidden";
+  lbNext.style.visibility = multi ? "visible" : "hidden";
+  if (multi) {
+    [1, -1].forEach(function(d){ var n = (lbIdx + d + g.imgs.length) % g.imgs.length; var p = new Image(); p.src = IMG_BASE + g.imgs[n]; });
+  }
+}
+function openLB(key) {
+  if (!galleries[key]) return true;
+  lbKey = key; lbIdx = 0; lbRender();
+  lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  return false;
+}
+function closeLB() {
+  lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+function lbStep(d) {
+  const g = galleries[lbKey]; if (!g) return;
+  lbIdx = (lbIdx + d + g.imgs.length) % g.imgs.length; lbRender();
+}
+lbPrev.addEventListener('click', function(e){ e.stopPropagation(); lbStep(-1); });
+lbNext.addEventListener('click', function(e){ e.stopPropagation(); lbStep(1); });
+document.getElementById('lbClose').addEventListener('click', closeLB);
+lb.addEventListener('click', function(e){ if (e.target === lb) closeLB(); });
+document.addEventListener('keydown', function(e){
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLB();
+  else if (e.key === 'ArrowLeft') lbStep(-1);
+  else if (e.key === 'ArrowRight') lbStep(1);
+});
 </script>
 </body>
 </html>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
