@@ -1,0 +1,1200 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TOWN DESIGN LABO | 移動できる建築を設計する西日本のスタジオ</title>
+<meta name="description" content="西日本を拠点に、トレーラーハウス・キッチンカー・モバイル建築を一棟ずつ設計するTOWN DESIGN LABO。製造パートナー 株式会社イーグルバレーと共に、街と暮らしに馴染む可動建築をつくります。">
+<meta property="og:title" content="TOWN DESIGN LABO — Mobile Architecture Studio">
+<meta property="og:description" content="街と暮らしに、もうひとつの建築を。設計はTOWN DESIGN LABO、製造はEAGLEVALLEY。">
+<meta property="og:image" content="./CaGqL7fv3mc_01.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Noto+Sans+JP:wght@200;300;400;500;700&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ffffff;
+  --bg-soft: #f4f4f3;
+  --bg-deep: #ebebe9;
+  --ink: #111111;
+  --ink-mute: #6b6b6b;
+  --line: #e5e5e3;
+  --line-strong: #1a1a1a;
+  --accent: #1a1a1a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: "Inter", "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.75;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+/* Mono utility */
+.mono {
+  font-family: "Inter", monospace;
+  font-size: 11px; font-weight: 500;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+/* ------- Layout ------- */
+.wrap { max-width: 1320px; margin: 0 auto; padding: 0 32px; }
+@media (max-width: 720px) { .wrap { padding: 0 20px; } }
+section { padding: 120px 0; position: relative; }
+@media (max-width: 720px) { section { padding: 72px 0; } }
+
+/* ------- Header ------- */
+header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: saturate(140%) blur(10px);
+  border-bottom: 1px solid transparent;
+  transition: border-color .25s;
+}
+header.scrolled { border-bottom-color: var(--line); }
+.nav {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 76px;
+}
+.brand {
+  display: flex; flex-direction: column;
+  font-weight: 600; letter-spacing: .18em;
+  line-height: 1.1;
+}
+.brand .b1 { font-size: 15px; color: var(--ink); }
+.brand .b2 {
+  font-size: 9px; font-weight: 400; letter-spacing: .28em;
+  color: var(--ink-mute); margin-top: 4px;
+}
+.menu { display: flex; gap: 36px; align-items: center; }
+.menu a {
+  font-size: 12px; font-weight: 500; letter-spacing: .12em;
+  color: var(--ink); transition: opacity .2s;
+  position: relative;
+}
+.menu a:not(.cta)::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -6px;
+  height: 1px; background: var(--ink); transform: scaleX(0); transform-origin: left;
+  transition: transform .3s;
+}
+.menu a:not(.cta):hover::after { transform: scaleX(1); }
+.cta {
+  background: var(--ink); color: #fff !important;
+  padding: 12px 22px; border-radius: 0;
+  font-size: 11px; letter-spacing: .15em;
+  transition: background .2s;
+}
+.cta:hover { background: #444; }
+.burger { display: none; background: none; border: 0; cursor: pointer; padding: 8px; }
+.burger span { display: block; width: 22px; height: 1px; background: var(--ink); margin: 6px 0; transition: .25s; }
+
+@media (max-width: 880px) {
+  .menu { display: none; position: absolute; top: 76px; left: 0; right: 0;
+    flex-direction: column; gap: 0; background: var(--bg); padding: 16px 24px 32px; border-bottom: 1px solid var(--line); }
+  .menu.open { display: flex; }
+  .menu a { padding: 16px 0; border-bottom: 1px solid var(--line); width: 100%; letter-spacing: .08em; }
+  .menu .cta { align-self: flex-start; margin-top: 16px; }
+  .burger { display: block; }
+}
+
+/* ------- Hero ------- */
+.hero {
+  position: relative;
+  min-height: 100vh; padding-top: 108px; padding-bottom: 72px;
+  display: flex; align-items: center;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: url('./CaGqL7fv3mc_01.jpg') center/cover no-repeat;
+  filter: grayscale(15%) brightness(.7) contrast(1.05);
+}
+.hero-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.45) 60%, rgba(0,0,0,.7) 100%);
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+}
+.hero-inner { position: relative; z-index: 1; color: #fff; width: 100%; }
+.hero-mono {
+  display: flex; gap: 24px; align-items: center;
+  font-family: "Inter", monospace;
+  font-size: 11px; letter-spacing: .25em; text-transform: uppercase;
+  color: rgba(255,255,255,.7); margin-bottom: 40px;
+}
+.hero-mono span:not(:first-child)::before {
+  content: "/"; margin-right: 24px; opacity: .5;
+}
+.hero h1 {
+  font-family: "Noto Sans JP", sans-serif;
+  font-weight: 200;
+  font-size: clamp(36px, 6.2vw, 76px);
+  line-height: 1.2; letter-spacing: .02em;
+  margin-bottom: 36px;
+}
+.hero h1 strong { font-weight: 500; }
+.hero h1 em {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic; font-weight: 300;
+}
+.hero p.lead {
+  font-size: clamp(13px, 1.3vw, 15px);
+  max-width: 560px; line-height: 1.95;
+  opacity: .85; font-weight: 300; letter-spacing: .02em;
+}
+.hero-actions { margin-top: 48px; display: flex; gap: 16px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 14px;
+  padding: 16px 28px;
+  border-radius: 0;
+  font-size: 12px; font-weight: 500; letter-spacing: .15em;
+  border: 1px solid currentColor;
+  transition: all .25s;
+  text-transform: uppercase;
+}
+.btn-primary { background: #fff; color: var(--ink); border-color: #fff; }
+.btn-primary:hover { background: transparent; color: #fff; }
+.btn-ghost { color: #fff; }
+.btn-ghost:hover { background: #fff; color: var(--ink); }
+.btn::after { content: "→"; transition: transform .25s; }
+.btn:hover::after { transform: translateX(4px); }
+
+.hero-meta {
+  position: absolute; left: 32px; bottom: 32px; z-index: 1;
+  color: rgba(255,255,255,.6);
+  font-family: "Inter", monospace; font-size: 10px;
+  letter-spacing: .25em; text-transform: uppercase;
+  display: flex; flex-direction: column; gap: 6px;
+}
+@media (max-width: 720px) { .hero-meta { display: none; } }
+
+/* ------- Section headings ------- */
+.s-head {
+  display: grid; grid-template-columns: 200px 1fr;
+  gap: 56px; margin-bottom: 72px;
+}
+@media (max-width: 720px) { .s-head { grid-template-columns: 1fr; gap: 20px; margin-bottom: 48px; } }
+.s-head .num {
+  font-family: "Inter", monospace;
+  font-size: 11px; font-weight: 500;
+  letter-spacing: .25em; color: var(--ink-mute);
+  padding-top: 8px;
+  border-top: 1px solid var(--line-strong);
+  text-transform: uppercase;
+}
+.s-head h2 {
+  font-weight: 300;
+  font-size: clamp(28px, 4vw, 48px);
+  letter-spacing: .02em; line-height: 1.3;
+  margin-bottom: 16px;
+}
+.s-head h2 strong { font-weight: 500; }
+.s-head h2 em {
+  font-family: "Cormorant Garamond", serif; font-style: italic; font-weight: 300;
+}
+.s-head p { color: var(--ink-mute); max-width: 600px; font-size: 14px; line-height: 2; }
+
+/* ------- About ------- */
+.about { background: var(--bg); border-top: 1px solid var(--line); }
+.about-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: flex-start; }
+@media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; gap: 48px; } }
+.about-text h3 {
+  font-weight: 400;
+  font-size: clamp(20px, 2.2vw, 26px);
+  line-height: 1.75; letter-spacing: .02em; margin-bottom: 32px;
+  color: var(--ink);
+}
+.about-text h3 em {
+  font-family: "Cormorant Garamond", serif; font-style: italic;
+}
+.about-text p {
+  margin-bottom: 20px; color: var(--ink-mute);
+  font-size: 14px; line-height: 2;
+}
+.about-figure { position: relative; aspect-ratio: 3/4; overflow: hidden; }
+.about-figure img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(15%); transition: filter .8s, transform .8s; }
+.about-figure:hover img { filter: grayscale(0%); transform: scale(1.02); }
+.about-figure .tag {
+  position: absolute; left: 0; bottom: 0;
+  background: var(--ink); color: #fff;
+  padding: 12px 18px;
+  font-family: "Inter", monospace; font-size: 10px;
+  letter-spacing: .25em; text-transform: uppercase;
+}
+
+/* Manufacturing partner badge */
+.partner {
+  margin-top: 56px; padding: 32px;
+  border: 1px solid var(--line);
+  display: grid; grid-template-columns: 200px 1fr;
+  gap: 32px; align-items: center;
+}
+@media (max-width: 720px) { .partner { grid-template-columns: 1fr; gap: 16px; } }
+.partner .label {
+  font-family: "Inter", monospace; font-size: 10px;
+  letter-spacing: .25em; text-transform: uppercase; color: var(--ink-mute);
+}
+.partner h4 {
+  font-weight: 600; font-size: 18px; letter-spacing: .08em;
+  margin-bottom: 8px;
+}
+.partner p { font-size: 13px; color: var(--ink-mute); line-height: 1.85; }
+.partner a { border-bottom: 1px solid var(--ink); padding-bottom: 1px; font-weight: 500; }
+
+/* ------- Numbers strip ------- */
+.numbers { background: var(--ink); color: #fff; padding: 80px 0; border-top: 1px solid var(--ink); }
+@media (max-width: 720px) { .numbers { padding: 56px 0; } }
+.numbers-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+}
+@media (max-width: 880px) { .numbers-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
+@media (max-width: 480px) { .numbers-grid { grid-template-columns: 1fr; } }
+.num-cell {
+  padding: 0 32px;
+  border-right: 1px solid rgba(255,255,255,.15);
+}
+.num-cell:last-child { border-right: 0; }
+@media (max-width: 880px) {
+  .num-cell { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.1); padding: 16px 0; }
+  .num-cell:last-child { border-bottom: 0; }
+}
+.num-cell .num-label {
+  font-family: "Inter", monospace; font-size: 11px;
+  letter-spacing: .25em; text-transform: uppercase;
+  color: rgba(255,255,255,.55); margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,.2);
+}
+.num-cell .num-value {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 400; font-size: clamp(40px, 5vw, 64px);
+  line-height: 1; letter-spacing: .02em;
+  margin-bottom: 12px;
+}
+.num-cell .num-value span {
+  font-family: "Inter", sans-serif;
+  font-size: 0.45em; font-weight: 300;
+  vertical-align: super; opacity: .7;
+  margin-left: 4px;
+}
+.num-cell .num-note { font-size: 12px; color: rgba(255,255,255,.7); line-height: 1.7; }
+
+/* ------- Services / Lineup ------- */
+.services { background: var(--bg-soft); border-top: 1px solid var(--line); }
+.services-list { border-top: 1px solid var(--line-strong); }
+.service-row {
+  display: grid; grid-template-columns: 60px 1.2fr 1.8fr 1fr;
+  gap: 32px; align-items: flex-start;
+  padding: 36px 0;
+  border-bottom: 1px solid var(--line);
+  transition: background .2s;
+}
+.service-row:hover { background: rgba(0,0,0,.015); }
+@media (max-width: 900px) {
+  .service-row { grid-template-columns: 1fr; gap: 12px; padding: 28px 0; }
+}
+.service-row .ix {
+  font-family: "Inter", monospace; font-size: 12px;
+  letter-spacing: .15em; color: var(--ink-mute); padding-top: 8px;
+}
+.service-row h4 {
+  font-size: 22px; font-weight: 500; letter-spacing: .04em;
+  line-height: 1.4;
+}
+.service-row h4 em {
+  display: block; font-family: "Cormorant Garamond", serif;
+  font-style: italic; font-weight: 300;
+  font-size: 13px; color: var(--ink-mute); letter-spacing: .15em; margin-top: 4px;
+}
+.service-row .desc { font-size: 14px; color: var(--ink-mute); line-height: 2; }
+.service-row .price {
+  font-family: "Inter", monospace; font-size: 12px;
+  letter-spacing: .1em; color: var(--ink); text-align: right;
+  padding-top: 8px;
+}
+.service-row .price strong { display: block; font-size: 18px; margin-top: 4px; letter-spacing: .04em; }
+@media (max-width: 900px) { .service-row .price { text-align: left; } }
+
+/* ------- Approach (3 columns) ------- */
+.approach { background: var(--bg); border-top: 1px solid var(--line); }
+.approach-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line-strong); }
+@media (max-width: 880px) { .approach-grid { grid-template-columns: 1fr; } }
+.approach-card {
+  padding: 36px 32px 40px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.approach-card:last-child { border-right: 0; }
+@media (max-width: 880px) { .approach-card { border-right: 0; } }
+.approach-card .num {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic; font-weight: 300;
+  font-size: 32px; color: var(--ink); margin-bottom: 16px;
+}
+.approach-card h5 {
+  font-size: 17px; font-weight: 500; letter-spacing: .04em;
+  margin-bottom: 16px;
+}
+.approach-card p { font-size: 13px; color: var(--ink-mute); line-height: 2; }
+
+/* ------- Gallery (editorial layout) ------- */
+.works { background: var(--bg); border-top: 1px solid var(--line); }
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 12px;
+  grid-auto-rows: 180px;
+}
+@media (max-width: 880px) { .works-grid { grid-auto-rows: 200px; gap: 8px; } }
+.work {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--bg-soft);
+}
+.work img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(8%); transition: transform .9s, filter .6s; }
+.work:hover img { transform: scale(1.04); filter: grayscale(0%); }
+.work .label {
+  position: absolute; left: 16px; top: 16px;
+  font-family: "Inter", monospace; font-size: 10px;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: #fff; background: rgba(0,0,0,.55);
+  padding: 6px 10px;
+  backdrop-filter: blur(6px);
+}
+.work .cap {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.82) 100%);
+  color: #fff;
+  padding: 40px 20px 18px;
+  font-size: 12px; line-height: 1.65; letter-spacing: .02em;
+  opacity: 0; transform: translateY(8px); transition: .3s;
+}
+.work:hover .cap { opacity: 1; transform: translateY(0); }
+.w1 { grid-column: span 7; grid-row: span 2; }
+.w2 { grid-column: span 5; grid-row: span 2; }
+.w3 { grid-column: span 4; grid-row: span 2; }
+.w4 { grid-column: span 4; grid-row: span 2; }
+.w5 { grid-column: span 4; grid-row: span 2; }
+.w6 { grid-column: span 6; grid-row: span 2; }
+.w7 { grid-column: span 6; grid-row: span 2; }
+.w8 { grid-column: span 12; grid-row: span 2; }
+@media (max-width: 880px) {
+  .w1,.w2,.w3,.w4,.w5,.w6,.w7,.w8 { grid-column: span 12; grid-row: span 2; }
+}
+
+/* ------- Interior ------- */
+.interior { background: var(--bg-soft); border-top: 1px solid var(--line); }
+.interior-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 14px;
+  min-height: 760px;
+}
+@media (max-width: 880px) {
+  .interior-grid { grid-template-columns: 1fr; grid-template-rows: auto; min-height: 0; gap: 16px; }
+}
+.int-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  cursor: pointer;
+  display: block;
+}
+.int-card.int-feature { grid-row: 1 / span 3; }
+@media (max-width: 880px) {
+  .int-card { aspect-ratio: 4/3; }
+  .int-card.int-feature { grid-row: auto; aspect-ratio: 3/4; }
+}
+.int-card img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: grayscale(8%);
+  transition: transform .9s, filter .6s;
+}
+.int-card:hover img { transform: scale(1.04); filter: grayscale(0%); }
+.int-card .cap {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.85) 65%);
+  color: #fff;
+  padding: 60px 22px 22px;
+  transform: translateY(0);
+  transition: padding .35s;
+}
+.int-card.int-feature .cap { padding: 80px 28px 28px; }
+.int-card .cap .ix {
+  font-family: "Inter", monospace; font-size: 10px;
+  letter-spacing: .25em; text-transform: uppercase;
+  opacity: .8; margin-bottom: 8px;
+}
+.int-card .cap h4 {
+  font-size: 17px; font-weight: 500;
+  letter-spacing: .04em; margin-bottom: 8px;
+  line-height: 1.35;
+}
+.int-card.int-feature .cap h4 { font-size: 22px; }
+.int-card .cap p {
+  font-size: 12.5px; opacity: .85; line-height: 1.7;
+  max-height: 0; overflow: hidden;
+  transition: max-height .35s;
+}
+.int-card:hover .cap p { max-height: 100px; margin-top: 4px; }
+.int-card.int-feature .cap p { max-height: 80px; font-size: 13px; }
+
+/* ------- Stories ------- */
+.stories { background: var(--bg); border-top: 1px solid var(--line); }
+.stories-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px 28px;
+}
+@media (max-width: 980px) { .stories-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .stories-grid { grid-template-columns: 1fr; } }
+.story-card {
+  display: flex; flex-direction: column;
+  border-top: 1px solid var(--line-strong);
+  padding-top: 0;
+  transition: transform .3s;
+}
+.story-card:hover { transform: translateY(-4px); }
+.story-card .story-ph {
+  aspect-ratio: 5/4; overflow: hidden;
+  margin-top: 20px;
+  background: var(--bg-soft);
+}
+.story-card .story-ph img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: grayscale(8%);
+  transition: transform .8s, filter .6s;
+}
+.story-card:hover .story-ph img { transform: scale(1.04); filter: grayscale(0%); }
+.story-card .story-meta { padding: 20px 0 6px; }
+.story-card .story-tag {
+  font-family: "Inter", monospace; font-size: 10px;
+  letter-spacing: .25em; text-transform: uppercase;
+  color: var(--ink-mute); margin-bottom: 8px;
+}
+.story-card h4 {
+  font-size: 19px; font-weight: 500; letter-spacing: .05em;
+  margin-bottom: 8px; line-height: 1.3;
+}
+.story-card .story-loc {
+  font-size: 12px; color: var(--ink-mute);
+  letter-spacing: .04em;
+  font-weight: 400;
+}
+.story-card p {
+  font-size: 13px; color: var(--ink-mute);
+  line-height: 1.9;
+  margin-top: 10px;
+}
+
+/* ------- Use Cases ------- */
+.uses { background: var(--bg-soft); border-top: 1px solid var(--line); }
+.use-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 24px;
+}
+@media (max-width: 880px) { .use-grid { grid-template-columns: 1fr; } }
+.use-card {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  padding: 0;
+}
+.use-card .ph { aspect-ratio: 4/3; overflow: hidden; }
+.use-card .ph img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(10%); transition: transform .8s, filter .6s; }
+.use-card:hover .ph img { transform: scale(1.05); filter: grayscale(0%); }
+.use-card .body { padding: 28px 28px 32px; }
+.use-card .ix {
+  font-family: "Inter", monospace; font-size: 10px;
+  letter-spacing: .25em; text-transform: uppercase;
+  color: var(--ink-mute); margin-bottom: 10px;
+}
+.use-card h4 { font-size: 18px; font-weight: 500; letter-spacing: .05em; margin-bottom: 12px; }
+.use-card p { font-size: 13px; color: var(--ink-mute); line-height: 1.95; }
+
+/* ------- Process timeline ------- */
+.process { background: var(--bg); border-top: 1px solid var(--line); }
+.timeline {
+  position: relative;
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+}
+@media (max-width: 980px) { .timeline { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .timeline { grid-template-columns: 1fr; } }
+.timeline::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 32px;
+  height: 1px; background: var(--line-strong);
+}
+.step {
+  padding: 0 16px 16px 0;
+  position: relative;
+}
+.step::before {
+  content: ""; position: absolute; left: 0; top: 27px;
+  width: 11px; height: 11px;
+  background: var(--bg); border: 1px solid var(--ink-mute);
+  border-radius: 50%;
+}
+.step .num {
+  font-family: "Inter", monospace; font-size: 11px;
+  letter-spacing: .25em; color: var(--ink-mute);
+  margin-top: 56px; margin-bottom: 12px;
+}
+.step h5 { font-size: 15px; font-weight: 600; letter-spacing: .04em; margin-bottom: 12px; }
+.step p { font-size: 12.5px; color: var(--ink-mute); line-height: 1.9; padding-right: 12px; }
+
+/* ------- Contact ------- */
+.contact { background: var(--ink); color: #f5f5f5; border-top: 1px solid var(--ink); }
+.contact .s-head .num { color: rgba(255,255,255,.55); border-color: rgba(255,255,255,.4); }
+.contact .s-head h2 { color: #fff; }
+.contact .s-head p { color: rgba(255,255,255,.6); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; }
+@media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; gap: 48px; } }
+
+.cblock { padding-bottom: 28px; border-bottom: 1px solid rgba(255,255,255,.1); margin-bottom: 32px; }
+.cblock:last-child { border-bottom: 0; margin-bottom: 0; }
+.cblock .tag {
+  font-family: "Inter", monospace; font-size: 10px;
+  letter-spacing: .25em; text-transform: uppercase;
+  color: rgba(255,255,255,.55); margin-bottom: 14px;
+}
+.cblock h5 { font-size: 22px; font-weight: 500; margin-bottom: 20px; letter-spacing: .06em; }
+.cblock dl { display: grid; grid-template-columns: 110px 1fr; gap: 10px 24px; font-size: 13.5px; }
+.cblock dt { color: rgba(255,255,255,.5); letter-spacing: .08em; font-size: 11px; padding-top: 4px; text-transform: uppercase; }
+.cblock dd { color: rgba(255,255,255,.92); line-height: 1.65; }
+.cblock dd a { border-bottom: 1px solid rgba(255,255,255,.3); padding-bottom: 1px; }
+.cblock dd a:hover { border-color: #fff; }
+.cblock .note {
+  display: inline-block; margin-top: 10px;
+  font-size: 11px; padding: 4px 10px;
+  background: rgba(255,255,255,.06); color: rgba(255,255,255,.55);
+  letter-spacing: .05em;
+}
+
+form {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  padding: 40px 36px;
+}
+form h5 {
+  font-size: 15px; margin-bottom: 28px;
+  letter-spacing: .15em; text-transform: uppercase;
+  font-family: "Inter", monospace; color: rgba(255,255,255,.85);
+}
+.field { margin-bottom: 18px; }
+.field label {
+  display: block; font-family: "Inter", monospace;
+  font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(255,255,255,.5); margin-bottom: 8px;
+}
+.field input, .field select, .field textarea {
+  width: 100%; background: transparent; border: 0;
+  border-bottom: 1px solid rgba(255,255,255,.25);
+  color: #fff; font-family: inherit; font-size: 14px; padding: 10px 0; outline: 0;
+}
+.field input:focus, .field select:focus, .field textarea:focus { border-color: #fff; }
+.field textarea { resize: vertical; min-height: 100px; }
+.field select option { color: var(--ink); }
+form button {
+  margin-top: 16px; width: 100%;
+  background: #fff; border: 0;
+  color: var(--ink); padding: 18px 28px;
+  font-size: 12px; letter-spacing: .25em; font-weight: 600;
+  text-transform: uppercase; cursor: pointer;
+  transition: background .2s;
+}
+form button:hover { background: rgba(255,255,255,.85); }
+form small { display: block; margin-top: 16px; font-size: 10.5px; color: rgba(255,255,255,.45); letter-spacing: .04em; line-height: 1.7; }
+
+/* ------- Footer ------- */
+footer {
+  background: #000;
+  color: rgba(255,255,255,.5);
+  padding: 56px 0 40px;
+  font-size: 12px; letter-spacing: .05em;
+}
+.foot {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 32px; padding-bottom: 32px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  margin-bottom: 24px;
+}
+@media (max-width: 720px) { .foot { grid-template-columns: 1fr; } }
+.foot-brand { color: #fff; font-weight: 600; letter-spacing: .2em; font-size: 14px; margin-bottom: 10px; }
+.foot-brand-sub { font-size: 11px; color: rgba(255,255,255,.4); letter-spacing: .15em; text-transform: uppercase; margin-bottom: 16px; }
+.foot p { color: rgba(255,255,255,.55); font-size: 12px; line-height: 1.85; max-width: 460px; }
+.foot-links { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
+@media (max-width: 720px) { .foot-links { align-items: flex-start; } }
+.foot-links a { font-size: 12px; letter-spacing: .1em; }
+.foot-links a:hover { color: #fff; }
+.foot-meta {
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  font-family: "Inter", monospace; font-size: 10px;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(255,255,255,.35);
+}
+
+/* ------- Reveal ------- */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s, transform .9s; }
+.reveal.shown { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <div class="wrap nav">
+    <a class="brand" href="#top">
+      <span class="b1">TOWN DESIGN LABO</span>
+      <span class="b2">MOBILE ARCHITECTURE STUDIO · WEST JAPAN</span>
+    </a>
+    <nav class="menu" id="menu">
+      <a href="#about">Studio</a>
+      <a href="#services">Services</a>
+      <a href="#works">Works</a>
+      <a href="#interior">Interior</a>
+      <a href="#stories">Stories</a>
+      <a href="#uses">Use Cases</a>
+      <a href="#process">Process</a>
+      <a href="#contact" class="cta">Contact</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="wrap hero-inner">
+    <div class="hero-mono">
+      <span>Est. 2026</span>
+      <span>West Japan</span>
+      <span>Mobile Architecture</span>
+    </div>
+    <h1>
+      <em>街</em>と<em>暮らし</em>を、<br>
+      <strong>もういちど設計する</strong>。
+    </h1>
+    <p class="lead">
+      TOWN DESIGN LABO は、トレーラーハウスとキッチンカーを「動く建築」として設計する西日本のスタジオです。
+      製造は本州随一の実績を持つ株式会社イーグルバレー。私たちは設計と提案、現地ディレクション、引き渡し後の運用まで担います。
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#services">View Services</a>
+      <a class="btn btn-ghost" href="#contact">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-meta">
+    <span>N 34.6937° / E 135.5023°</span>
+    <span>Designed in West Japan / Manufactured in Chiba</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="s-head reveal">
+      <div class="num">— 01 / Studio</div>
+      <div>
+        <h2>動く建築の<strong>研究室</strong>として。</h2>
+        <p>固定された建築が答えではない場面が増えています。土地、規制、撤退コスト、用途変更 — 設計の前提条件そのものが流動的になっている時代に、私たちは「動かせる建築」を1棟ずつ設計する研究室として、街と暮らしの新しい接点を提案します。</p>
+      </div>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <h3>建てるのではなく、<em>運ぶ</em>。<br>その判断が、街と暮らしの自由度を変える。</h3>
+        <p>
+          別荘・店舗・事務所・サテライト拠点・グランピング・移動販売 ——
+          「敷地に建築物を増やしたいけれど建てづらい」「短期で出店したい」「自然のなかに拠点を置きたい」「将来移設したい」。
+          固定建築では取りこぼされてきた要望に、可動建築は静かな選択肢を返します。
+        </p>
+        <p>
+          製造パートナーのEAGLEVALLEYは、シャーシ設計から内装造作までを自社一貫で行う、国内屈指のカスタムビルダーです。
+          車両として定められた寸法ルールの内側で「室内空間をいかに広く使うか」を独自設計で追求し、床面の段差設計や軽量化の重量計算まで、設計の解像度を一台ごとに調整しています。
+        </p>
+        <p>
+          TOWN DESIGN LABOは、その車両を「ただの箱」にしないために、ロケーション・動線・素材・周辺との調和を建築の解像度で設計します。
+          外装の杉板、左官造形、アイアン建具、古材ウッドウォール、断熱・床暖・水回り、海上コンテナ改造、連結型ミニパークまで ——
+          仕様の自由度はそのままに、街並みに馴染む輪郭を引きます。
+        </p>
+        <p>
+          設計から納車後の運用まで西日本(関西・中国・四国・九州)を中心に、ひとつひとつの現場と長くつきあいます。
+          本社EAGLEVALLEYは2019年から北海道(ルスツ)、東京(丸の内)、茨城、長野、名古屋、徳島、高知(仁淀川)、九州まで全国へ車両を届けています。
+        </p>
+      </div>
+      <div class="about-figure reveal">
+        <img src="./dec18-03.jpg" alt="Interior craft of a mobile architecture by TOWN DESIGN LABO">
+        <div class="tag">INTERIOR · TINY HOUSE</div>
+      </div>
+    </div>
+
+    <div class="partner reveal">
+      <div>
+        <div class="label">— Manufacturing Partner</div>
+      </div>
+      <div>
+        <h4>株式会社イーグルバレー(EAGLEVALLEY)</h4>
+        <p>
+          千葉県柏市・自社工房にて、シャーシ設計から内装造作まで一棟ごとに完成させる国内屈指のカスタムビルダー。
+          TOWN DESIGN LABOは、その確かな製造力を信頼する唯一の製造パートナーとして提携しています。
+          <a href="https://www.instagram.com/eaglevalley_trailerhouse/" target="_blank" rel="noopener">@eaglevalley_trailerhouse →</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NUMBERS STRIP -->
+<section class="numbers" id="numbers">
+  <div class="wrap">
+    <div class="numbers-grid">
+      <div class="num-cell reveal">
+        <div class="num-label">Established</div>
+        <div class="num-value">2019<span>—</span></div>
+        <div class="num-note">本社EAGLEVALLEY設立年</div>
+      </div>
+      <div class="num-cell reveal">
+        <div class="num-label">Service Area</div>
+        <div class="num-value">全国<span>納車</span></div>
+        <div class="num-note">北海道〜九州・全エリア対応</div>
+      </div>
+      <div class="num-cell reveal">
+        <div class="num-label">Projects</div>
+        <div class="num-value">300<span>+</span></div>
+        <div class="num-note">公開実績(Instagram 383投稿)</div>
+      </div>
+      <div class="num-cell reveal">
+        <div class="num-label">Customization</div>
+        <div class="num-value">100<span>%</span></div>
+        <div class="num-note">シャーシ設計から自社一貫</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="s-head reveal">
+      <div class="num">— 02 / Services</div>
+      <div>
+        <h2>4つの<strong>カテゴリ</strong>。<br>すべてフルカスタム。</h2>
+        <p>下記は代表的なカテゴリで、サイズ・内装・設備・外装はご要望と設置地に応じて自由に設計可能です。</p>
+      </div>
+    </div>
+
+    <div class="services-list">
+      <div class="service-row reveal">
+        <div class="ix">001</div>
+        <h4>Trailer House<em>トレーラーハウス</em></h4>
+        <div class="desc">住居・別荘・離れ・宿泊施設として。シャーシから設計し、断熱・床暖・水回り・電源容量までフル装備可能。コンパクトな1.5tクラスから本格仕様まで、設置場所と用途に合わせて設計します。</div>
+        <div class="price">参考<strong>¥6,800,000〜</strong></div>
+      </div>
+      <div class="service-row reveal">
+        <div class="ix">002</div>
+        <h4>Food Truck<em>フードトラック・キッチンカー</em></h4>
+        <div class="desc">営業許可を見据えた厨房レイアウト。ピザ窯・冷蔵機器・電源容量・配管・換気をメニュー業態に合わせ設計。フルサイズトラックから軽トラベースのチャックワゴン風まで、北海道〜九州への陸送実績あり。</div>
+        <div class="price">参考<strong>¥4,500,000〜</strong></div>
+      </div>
+      <div class="service-row reveal">
+        <div class="ix">003</div>
+        <h4>Mobile Shop &amp; Atelier<em>モバイルショップ・移動工房</em></h4>
+        <div class="desc">レザークラフト工房、ギャラリー、ヘアサロン、ポップアップショップ等。「移動できる店舗」をシャーシ設計から行います。海上コンテナ改造などの大型ユニットにも対応。</div>
+        <div class="price">参考<strong>¥5,200,000〜</strong></div>
+      </div>
+      <div class="service-row reveal">
+        <div class="ix">004</div>
+        <h4>Stationary Unit<em>固定設置型ユニット</em></h4>
+        <div class="desc">グランピング棟・サウナ小屋・店舗棟など、土地に半固定で運用するモバイル建築。複数台を連結し「ちっちゃな公園」のようなモバイルコンプレックスを構成することも可能です。</div>
+        <div class="price">参考<strong>¥3,800,000〜</strong></div>
+      </div>
+    </div>
+    <p style="margin-top: 28px; font-size: 11px; color: var(--ink-mute); letter-spacing: .04em;">
+      ※ 価格は仕様により変動します。陸送費・登録費・基礎工事費・特別仕様は別途。詳細は個別お見積もりにてご案内します。
+    </p>
+  </div>
+</section>
+
+<!-- WORKS -->
+<section class="works" id="works">
+  <div class="wrap">
+    <div class="s-head reveal">
+      <div class="num">— 03 / Works</div>
+      <div>
+        <h2>製造実績<strong>セレクション</strong></h2>
+        <p>製造パートナー EAGLEVALLEY の最新案件から、TOWN DESIGN LABOが推奨する8件をセレクト。詳細仕様・図面・現場見学のご希望は、Contactより。</p>
+      </div>
+    </div>
+    <div class="works-grid">
+      <a class="work w1 reveal" href="./eagle-01.jpg" target="_blank">
+        <img src="./eagle-01.jpg" alt="wick Bar">
+        <div class="label">001 · Bar</div>
+        <div class="cap">WICK BAR — 都市の余白に置かれた小さなバー。Slit Park YURAKUCHOで稼働中。メンテナンスを経て再び現場へ。</div>
+      </a>
+      <a class="work w2 reveal" href="./CppfyPsv4kN_01.jpg" target="_blank">
+        <img src="./CppfyPsv4kN_01.jpg" alt="Mountain cabin trailer being towed for delivery">
+        <div class="label">002 · House</div>
+        <div class="cap">Second House Delivery — セカンドハウスとしての納車事例。キャンピングトレーラー登録で、いつでもどこでも牽引可能な仕様。</div>
+      </a>
+      <a class="work w3 reveal" href="./eagle-11.jpg" target="_blank">
+        <img src="./eagle-11.jpg" alt="Pizzeria Calcifer">
+        <div class="label">003 · Pizzeria</div>
+        <div class="cap">PIZZERIA Calcifer — 北海道ルスツへ。床暖房付き極寒仕様、ハウルの城モチーフのデザイン。</div>
+      </a>
+      <a class="work w4 reveal" href="./CG2E9eDB-z0_01.jpg" target="_blank">
+        <img src="./CG2E9eDB-z0_01.jpg" alt="PARA-SOL kitchen stand food truck">
+        <div class="label">004 · Food Truck</div>
+        <div class="cap">PARA-SOL Kitchen Stand — 東京東エリアの軽トラベースフードトラック。古材ボードと左官モルタル仕上げで構成。</div>
+      </a>
+      <a class="work w5 reveal" href="./eagle-04.jpg" target="_blank">
+        <img src="./eagle-04.jpg" alt="Leather atelier">
+        <div class="label">005 · Atelier</div>
+        <div class="cap">レザークラフト移動工房 — 黒塗り杉板・アイアン建具・古材造作。施主のアイデアからシャーシ設計。</div>
+      </a>
+      <a class="work w6 reveal" href="./hotel-02.jpg" target="_blank">
+        <img src="./hotel-02.jpg" alt="HOTEL DU BLANC interior dining">
+        <div class="label">006 · Hotel</div>
+        <div class="cap">HOTEL DU BLANC — ヨーロピアン様式の館内造作。木天井・モールディング壁・シャンデリアまで一貫設計。</div>
+      </a>
+      <a class="work w7 reveal" href="./CERIUKlhGWp_01.jpg" target="_blank">
+        <img src="./CERIUKlhGWp_01.jpg" alt="Saratoga mark2 industrial food trailer">
+        <div class="label">007 · Industrial</div>
+        <div class="cap">Saratoga Mark2 — 鉄骨フレーム×大開口ガラス×古材造作の重厚なフードトレーラー。建築としての存在感を持つ一台。</div>
+      </a>
+      <a class="work w8 reveal" href="./CrGPYCqvxna_01.jpg" target="_blank">
+        <img src="./CrGPYCqvxna_01.jpg" alt="Trailer being towed on highway to delivery destination">
+        <div class="label">008 · Delivery</div>
+        <div class="cap">納車・陸送 — 千葉本社から日本各地まで。岡山県倉敷市のお寿司トレーラー納車時の高速道路上の1コマ。</div>
+      </a>
+    </div>
+    <p style="margin-top: 28px; font-size: 11px; color: var(--ink-mute);">
+      Photo: 株式会社イーグルバレー / @eaglevalley_trailerhouse
+    </p>
+  </div>
+</section>
+
+<!-- INTERIOR -->
+<section class="interior" id="interior">
+  <div class="wrap">
+    <div class="s-head reveal">
+      <div class="num">— 04 / Interior</div>
+      <div>
+        <h2>細部に、<em>住まう</em>が宿る。</h2>
+        <p>「動く建築」の本質は、外観ではなく中で過ごす時間です。シャーシから設計するからこそ、断熱・水回り・収納・採光まで暮らしの解像度で組み立てます。</p>
+      </div>
+    </div>
+    <div class="interior-grid">
+      <a class="int-card int-feature reveal" href="./dec18-05.jpg" target="_blank">
+        <img src="./dec18-05.jpg" alt="Vaulted tiny house interior with kitchen and stairs">
+        <div class="cap">
+          <div class="ix">001 · Vaulted Living</div>
+          <h4>Vaulted Tiny House</h4>
+          <p>ヴォールト天井×杉板×アイアン階段。コンパクトな間口に住まいの完成度を凝縮した一棟。</p>
+        </div>
+      </a>
+      <a class="int-card reveal" href="./dec18-03.jpg" target="_blank">
+        <img src="./dec18-03.jpg" alt="Vaulted ceiling kitchen with tile backsplash">
+        <div class="cap">
+          <div class="ix">002 · Kitchen</div>
+          <h4>Kitchen + Loft</h4>
+          <p>シンクとIHを納め、頭上にロフト収納/寝室動線を確保。</p>
+        </div>
+      </a>
+      <a class="int-card reveal" href="./dec18-04.jpg" target="_blank">
+        <img src="./dec18-04.jpg" alt="Modern compact bathroom with sink and chrome plumbing">
+        <div class="cap">
+          <div class="ix">003 · Powder Room</div>
+          <h4>Powder Room</h4>
+          <p>自立式の磁器洗面と、剥き出しのクロームパイプ。コンセント・温水栓まで実装。</p>
+        </div>
+      </a>
+      <a class="int-card reveal" href="./hotel-03.jpg" target="_blank">
+        <img src="./hotel-03.jpg" alt="PARIS BISTRO interior with white tile and brick wall">
+        <div class="cap">
+          <div class="ix">004 · Bistro</div>
+          <h4>Bistro Kitchen</h4>
+          <p>HOTEL DU BLANC館内ビストロ。白サブウェイタイル×ブリックの厨房造作。</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- STORIES -->
+<section class="stories" id="stories">
+  <div class="wrap">
+    <div class="s-head reveal">
+      <div class="num">— 05 / Stories</div>
+      <div>
+        <h2>制作の<strong>物語</strong>と、納車先で<em>続く時間</em>。</h2>
+        <p>本社EAGLEVALLEYが2019年からつくってきた車両のうち、設計の視点で印象に残る6件を抜粋しました。場所、施主の構想、設計のポイントを短く紹介します。</p>
+      </div>
+    </div>
+    <div class="stories-grid">
+      <article class="story-card reveal">
+        <div class="story-ph"><img src="./CaGqL7fv3mc_01.jpg" alt="THE NOMAD trailer hotel at Yatsugatake"></div>
+        <div class="story-meta">
+          <div class="story-tag">001 · Lodging</div>
+          <h4>THE NOMAD 八ヶ岳</h4>
+          <div class="story-loc">📍 長野 / 山梨 県境エリア</div>
+        </div>
+        <p>八ヶ岳の新スポット、THE NOMAD様へトレーラーホテルとして納車・設置。傾斜地での搬入に悪戦苦闘しながらも、雪と樹々に囲まれた環境に馴染む杉板外装で設計。宿泊棟としての運用に。</p>
+      </article>
+      <article class="story-card reveal">
+        <div class="story-ph"><img src="./B04WC84hCxT_01.jpg" alt="Container-based mobile unit at Aloha Garden Tateyama"></div>
+        <div class="story-meta">
+          <div class="story-tag">002 · Container</div>
+          <h4>アロハガーデン館山 / Container Base</h4>
+          <div class="story-loc">📍 千葉県南房総市</div>
+        </div>
+        <p>海上コンテナをベースにしたトレーラー。施設の中心動線に橙色のシグネチャーカラーで配置し、ウッドデッキで隣接棟と接続。可動建築をランドマークにする運用提案。</p>
+      </article>
+      <article class="story-card reveal">
+        <div class="story-ph"><img src="./CG2E9eDB-z0_01.jpg" alt="PARA-SOL kitchen stand food truck"></div>
+        <div class="story-meta">
+          <div class="story-tag">003 · Food Truck</div>
+          <h4>PARA-SOL Kitchen Stand</h4>
+          <div class="story-loc">📍 東京東エリア</div>
+        </div>
+        <p>軽トラベースのフードトラック。古材ボード×左官モルタル×無垢の建具で構成し、外装の質感に重みを持たせた一台。サイズの制約を「素材の存在感」で凌駕した設計。</p>
+      </article>
+      <article class="story-card reveal">
+        <div class="story-ph"><img src="./CUxVo9PvSep_01.jpg" alt="Mobile florist truck"></div>
+        <div class="story-meta">
+          <div class="story-tag">004 · Florist</div>
+          <h4>Mobile Florist</h4>
+          <div class="story-loc">📍 移動販売 / 全国</div>
+        </div>
+        <p>多角形の鉄フレーム+ガラス開口で構成した移動花屋。商品である花そのものを内側のショーケースとして見せる、透明性を主役にしたデザイン。</p>
+      </article>
+      <article class="story-card reveal">
+        <div class="story-ph"><img src="./CV2IchwvxTz_01.jpg" alt="HUKKE Village mobile architecture"></div>
+        <div class="story-meta">
+          <div class="story-tag">005 · Village</div>
+          <h4>ヒュッケビレッジ</h4>
+          <div class="story-loc">📍 茨城県常総市</div>
+        </div>
+        <p>長尺のショップ兼カフェ棟。杉板×波板鋼板×ウッドデッキの組み合わせで、地域の風景に溶け込む構えを設計。1棟だけで小さな村を成立させるサイズ感。</p>
+      </article>
+      <article class="story-card reveal">
+        <div class="story-ph"><img src="./C99Vbk3yYlF_01.jpg" alt="Chuck wagon style light truck kitchen"></div>
+        <div class="story-meta">
+          <div class="story-tag">006 · Chuck Wagon</div>
+          <h4>Chuck Wagon 軽トラキッチン</h4>
+          <div class="story-loc">📍 田園エリア</div>
+        </div>
+        <p>「チャックワゴンみたいな軽トラキッチンカー作りたい」という施主リクエストに対する設計回答。軽トラベースで開拓時代のアメリカンクラフトを再構築した一台。</p>
+      </article>
+    </div>
+    <p style="margin-top: 32px; font-size: 11px; color: var(--ink-mute); letter-spacing: .04em;">
+      ※ 本社EAGLEVALLEYの過去5年間 / 全383投稿(@eaglevalley_trailerhouse)から抜粋。実物見学・図面相談はContactより承ります。
+    </p>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section class="uses" id="uses">
+  <div class="wrap">
+    <div class="s-head reveal">
+      <div class="num">— 06 / Use Cases</div>
+      <div>
+        <h2>建てるのが<em>難しい</em>、<br>を<strong>解く</strong>3つのケース。</h2>
+        <p>「土地はあるけれど建てづらい」「短期間で出店したい」「自然と暮らしたい」。可動建築は、その答えになりうる選択肢です。</p>
+      </div>
+    </div>
+    <div class="use-grid">
+      <div class="use-card reveal">
+        <div class="ph"><img src="./CaGqL7fv3mc_01.jpg" alt="Trailer hotel at Yatsugatake"></div>
+        <div class="body">
+          <div class="ix">— For Holiday</div>
+          <h4>別荘・セカンドハウス</h4>
+          <p>市街化調整区域でも建築許可が不要なケースあり。山林、海辺、農地隣接地でも設置検討が可能です。八ヶ岳THE NOMAD様のような宿泊棟運用も可能。</p>
+        </div>
+      </div>
+      <div class="use-card reveal">
+        <div class="ph"><img src="./eagle-01.jpg" alt="Business"></div>
+        <div class="body">
+          <div class="ix">— For Business</div>
+          <h4>店舗・カフェ・バー</h4>
+          <p>都市の余白、商業施設のスポット、ポップアップ。撤去・移設できる店舗だからこそ取れる立地があります。短期イベントにも。</p>
+        </div>
+      </div>
+      <div class="use-card reveal">
+        <div class="ph"><img src="./eagle-04.jpg" alt="Work"></div>
+        <div class="body">
+          <div class="ix">— For Work</div>
+          <h4>事務所・サテライト拠点</h4>
+          <p>建築確認不要枠で増床。リモート拠点、撮影スタジオ、サロン増設、社員向けレトリート用途にも。法人需要にも対応。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="wrap">
+    <div class="s-head reveal">
+      <div class="num">— 07 / Process</div>
+      <div>
+        <h2>設計から納車まで、<br><strong>5つのステップ</strong>。</h2>
+        <p>初回相談から設計・製造監修・陸送・引き渡し・アフターサポートまで、TOWN DESIGN LABOが一貫してディレクションします。</p>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="step reveal">
+        <div class="num">Step / 01</div>
+        <h5>Consultation</h5>
+        <p>ご用途、設置場所、ご予算感、納期をヒアリング。オンライン面談・現地訪問のいずれにも対応します。</p>
+      </div>
+      <div class="step reveal">
+        <div class="num">Step / 02</div>
+        <h5>Design Proposal</h5>
+        <p>図面・仕様書・概算見積もりをご提示。設置経路、搬入条件、近隣との調和を含めて初期設計を固めます。</p>
+      </div>
+      <div class="step reveal">
+        <div class="num">Step / 03</div>
+        <h5>Manufacturing</h5>
+        <p>千葉県柏市・EAGLEVALLEY自社工房で着工。写真・動画で工程を随時共有し、節目で打ち合わせ。</p>
+      </div>
+      <div class="step reveal">
+        <div class="num">Step / 04</div>
+        <h5>Delivery</h5>
+        <p>西日本のご指定場所まで陸送、必要に応じて登録・基礎工事をコーディネート。引き渡し時に最終確認。</p>
+      </div>
+      <div class="step reveal">
+        <div class="num">Step / 05</div>
+        <h5>After Care</h5>
+        <p>引き渡し後も定期点検でサポート。修繕・改修・移設の相談も継続的にお受けします。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="s-head reveal">
+      <div class="num">— 08 / Contact</div>
+      <div>
+        <h2>まずは、<em>お話</em>から。</h2>
+        <p>初回相談・お見積もり無料。構想段階からご一緒します。完成イメージが固まっていなくても結構です。</p>
+      </div>
+    </div>
+    <div class="contact-grid">
+      <div class="reveal">
+        <div class="cblock">
+          <div class="tag">— Studio</div>
+          <h5>TOWN DESIGN LABO</h5>
+          <dl>
+            <dt>Director</dt><dd>ヤスムラ ミチヨシ</dd>
+            <dt>Area</dt><dd>関西・中国・四国・九州エリア</dd>
+            <dt>Email</dt><dd><a href="mailto:michiyosi34@gmail.com">michiyosi34@gmail.com</a></dd>
+            <dt>Hours</dt><dd>10:00–18:00 / 不定休</dd>
+          </dl>
+        </div>
+        <div class="cblock">
+          <div class="tag">— Manufacturing Partner</div>
+          <h5>株式会社イーグルバレー</h5>
+          <dl>
+            <dt>Address</dt><dd>〒277-1443 千葉県柏市鷲野谷874-2</dd>
+            <dt>Tel</dt><dd><a href="tel:0471928638">04-7192-8638</a></dd>
+            <dt>Email</dt><dd><a href="mailto:contact@eaglevalley.co.jp">contact@eaglevalley.co.jp</a></dd>
+            <dt>Web</dt><dd><a href="https://eaglevalley-trailerhouse.com/" target="_blank" rel="noopener">eaglevalley-trailerhouse.com</a></dd>
+            <dt>Instagram</dt><dd><a href="https://www.instagram.com/eaglevalley_trailerhouse/" target="_blank" rel="noopener">@eaglevalley_trailerhouse</a></dd>
+          </dl>
+        </div>
+      </div>
+      <form class="reveal" id="cform" onsubmit="return submitForm(event)">
+        <h5>— Inquiry Form</h5>
+        <div class="field"><label>Name *</label><input required name="name" type="text"></div>
+        <div class="field"><label>Email *</label><input required name="email" type="email"></div>
+        <div class="field"><label>Tel</label><input name="tel" type="tel"></div>
+        <div class="field"><label>Purpose</label>
+          <select name="purpose">
+            <option>未定 / 相談したい</option>
+            <option>別荘・セカンドハウス</option>
+            <option>店舗・カフェ・バー</option>
+            <option>事務所・サテライト</option>
+            <option>フードトラック・キッチンカー</option>
+            <option>グランピング・宿泊施設</option>
+            <option>その他</option>
+          </select>
+        </div>
+        <div class="field"><label>Area</label><input name="area" type="text" placeholder="例: 兵庫県淡路市"></div>
+        <div class="field"><label>Message</label><textarea name="message" placeholder="想定サイズ、予算感、ご希望納期など"></textarea></div>
+        <button type="submit">Send Inquiry</button>
+        <small>※ 本フォームはmailtoでメールクライアントを起動します。ご利用環境によってはメール送信ができない場合があります。その際はお手数ですがメールアドレス宛に直接ご連絡ください。</small>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <div class="foot-brand">TOWN DESIGN LABO</div>
+        <div class="foot-brand-sub">Mobile Architecture Studio · West Japan</div>
+        <p>動かせる建築を、街と暮らしのために。設計はTOWN DESIGN LABO、製造は信頼する株式会社イーグルバレー。</p>
+      </div>
+      <div class="foot-links">
+        <a href="#about">Studio</a>
+        <a href="#services">Services</a>
+        <a href="#works">Works</a>
+        <a href="#contact">Contact</a>
+        <a href="https://www.instagram.com/eaglevalley_trailerhouse/" target="_blank" rel="noopener">Instagram(Partner)</a>
+      </div>
+    </div>
+    <div class="foot-meta">
+      <span>© 2026 TOWN DESIGN LABO</span>
+      <span>Manufactured by EAGLEVALLEY CO., LTD.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const hdr = document.getElementById('hdr');
+window.addEventListener('scroll', () => hdr.classList.toggle('scrolled', window.scrollY > 8));
+
+const burger = document.getElementById('burger');
+const menu = document.getElementById('menu');
+burger.addEventListener('click', () => menu.classList.toggle('open'));
+menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('shown'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+function submitForm(e) {
+  e.preventDefault();
+  const f = e.target;
+  const subj = encodeURIComponent("[Inquiry] TOWN DESIGN LABO");
+  const body = encodeURIComponent(
+    "■お名前: " + f.name.value +
+    "\n■メール: " + f.email.value +
+    "\n■電話: " + (f.tel.value || "(未記入)") +
+    "\n■ご用途: " + f.purpose.value +
+    "\n■エリア: " + (f.area.value || "(未記入)") +
+    "\n■ご相談内容:\n" + (f.message.value || "(未記入)")
+  );
+  window.location.href = "mailto:michiyosi34@gmail.com?subject=" + subj + "&body=" + body;
+  return false;
+}
+</script>
+</body>
+</html>
+                                                                                                                                                                                       
