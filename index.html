@@ -882,7 +882,7 @@ footer {
       </div>
     </div>
     <div class="works-grid">
-      <a class="work w1 reveal" href="./eagle-01.jpg" data-gallery="w1" onclick="return openLB('w1')">
+      <a class="work w1 reveal" href="./eagle-01.jpg" data-gallery="w1" data-count="4" onclick="return openLB('w1')">
         <img src="./eagle-01.jpg" alt="wick Bar">
         <div class="label">001 · Bar</div>
         <div class="cap">WICK BAR — 都市の余白に置かれた小さなバー。Slit Park YURAKUCHOで稼働中。メンテナンスを経て再び現場へ。</div>
@@ -892,7 +892,7 @@ footer {
         <div class="label">002 · House</div>
         <div class="cap">Second House Delivery — セカンドハウスとしての納車事例。キャンピングトレーラー登録で、いつでもどこでも牽引可能な仕様。</div>
       </a>
-      <a class="work w3 reveal" href="./eagle-11.jpg" data-gallery="w3" onclick="return openLB('w3')">
+      <a class="work w3 reveal" href="./eagle-11.jpg" data-gallery="w3" data-count="5" onclick="return openLB('w3')">
         <img src="./eagle-11.jpg" alt="Pizzeria Calcifer">
         <div class="label">003 · Pizzeria</div>
         <div class="cap">PIZZERIA Calcifer — 北海道ルスツへ。床暖房付き極寒仕様、ハウルの城モチーフのデザイン。</div>
@@ -1244,9 +1244,9 @@ function submitForm(e) {
 
 /* ---- Works Lightbox ---- */
 const galleries = {
-  w1: { title: "001 · Bar — WICK BAR", imgs: ["eagle-01.jpg"] },
+  w1: { title: "001 · Bar — WICK BAR", imgs: ["eagle-01.jpg","wick-02.jpg","wick-03.jpg","wick-04.jpg"] },
   w2: { title: "002 · House — Second House", imgs: ["CppfyPsv4kN_01.jpg","CppfyPsv4kN_02.jpg","CppfyPsv4kN_03.jpg","CppfyPsv4kN_04.jpg","CppfyPsv4kN_05.jpg"] },
-  w3: { title: "003 · Pizzeria — PIZZERIA Calcifer", imgs: ["eagle-11.jpg"] },
+  w3: { title: "003 · Pizzeria — PIZZERIA Calcifer", imgs: ["eagle-11.jpg","calcifer-02.jpg","calcifer-03.jpg","calcifer-04.jpg","calcifer-05.jpg"] },
   w4: { title: "004 · Food Truck — PARA-SOL Kitchen Stand", imgs: ["CG2E9eDB-z0_01.jpg","CG2E9eDB-z0_02.jpg","CG2E9eDB-z0_03.jpg","CG2E9eDB-z0_04.jpg","CG2E9eDB-z0_05.jpg"] },
   w5: { title: "005 · Atelier — レザークラフト移動工房", imgs: ["eagle-04.jpg","eagle-05.jpg","eagle-10.jpg"] },
   w6: { title: "006 · Hotel — HOTEL DU BLANC", imgs: ["hotel-02.jpg","hotel-01.jpg","hotel-03.jpg","hotel-04.jpg"] },
