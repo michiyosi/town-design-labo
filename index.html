@@ -387,6 +387,7 @@ header.scrolled { border-bottom-color: var(--line); }
   opacity: 0; transform: translateY(8px); transition: .3s;
 }
 .work:hover .cap { opacity: 1; transform: translateY(0); }
+.w0 { grid-column: span 12; grid-row: span 3; }
 .w1 { grid-column: span 7; grid-row: span 2; }
 .w2 { grid-column: span 5; grid-row: span 2; }
 .w3 { grid-column: span 4; grid-row: span 2; }
@@ -396,7 +397,7 @@ header.scrolled { border-bottom-color: var(--line); }
 .w7 { grid-column: span 6; grid-row: span 2; }
 .w8 { grid-column: span 12; grid-row: span 2; }
 @media (max-width: 880px) {
-  .w1,.w2,.w3,.w4,.w5,.w6,.w7,.w8 { grid-column: span 12; grid-row: span 2; }
+  .w0,.w1,.w2,.w3,.w4,.w5,.w6,.w7,.w8 { grid-column: span 12; grid-row: span 2; }
 }
 
 /* ------- Interior ------- */
@@ -711,6 +712,14 @@ footer {
 .approach-card .num { font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; }
 
 .cform-thanks { color: rgba(255,255,255,.9); font-size: 14px; line-height: 2; padding: 20px 0 8px; letter-spacing: .02em; }
+
+/* ---- Studio-designed work badge ---- */
+.work .tdl {
+  position: absolute; left: 16px; top: 48px; z-index: 3;
+  font-family: "Inter", monospace; font-size: 9.5px; letter-spacing: .16em;
+  text-transform: uppercase; color: #111; background: #fff;
+  padding: 5px 9px; pointer-events: none;
+}
 </style>
 </head>
 <body>
@@ -883,7 +892,7 @@ footer {
       <div class="num">— 03 / Our Role</div>
       <div>
         <h2>つくるのは<strong>EAGLEVALLEY</strong>。<br>どう<em>つくるか</em>を決めるのが、私たちです。</h2>
-        <p>以降の Works・Interior・Stories は、製造パートナー EAGLEVALLEY の製造事例です。TOWN DESIGN LABO は西日本の新規案件において、下記のレイヤーを担います。</p>
+        <p>Works 001 は TOWN DESIGN LABO が設計した案件です。002以降と Interior・Stories は、製造パートナー EAGLEVALLEY の製造事例です。TOWN DESIGN LABO は西日本の新規案件において、下記のレイヤーを担います。</p>
       </div>
     </div>
     <div class="approach-grid">
@@ -913,53 +922,59 @@ footer {
       <div class="num">— 04 / Works</div>
       <div>
         <h2>製造実績<strong>セレクション</strong></h2>
-        <p>製造パートナー EAGLEVALLEY の最新案件から、TOWN DESIGN LABOが推奨する8件をセレクト。詳細仕様・図面・現場見学のご希望は、Contactより。</p>
+        <p>001はTOWN DESIGN LABOが設計した案件。002以降は製造パートナー EAGLEVALLEY の実績から推奨する8件をセレクトしました。詳細仕様・図面・現場見学のご希望は、Contactより。</p>
       </div>
     </div>
     <div class="works-grid">
+      <a class="work w0 reveal" href="./otafuku-01.jpg" data-gallery="w0" data-count="4" onclick="return openLB('w0')">
+        <img src="./otafuku-01.jpg" alt="OTAFUKU okonomiyaki caravan car designed by TOWN DESIGN LABO">
+        <div class="label">001 · Caravan Car</div>
+        <div class="tdl">Design: TOWN DESIGN LABO</div>
+        <div class="cap">OTAFUKU okonomiyaki caravan car — オタフクソース株式会社。お好み焼きの実演を運ぶキッチンカー。跳ね上げ式の大開口とオーニング、折りたたみデッキを展開し、駐車スペースに厨房と客席を同時に立ち上げます。TOWN DESIGN LABOが設計・製造ディレクションを担当。</div>
+      </a>
       <a class="work w1 reveal" href="./eagle-01.jpg" data-gallery="w1" data-count="4" onclick="return openLB('w1')">
         <img src="./eagle-01.jpg" alt="wick Bar">
-        <div class="label">001 · Bar</div>
+        <div class="label">002 · Bar</div>
         <div class="cap">WICK BAR — 都市の余白に置かれた小さなバー。Slit Park YURAKUCHOで稼働中。メンテナンスを経て再び現場へ。</div>
       </a>
       <a class="work w2 reveal" href="./CppfyPsv4kN_01.jpg" data-gallery="w2" data-count="5" onclick="return openLB('w2')">
         <img src="./CppfyPsv4kN_01.jpg" alt="Mountain cabin trailer being towed for delivery">
-        <div class="label">002 · House</div>
+        <div class="label">003 · House</div>
         <div class="cap">Second House Delivery — セカンドハウスとしての納車事例。キャンピングトレーラー登録(車検取得)で公道を牽引移動できる仕様(要車検維持・総重量750kg超はけん引免許が必要)。</div>
       </a>
       <a class="work w3 reveal" href="./eagle-11.jpg" data-gallery="w3" data-count="5" onclick="return openLB('w3')">
         <img src="./eagle-11.jpg" alt="Pizzeria Calcifer">
-        <div class="label">003 · Pizzeria</div>
+        <div class="label">004 · Pizzeria</div>
         <div class="cap">PIZZERIA Calcifer — 北海道ルスツへ。床暖房付き極寒仕様、ハウルの城モチーフのデザイン。</div>
       </a>
       <a class="work w4 reveal" href="./CG2E9eDB-z0_01.jpg" data-gallery="w4" data-count="5" onclick="return openLB('w4')">
         <img src="./CG2E9eDB-z0_01.jpg" alt="PARA-SOL kitchen stand food truck">
-        <div class="label">004 · Food Truck</div>
+        <div class="label">005 · Food Truck</div>
         <div class="cap">PARA-SOL Kitchen Stand — 東京東エリアの軽トラベースフードトラック。古材ボードと左官モルタル仕上げで構成。</div>
       </a>
       <a class="work w5 reveal" href="./eagle-04.jpg" data-gallery="w5" data-count="3" onclick="return openLB('w5')">
         <img src="./eagle-04.jpg" alt="Leather atelier">
-        <div class="label">005 · Atelier</div>
+        <div class="label">006 · Atelier</div>
         <div class="cap">レザークラフト移動工房 — 黒塗り杉板・アイアン建具・古材造作。施主のアイデアからシャーシ設計。</div>
       </a>
       <a class="work w6 reveal" href="./CaGqL7fv3mc_03.jpg" data-gallery="w6" data-count="5" onclick="return openLB('w6')">
         <img src="./CaGqL7fv3mc_03.jpg" alt="THE NOMAD trailer hotel at Yatsugatake">
-        <div class="label">006 · Hotel</div>
+        <div class="label">007 · Hotel</div>
         <div class="cap">THE NOMAD 八ヶ岳 — 傾斜地に設置したトレーラーホテルの宿泊棟。大開口から八ヶ岳を望む客室、木天井・無垢床・水回りまで一棟ごとに造作。</div>
       </a>
       <a class="work w7 reveal" href="./CERIUKlhGWp_01.jpg" data-gallery="w7" data-count="4" onclick="return openLB('w7')">
         <img src="./CERIUKlhGWp_01.jpg" alt="Saratoga mark2 industrial food trailer">
-        <div class="label">007 · Industrial</div>
+        <div class="label">008 · Industrial</div>
         <div class="cap">Saratoga Mark2 — 鉄骨フレーム×大開口ガラス×古材造作の重厚なフードトレーラー。建築としての存在感を持つ一台。</div>
       </a>
       <a class="work w8 reveal" href="./CrGPYCqvxna_01.jpg" data-gallery="w8" data-count="5" onclick="return openLB('w8')">
         <img src="./CrGPYCqvxna_01.jpg" alt="Trailer being towed on highway to delivery destination">
-        <div class="label">008 · Delivery</div>
+        <div class="label">009 · Delivery</div>
         <div class="cap">納車・陸送 — 千葉本社から日本各地まで。岡山県倉敷市のお寿司トレーラー納車時の高速道路上の1コマ。</div>
       </a>
     </div>
     <p style="margin-top: 28px; font-size: 11px; color: var(--ink-mute);">
-      製造・写真: 株式会社イーグルバレー(@eaglevalley_trailerhouse) ／ セレクション・ディレクション: TOWN DESIGN LABO
+      001: 設計・製造ディレクション TOWN DESIGN LABO ／ 002以降: 製造・写真 株式会社イーグルバレー(@eaglevalley_trailerhouse)、セレクション・ディレクション TOWN DESIGN LABO
     </p>
   </div>
 </section>
@@ -1314,14 +1329,15 @@ if (cform && gsink) {
 
 /* ---- Works Lightbox ---- */
 const galleries = {
-  w1: { title: "001 · Bar — WICK BAR", imgs: ["eagle-01.jpg","wick-02.jpg","wick-03.jpg","wick-04.jpg"] },
-  w2: { title: "002 · House — Second House", imgs: ["CppfyPsv4kN_01.jpg","CppfyPsv4kN_02.jpg","CppfyPsv4kN_03.jpg","CppfyPsv4kN_04.jpg","CppfyPsv4kN_05.jpg"] },
-  w3: { title: "003 · Pizzeria — PIZZERIA Calcifer", imgs: ["eagle-11.jpg","calcifer-02.jpg","calcifer-03.jpg","calcifer-04.jpg","calcifer-05.jpg"] },
-  w4: { title: "004 · Food Truck — PARA-SOL Kitchen Stand", imgs: ["CG2E9eDB-z0_01.jpg","CG2E9eDB-z0_02.jpg","CG2E9eDB-z0_03.jpg","CG2E9eDB-z0_04.jpg","CG2E9eDB-z0_05.jpg"] },
-  w5: { title: "005 · Atelier — レザークラフト移動工房", imgs: ["eagle-04.jpg","eagle-05.jpg","eagle-10.jpg"] },
-  w6: { title: "006 · Hotel — THE NOMAD 八ヶ岳 トレーラーホテル", imgs: ["CaGqL7fv3mc_03.jpg","CaGqL7fv3mc_06.jpg","CccEOvgLPIY_04.jpg","CccEOvgLPIY_02.jpg","CccEOvgLPIY_05.jpg"] },
-  w7: { title: "007 · Industrial — Saratoga Mark2", imgs: ["CERIUKlhGWp_01.jpg","CERIUKlhGWp_02.jpg","CERIUKlhGWp_03.jpg","CERIUKlhGWp_04.jpg"] },
-  w8: { title: "008 · Delivery — 納車・陸送", imgs: ["CrGPYCqvxna_01.jpg","CrGPYCqvxna_02.jpg","CrGPYCqvxna_03.jpg","CrGPYCqvxna_04.jpg","CrGPYCqvxna_05.jpg"] }
+  w0: { title: "001 · Caravan Car — OTAFUKU okonomiyaki caravan car", imgs: ["otafuku-01.jpg","otafuku-02.jpg","otafuku-03.jpg","otafuku-04.jpg"] },
+  w1: { title: "002 · Bar — WICK BAR", imgs: ["eagle-01.jpg","wick-02.jpg","wick-03.jpg","wick-04.jpg"] },
+  w2: { title: "003 · House — Second House", imgs: ["CppfyPsv4kN_01.jpg","CppfyPsv4kN_02.jpg","CppfyPsv4kN_03.jpg","CppfyPsv4kN_04.jpg","CppfyPsv4kN_05.jpg"] },
+  w3: { title: "004 · Pizzeria — PIZZERIA Calcifer", imgs: ["eagle-11.jpg","calcifer-02.jpg","calcifer-03.jpg","calcifer-04.jpg","calcifer-05.jpg"] },
+  w4: { title: "005 · Food Truck — PARA-SOL Kitchen Stand", imgs: ["CG2E9eDB-z0_01.jpg","CG2E9eDB-z0_02.jpg","CG2E9eDB-z0_03.jpg","CG2E9eDB-z0_04.jpg","CG2E9eDB-z0_05.jpg"] },
+  w5: { title: "006 · Atelier — レザークラフト移動工房", imgs: ["eagle-04.jpg","eagle-05.jpg","eagle-10.jpg"] },
+  w6: { title: "007 · Hotel — THE NOMAD 八ヶ岳 トレーラーホテル", imgs: ["CaGqL7fv3mc_03.jpg","CaGqL7fv3mc_06.jpg","CccEOvgLPIY_04.jpg","CccEOvgLPIY_02.jpg","CccEOvgLPIY_05.jpg"] },
+  w7: { title: "008 · Industrial — Saratoga Mark2", imgs: ["CERIUKlhGWp_01.jpg","CERIUKlhGWp_02.jpg","CERIUKlhGWp_03.jpg","CERIUKlhGWp_04.jpg"] },
+  w8: { title: "009 · Delivery — 納車・陸送", imgs: ["CrGPYCqvxna_01.jpg","CrGPYCqvxna_02.jpg","CrGPYCqvxna_03.jpg","CrGPYCqvxna_04.jpg","CrGPYCqvxna_05.jpg"] }
 };
 const IMG_BASE = "./";
 const lb = document.getElementById('lb');
