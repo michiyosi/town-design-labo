@@ -709,6 +709,8 @@ footer {
 
 /* ---- Our Role card numerals ---- */
 .approach-card .num { font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; }
+
+.cform-thanks { color: rgba(255,255,255,.9); font-size: 14px; line-height: 2; padding: 20px 0 8px; letter-spacing: .02em; }
 </style>
 </head>
 <body>
@@ -1188,26 +1190,34 @@ footer {
           </dl>
         </div>
       </div>
-      <form class="reveal" id="cform" onsubmit="return submitForm(event)">
+      <form class="reveal" id="cform" action="https://docs.google.com/forms/d/e/1FAIpQLSe0ioggwa5pgKEyCL_FwvP3mKaPQv50Lgj89eXzF6GyDkvoRg/formResponse" method="POST" target="gform-sink">
         <h5>— Inquiry Form</h5>
-        <div class="field"><label>Name *</label><input required name="name" type="text"></div>
-        <div class="field"><label>Email *</label><input required name="email" type="email"></div>
-        <div class="field"><label>Tel</label><input name="tel" type="tel"></div>
-        <div class="field"><label>Purpose</label>
-          <select name="purpose">
-            <option>未定 / 相談したい</option>
-            <option>別荘・セカンドハウス</option>
-            <option>店舗・カフェ・バー</option>
-            <option>事務所・サテライト</option>
-            <option>フードトラック・キッチンカー</option>
-            <option>グランピング・宿泊施設</option>
-            <option>その他</option>
-          </select>
+        <div id="cform-fields">
+          <div class="field"><label>Name *</label><input required name="entry.1951315019" type="text" autocomplete="name"></div>
+          <div class="field"><label>Email *</label><input required name="entry.437484033" type="email" autocomplete="email"></div>
+          <div class="field"><label>Tel</label><input name="entry.2095176949" type="tel" autocomplete="tel"></div>
+          <div class="field"><label>Purpose</label>
+            <select name="entry.1401254800">
+              <option>未定 / 相談したい</option>
+              <option>別荘・セカンドハウス</option>
+              <option>店舗・カフェ・バー</option>
+              <option>事務所・サテライト</option>
+              <option>フードトラック・キッチンカー</option>
+              <option>グランピング・宿泊施設</option>
+              <option>その他</option>
+            </select>
+          </div>
+          <div class="field"><label>Area</label><input name="entry.1087811776" type="text" placeholder="例: 兵庫県淡路市"></div>
+          <div class="field"><label>Message</label><textarea name="entry.1424514303" placeholder="想定サイズ、予算感、ご希望納期など"></textarea></div>
+          <button type="submit" id="cform-submit">Send Inquiry</button>
+          <small>※ 送信内容はGoogleフォーム経由で受け付けます。2営業日以内にご返信します。届かない場合は <a href="mailto:yasumura@towndesignlabo.com">yasumura@towndesignlabo.com</a> まで直接ご連絡ください。</small>
         </div>
-        <div class="field"><label>Area</label><input name="area" type="text" placeholder="例: 兵庫県淡路市"></div>
-        <div class="field"><label>Message</label><textarea name="message" placeholder="想定サイズ、予算感、ご希望納期など"></textarea></div>
-        <button type="submit">Send Inquiry</button>
-        <small>※ 本フォームはmailtoでメールクライアントを起動します。ご利用環境によってはメール送信ができない場合があります。その際はお手数ですがメールアドレス宛に直接ご連絡ください。</small>
+        <div id="cform-done" hidden>
+          <p class="cform-thanks">お問い合わせありがとうございます。<br>内容を確認のうえ、担当より2営業日以内にご連絡いたします。</p>
+        </div>
+        <input type="hidden" name="fvv" value="1">
+        <input type="hidden" name="pageHistory" value="0">
+        <iframe id="gform-sink" name="gform-sink" title="submission target" style="display:none" aria-hidden="true"></iframe>
       </form>
     </div>
   </div>
@@ -1283,20 +1293,23 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-function submitForm(e) {
-  e.preventDefault();
-  const f = e.target;
-  const subj = encodeURIComponent("[Inquiry] TOWN DESIGN LABO");
-  const body = encodeURIComponent(
-    "■お名前: " + f.name.value +
-    "\n■メール: " + f.email.value +
-    "\n■電話: " + (f.tel.value || "(未記入)") +
-    "\n■ご用途: " + f.purpose.value +
-    "\n■エリア: " + (f.area.value || "(未記入)") +
-    "\n■ご相談内容:\n" + (f.message.value || "(未記入)")
-  );
-  window.location.href = "mailto:yasumura@towndesignlabo.com?subject=" + subj + "&body=" + body;
-  return false;
+/* ---- Contact form -> Google Forms (hidden iframe POST) ---- */
+const cform = document.getElementById('cform');
+const gsink = document.getElementById('gform-sink');
+const cfFields = document.getElementById('cform-fields');
+const cfDone = document.getElementById('cform-done');
+const cfBtn = document.getElementById('cform-submit');
+let cfSubmitted = false;
+if (cform && gsink) {
+  cform.addEventListener('submit', function () {
+    cfSubmitted = true;
+    if (cfBtn) { cfBtn.disabled = true; cfBtn.textContent = 'Sending…'; }
+  });
+  gsink.addEventListener('load', function () {
+    if (!cfSubmitted) return;
+    if (cfFields) cfFields.hidden = true;
+    if (cfDone) cfDone.hidden = false;
+  });
 }
 
 /* ---- Works Lightbox ---- */
