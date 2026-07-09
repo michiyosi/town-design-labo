@@ -73,11 +73,11 @@ header.scrolled { border-bottom-color: var(--line); }
   font-size: 9px; font-weight: 400; letter-spacing: .28em;
   color: var(--ink-mute); margin-top: 4px;
 }
-.menu { display: flex; gap: 36px; align-items: center; }
+.menu { display: flex; gap: 26px; align-items: center; }
 .menu a {
   font-size: 12px; font-weight: 500; letter-spacing: .12em;
   color: var(--ink); transition: opacity .2s;
-  position: relative;
+  position: relative; white-space: nowrap;
 }
 .menu a:not(.cta)::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: -6px;
@@ -706,6 +706,9 @@ footer {
 .partner-band .partner a { color: #fff; border-bottom: 1px solid rgba(255,255,255,.45); }
 .partner-band .partner a:hover { border-color: #fff; }
 @media (max-width: 720px) { .partner-band { padding: 48px 0; } }
+
+/* ---- Our Role card numerals ---- */
+.approach-card .num { font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; }
 </style>
 </head>
 <body>
@@ -719,6 +722,7 @@ footer {
     <nav class="menu" id="menu">
       <a href="#about">Studio</a>
       <a href="#services">Services</a>
+      <a href="#role">Our Role</a>
       <a href="#works">Works</a>
       <a href="#interior">Interior</a>
       <a href="#stories">Stories</a>
@@ -736,7 +740,7 @@ footer {
   <div class="hero-grid"></div>
   <div class="wrap hero-inner">
     <div class="hero-mono">
-      <span>Est. 2026</span>
+      <span>Studio est. 2026</span>
       <span>West Japan</span>
       <span>Mobile Architecture</span>
     </div>
@@ -754,7 +758,7 @@ footer {
     </div>
   </div>
   <div class="hero-meta">
-    <span>N 34.6937° / E 135.5023°</span>
+    <span>N 34.3486° / E 132.3317° — Hatsukaichi, Hiroshima</span>
     <span>Designed in West Japan / Manufactured in Chiba</span>
   </div>
 </section>
@@ -870,11 +874,41 @@ footer {
   </div>
 </section>
 
+<!-- OUR ROLE -->
+<section class="approach" id="role">
+  <div class="wrap">
+    <div class="s-head reveal">
+      <div class="num">— 03 / Our Role</div>
+      <div>
+        <h2>つくるのは<strong>EAGLEVALLEY</strong>。<br>どう<em>つくるか</em>を決めるのが、私たちです。</h2>
+        <p>以降の Works・Interior・Stories は、製造パートナー EAGLEVALLEY の製造事例です。TOWN DESIGN LABO は西日本の新規案件において、下記のレイヤーを担います。</p>
+      </div>
+    </div>
+    <div class="approach-grid">
+      <div class="approach-card reveal">
+        <div class="num">01</div>
+        <h5>与件と法規のスクリーニング</h5>
+        <p>「そもそも可動建築が最適か」から検討します。建築基準法上の「建築物」該当性、市街化調整区域での設置可否、旅館業法・食品衛生法の許認可要件を初期段階で洗い出し、自治体との事前相談まで伴走します。固定建築が適切な場合は、そう申し上げます。</p>
+      </div>
+      <div class="approach-card reveal">
+        <div class="num">02</div>
+        <h5>空間と仕様の設計</h5>
+        <p>車両として定められた寸法の内側で、動線・採光・眺望・周辺との調和を建築の解像度で設計します。施主の構想を、製造が読める図面と仕様書に翻訳することが私たちの仕事です。</p>
+      </div>
+      <div class="approach-card reveal">
+        <div class="num">03</div>
+        <h5>製造監修と、引き渡し後</h5>
+        <p>千葉の自社工房での製造工程を確認し、陸送経路・搬入・据付・ライフライン接続を現地で監理します。引き渡し後の点検・修繕・移設まで、使われ続ける状態を設計の対象とみなします。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- WORKS -->
 <section class="works" id="works">
   <div class="wrap">
     <div class="s-head reveal">
-      <div class="num">— 03 / Works</div>
+      <div class="num">— 04 / Works</div>
       <div>
         <h2>製造実績<strong>セレクション</strong></h2>
         <p>製造パートナー EAGLEVALLEY の最新案件から、TOWN DESIGN LABOが推奨する8件をセレクト。詳細仕様・図面・現場見学のご希望は、Contactより。</p>
@@ -923,7 +957,7 @@ footer {
       </a>
     </div>
     <p style="margin-top: 28px; font-size: 11px; color: var(--ink-mute);">
-      Photo: 株式会社イーグルバレー / @eaglevalley_trailerhouse
+      製造・写真: 株式会社イーグルバレー(@eaglevalley_trailerhouse) ／ セレクション・ディレクション: TOWN DESIGN LABO
     </p>
   </div>
 </section>
@@ -932,7 +966,7 @@ footer {
 <section class="interior" id="interior">
   <div class="wrap">
     <div class="s-head reveal">
-      <div class="num">— 04 / Interior</div>
+      <div class="num">— 05 / Interior</div>
       <div>
         <h2>細部に、<em>住まう</em>が宿る。</h2>
         <p>「動く建築」の本質は、外観ではなく中で過ごす時間です。シャーシから設計するからこそ、断熱・水回り・収納・採光まで暮らしの解像度で組み立てます。</p>
@@ -979,7 +1013,7 @@ footer {
 <section class="stories" id="stories">
   <div class="wrap">
     <div class="s-head reveal">
-      <div class="num">— 05 / Stories</div>
+      <div class="num">— 06 / Stories</div>
       <div>
         <h2>制作の<strong>物語</strong>と、納車先で<em>続く時間</em>。</h2>
         <p>本社EAGLEVALLEYが2019年からつくってきた車両のうち、設計の視点で印象に残る6件を抜粋しました。場所、施主の構想、設計のポイントを短く紹介します。</p>
@@ -1042,7 +1076,7 @@ footer {
       </article>
     </div>
     <p style="margin-top: 32px; font-size: 11px; color: var(--ink-mute); letter-spacing: .04em;">
-      ※ 本社EAGLEVALLEYの過去5年間 / 全383投稿(@eaglevalley_trailerhouse)から抜粋。実物見学・図面相談はContactより承ります。
+      ※ 上記はすべて製造パートナー EAGLEVALLEY の製造事例です(全383投稿より抜粋)。TOWN DESIGN LABOは西日本の新規案件において設計・ディレクションを担当します。実物見学・図面相談はContactより承ります。
     </p>
   </div>
 </section>
@@ -1051,7 +1085,7 @@ footer {
 <section class="uses" id="uses">
   <div class="wrap">
     <div class="s-head reveal">
-      <div class="num">— 06 / Use Cases</div>
+      <div class="num">— 07 / Use Cases</div>
       <div>
         <h2>建てるのが<em>難しい</em>、<br>を<strong>解く</strong>3つのケース。</h2>
         <p>「土地はあるけれど建てづらい」「短期間で出店したい」「自然と暮らしたい」。可動建築は、その答えになりうる選択肢です。</p>
@@ -1093,7 +1127,7 @@ footer {
 <section class="process" id="process">
   <div class="wrap">
     <div class="s-head reveal">
-      <div class="num">— 07 / Process</div>
+      <div class="num">— 08 / Process</div>
       <div>
         <h2>設計から納車まで、<br><strong>5つのステップ</strong>。</h2>
         <p>初回相談から設計・製造監修・陸送・引き渡し・アフターサポートまで、TOWN DESIGN LABOが一貫してディレクションします。</p>
@@ -1133,7 +1167,7 @@ footer {
 <section class="contact" id="contact">
   <div class="wrap">
     <div class="s-head reveal">
-      <div class="num">— 08 / Contact</div>
+      <div class="num">— 09 / Contact</div>
       <div>
         <h2>まずは、<em>お話</em>から。</h2>
         <p>初回相談・お見積もり無料。構想段階からご一緒します。完成イメージが固まっていなくても結構です。</p>
@@ -1145,9 +1179,11 @@ footer {
           <div class="tag">— Studio</div>
           <h5>TOWN DESIGN LABO</h5>
           <dl>
-            <dt>Director</dt><dd>ヤスムラ ミチヨシ</dd>
+            <dt>Company</dt><dd>株式会社TOWN DESIGN LABO</dd>
+            <dt>Director</dt><dd>代表取締役 安村 通芳</dd>
+            <dt>Office</dt><dd>広島県廿日市市</dd>
             <dt>Area</dt><dd>関西・中国・四国・九州エリア</dd>
-            <dt>Email</dt><dd><a href="mailto:michiyosi34@gmail.com">michiyosi34@gmail.com</a></dd>
+            <dt>Email</dt><dd><a href="mailto:yasumura@towndesignlabo.com">yasumura@towndesignlabo.com</a></dd>
             <dt>Hours</dt><dd>10:00–18:00 / 不定休</dd>
           </dl>
         </div>
@@ -1259,7 +1295,7 @@ function submitForm(e) {
     "\n■エリア: " + (f.area.value || "(未記入)") +
     "\n■ご相談内容:\n" + (f.message.value || "(未記入)")
   );
-  window.location.href = "mailto:michiyosi34@gmail.com?subject=" + subj + "&body=" + body;
+  window.location.href = "mailto:yasumura@towndesignlabo.com?subject=" + subj + "&body=" + body;
   return false;
 }
 
