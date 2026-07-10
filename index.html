@@ -794,6 +794,20 @@ footer {
   text-transform: uppercase; color: #111; background: #fff;
   padding: 5px 9px; pointer-events: none;
 }
+
+/* FAQ */
+.faq { background: var(--bg-soft); border-top: 1px solid var(--line); }
+.faq .faq-list { max-width: 860px; }
+.faq-item { border-top: 1px solid var(--line); }
+.faq-item:last-child { border-bottom: 1px solid var(--line); }
+.faq-item > summary { list-style: none; cursor: pointer; position: relative;
+  padding: 24px 48px 24px 0; font-weight: 600; font-size: 16px; color: var(--ink); line-height: 1.6; }
+.faq-item > summary::-webkit-details-marker { display: none; }
+.faq-item > summary::after { content: "+"; position: absolute; right: 4px; top: 22px;
+  font-size: 22px; font-weight: 400; color: var(--ink-mute); transition: transform .2s ease; }
+.faq-item[open] > summary::after { content: "\2013"; }
+.faq-a { padding: 0 0 26px; }
+.faq-a p { margin: 0; color: var(--ink-mute); font-size: 15px; line-height: 1.95; max-width: 760px; }
 </style>
 </head>
 <body>
@@ -1255,11 +1269,118 @@ footer {
   </div>
 </section>
 
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="s-head reveal">
+      <div class="num">— 09 / FAQ</div>
+      <div>
+        <h2>よくある<em>ご質問</em>。</h2>
+        <p>ご相談前に多くいただく質問をまとめました。ここにない点も、Contactよりお気軽にどうぞ。</p>
+      </div>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item reveal">
+        <summary>相談から納車まで、どのくらいの期間がかかりますか？</summary>
+        <div class="faq-a"><p>内容や仕様によりますが、初回相談から設計・製造・陸送・引き渡しまで、標準的には3〜6ヶ月ほどが目安です。仕様の複雑さや製造の混み具合により前後します。まずはご希望の時期をお聞かせください。</p></div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>トレーラーハウスの設置に建築確認申請は必要ですか？</summary>
+        <div class="faq-a"><p>随時かつ任意に移動できる状態（工具を使わずに着脱できるライフライン接続、公道までの移動経路の確保、適法に公道を走行できる車両であること等）を維持する場合、建築基準法上の「建築物」に該当せず、建築確認申請が不要となるケースがあります。判断は自治体（特定行政庁）により異なるため、事前相談から当スタジオがサポートします。基礎等で土地に固定する場合は建築物として手続きが必要です。</p></div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>市街化調整区域に設置できますか？</summary>
+        <div class="faq-a"><p>随時かつ任意に移動できる車両として設置する場合、設置できるケースがあります。可否は自治体判断となるため、事前相談から当スタジオがサポートします。</p></div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>費用の目安を教えてください。</summary>
+        <div class="faq-a"><p>参考価格（税込）は、トレーラーハウスが¥7,480,000〜、フードトラック・キッチンカーが¥4,950,000〜、モバイルショップ・移動工房が¥5,720,000〜、定置型ユニットが¥4,180,000〜です。仕様により変動し、陸送費・登録費・設置工事費・特別仕様は別途（税込にてお見積もり）。詳細は個別お見積もりでご案内します。</p></div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>対応エリアはどこまでですか？</summary>
+        <div class="faq-a"><p>TOWN DESIGN LABOは広島県廿日市市を拠点に、関西・中国・四国・九州エリアの案件を中心に設計・ディレクションを担います。製造は千葉県の製造パートナーが行い、北海道から九州まで全国への陸送実績があります。</p></div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>キッチンカーで飲食営業をするための許可も相談できますか？</summary>
+        <div class="faq-a"><p>はい。営業許可を見据えた厨房レイアウト（設備・電源容量・配管・換気）を業態に合わせて設計します。飲食営業には食品衛生法、宿泊営業には旅館業法等の許認可が別途必要で、要件の洗い出しから設計段階でご案内します。</p></div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>完成イメージが固まっていなくても相談できますか？</summary>
+        <div class="faq-a"><p>はい。構想段階からご一緒します。初回相談・お見積もりは無料です。ご用途・設置場所・ご予算感・ご希望時期をお聞かせいただければ、図面・仕様書・概算見積もりをご提示します。</p></div>
+      </details>
+    </div>
+  </div>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "相談から納車まで、どのくらいの期間がかかりますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "内容や仕様によりますが、初回相談から設計・製造・陸送・引き渡しまで、標準的には3〜6ヶ月ほどが目安です。仕様の複雑さや製造の混み具合により前後します。まずはご希望の時期をお聞かせください。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "トレーラーハウスの設置に建築確認申請は必要ですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "随時かつ任意に移動できる状態（工具を使わずに着脱できるライフライン接続、公道までの移動経路の確保、適法に公道を走行できる車両であること等）を維持する場合、建築基準法上の「建築物」に該当せず、建築確認申請が不要となるケースがあります。判断は自治体（特定行政庁）により異なるため、事前相談から当スタジオがサポートします。基礎等で土地に固定する場合は建築物として手続きが必要です。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "市街化調整区域に設置できますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "随時かつ任意に移動できる車両として設置する場合、設置できるケースがあります。可否は自治体判断となるため、事前相談から当スタジオがサポートします。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "費用の目安を教えてください。",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "参考価格（税込）は、トレーラーハウスが¥7,480,000〜、フードトラック・キッチンカーが¥4,950,000〜、モバイルショップ・移動工房が¥5,720,000〜、定置型ユニットが¥4,180,000〜です。仕様により変動し、陸送費・登録費・設置工事費・特別仕様は別途（税込にてお見積もり）。詳細は個別お見積もりでご案内します。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "対応エリアはどこまでですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "TOWN DESIGN LABOは広島県廿日市市を拠点に、関西・中国・四国・九州エリアの案件を中心に設計・ディレクションを担います。製造は千葉県の製造パートナーが行い、北海道から九州まで全国への陸送実績があります。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "キッチンカーで飲食営業をするための許可も相談できますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "はい。営業許可を見据えた厨房レイアウト（設備・電源容量・配管・換気）を業態に合わせて設計します。飲食営業には食品衛生法、宿泊営業には旅館業法等の許認可が別途必要で、要件の洗い出しから設計段階でご案内します。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "完成イメージが固まっていなくても相談できますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "はい。構想段階からご一緒します。初回相談・お見積もりは無料です。ご用途・設置場所・ご予算感・ご希望時期をお聞かせいただければ、図面・仕様書・概算見積もりをご提示します。"
+      }
+    }
+  ]
+}
+  </script>
+</section>
+
 <!-- CONTACT -->
 <section class="contact" id="contact">
   <div class="wrap">
     <div class="s-head reveal">
-      <div class="num">— 09 / Contact</div>
+      <div class="num">— 10 / Contact</div>
       <div>
         <h2>まずは、<em>お話</em>から。</h2>
         <p>初回相談・お見積もり無料。構想段階からご一緒します。完成イメージが固まっていなくても結構です。</p>
