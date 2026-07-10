@@ -2,6 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
+  <meta name="google-site-verification" content="bHl5PZnUv3dqjmBg84r53dBZcAy-EaVIlH0UF9vFwgg">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>広島・廿日市のトレーラーハウス／キッチンカー設計 | TOWN DESIGN LABO</title>
 <meta name="description" content="広島県廿日市市を拠点に、トレーラーハウス・キッチンカー・モバイル建築を一棟ずつ設計するTOWN DESIGN LABO。関西・中国・四国・九州エリアで、与件整理と法規確認から空間設計、製造ディレクション、引き渡し後の運用までを一貫して担います。">
@@ -135,10 +136,12 @@ header.scrolled { border-bottom-color: var(--line); }
   height: 76px;
 }
 .brand {
-  display: flex; flex-direction: column;
+  display: flex; flex-direction: row; align-items: center; gap: 10px;
   font-weight: 600; letter-spacing: .18em;
   line-height: 1.1;
 }
+.brand-mark { width: 30px; height: 30px; flex: none; display: block; }
+.brand-tx { display: flex; flex-direction: column; }
 .brand .b1 { font-size: 15px; color: var(--ink); }
 .brand .b2 {
   font-size: 9px; font-weight: 400; letter-spacing: .28em;
@@ -798,8 +801,9 @@ footer {
 <header id="hdr">
   <div class="wrap nav">
     <a class="brand" href="#top">
-      <span class="b1">TOWN DESIGN LABO</span>
-      <span class="b2">MOBILE ARCHITECTURE STUDIO · WEST JAPAN</span>
+      <svg class="brand-mark" viewBox="0 0 100 100" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="100" height="100" rx="22" fill="#111111"/><rect x="18" y="25" width="64" height="12" fill="#f5f5f4"/><rect x="44" y="25" width="12" height="60" fill="#f5f5f4"/><rect x="30" y="78" width="40" height="7" fill="#f5f5f4"/></svg>
+      <span class="brand-tx"><span class="b1">TOWN DESIGN LABO</span>
+      <span class="b2">MOBILE ARCHITECTURE STUDIO · WEST JAPAN</span></span>
     </a>
     <nav class="menu" id="menu">
       <a href="#about">Studio</a>
