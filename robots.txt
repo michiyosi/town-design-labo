@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://michiyosi.github.io/town-design-labo/sitemap.xml
+Sitemap: https://towndesignlabo.jp/sitemap.xml
