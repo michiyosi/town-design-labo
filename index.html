@@ -470,8 +470,10 @@ header.scrolled { border-bottom-color: var(--line); }
 .w6 { grid-column: span 6; grid-row: span 2; }
 .w7 { grid-column: span 6; grid-row: span 2; }
 .w8 { grid-column: span 12; grid-row: span 2; }
+.w9 { grid-column: span 6; grid-row: span 2; }
+.w10 { grid-column: span 6; grid-row: span 2; }
 @media (max-width: 880px) {
-  .w0,.w1,.w2,.w3,.w4,.w5,.w6,.w7,.w8 { grid-column: span 12; grid-row: span 2; }
+  .w0,.w1,.w2,.w3,.w4,.w5,.w6,.w7,.w8,.w9,.w10 { grid-column: span 12; grid-row: span 2; }
 }
 
 /* ------- Interior ------- */
@@ -808,6 +810,28 @@ footer {
 .faq-item[open] > summary::after { content: "\2013"; }
 .faq-a { padding: 0 0 26px; }
 .faq-a p { margin: 0; color: var(--ink-mute); font-size: 15px; line-height: 1.95; max-width: 760px; }
+
+/* ------- KAZARI KITCHEN / MTR ------- */
+.mtr { background: var(--bg-soft); border-top: 1px solid var(--line); }
+.mtr-lead { display: grid; grid-template-columns: 1fr 1.25fr; gap: 40px; align-items: center; margin-bottom: 52px; }
+.mtr-lead img { width: 100%; max-height: 420px; object-fit: cover; display: block; }
+.mtr-lead-tx h3 { font-size: 19px; font-weight: 600; letter-spacing: .05em; margin-bottom: 16px; color: var(--ink); line-height: 1.5; }
+.mtr-lead-tx p { color: var(--ink-mute); font-size: 14px; line-height: 1.95; margin-bottom: 13px; }
+.ladder { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.rung { background: var(--bg); border: 1px solid var(--line); padding: 26px 20px 24px; }
+.rung .num { border-top: none; padding-top: 0; margin-bottom: 14px; }
+.rung h5 { font-size: 14px; font-weight: 600; letter-spacing: .06em; margin-bottom: 10px; color: var(--ink); }
+.rung .price { font-size: 17px; font-weight: 600; letter-spacing: .01em; margin-bottom: 12px; color: var(--ink); font-variant-numeric: lining-nums tabular-nums; }
+.rung p { font-size: 12.5px; line-height: 1.85; color: var(--ink-mute); }
+.rung.accent { background: var(--ink); border-color: var(--ink); }
+.rung.accent h5, .rung.accent .price { color: #f5f5f4; }
+.rung.accent p { color: rgba(255,255,255,.6); }
+.rung.accent .num { color: rgba(255,255,255,.45); }
+@media (max-width: 880px) {
+  .mtr-lead { grid-template-columns: 1fr; gap: 22px; }
+  .ladder { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) { .ladder { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -840,7 +864,7 @@ footer {
   <div class="hero-grid"></div>
   <div class="wrap hero-inner">
     <div class="hero-mono">
-      <span>Studio est. 2026</span>
+      <span>Studio est. 2018</span>
       <span>West Japan</span>
       <span>Mobile Architecture</span>
     </div>
@@ -974,14 +998,70 @@ footer {
   </div>
 </section>
 
+<!-- KAZARI KITCHEN -->
+<section class="mtr" id="kazari">
+  <div class="wrap">
+    <div class="s-head reveal">
+      <div class="num">— 03 / KAZARI KITCHEN</div>
+      <div>
+        <h2>いきなり<em>買わなくていい</em>。<br><strong>月額で始める</strong>という道。</h2>
+        <p>キッチンカーは、つくるだけのものではありません。私たちは自社で設計・保有する車両を貸し出す「KAZARI KITCHEN」を運営しています。移動型仮設飲食店(MTR / Mobility Temporary Restaurant)として2022年に立ち上げた、シェアと開業支援の事業です。</p>
+      </div>
+    </div>
+
+    <div class="mtr-lead reveal">
+      <img src="./kazari-mtr-01-sm.webp" alt="KAZARI KITCHENのキッチンカーで営業する様子" width="1200" height="1200" loading="lazy" decoding="async">
+      <div class="mtr-lead-tx">
+        <h3>煩雑な手続きは、こちらで引き受けます。</h3>
+        <p>「始めたいけれど、リスクが大きすぎて踏み切れない」。飲食・物販の現場で最も多く聞く声です。一方、過疎地域や都市の周辺部では「近くに店がない」という声がある。必要とする人がいるのに、店が事業として成り立たない — その両方を同時に解くために設計したのがMTRです。</p>
+        <p>許可申請、場所の選定と打診、飲食スペースの設営、利用期間終了後の車両回収まで、ワンストップで引き受けます。プランに応じて数ヶ月の常駐が可能なため、日々の移動・準備・片付けは不要です。</p>
+      </div>
+    </div>
+
+    <div class="ladder">
+      <div class="rung reveal">
+        <div class="num">Step / 01</div>
+        <h5>お試しプラン</h5>
+        <div class="price">¥0</div>
+        <p>リースをご検討中の方向けの短日貸出。まず現場で使ってから判断できます。</p>
+      </div>
+      <div class="rung reveal">
+        <div class="num">Step / 02</div>
+        <h5>創業支援プラン</h5>
+        <div class="price">月額 ¥66,000〜</div>
+        <p>軽トラ ¥66,000／1.5t ¥96,000／2t ¥126,000。2年目以降は前年の売上実績の平均値×10%。立ち上がるまで負担を抑えられます。</p>
+      </div>
+      <div class="rung reveal">
+        <div class="num">Step / 03</div>
+        <h5>リースプラン</h5>
+        <div class="price">月額 ¥76,000〜</div>
+        <p>軽トラ ¥76,000／1.5t ¥106,000／2t ¥146,000。事業が固まった段階の定額運用に。</p>
+      </div>
+      <div class="rung accent reveal">
+        <div class="num">Step / 04</div>
+        <h5>自分の一台をつくる</h5>
+        <div class="price">¥4,950,000〜</div>
+        <p>業態が定まったら、TOWN DESIGN LABOで一台ずつ設計します。試した経験が、そのまま仕様書になります。</p>
+      </div>
+    </div>
+
+    <p class="reveal" style="margin-top: 30px; font-size: 11.5px; line-height: 1.9; color: var(--ink-mute); letter-spacing: .04em;">
+      ※ 表示は目安の金額(税込)で、仕様・利用条件により変動します。各プランには別途、車検及び車両整備費が必要です(車検・整備は連携事業者にて実施)。ご利用にあたっては、飲食営業許可の申請と車両使用者変更の手続きが別途必要です。車両保険の加入は任意ですが、事故時の現状復旧は利用者のご負担となります。お試しプランはレジャー保険等への加入が必要で、ご使用後の清掃は利用者の責任で実施いただきます(保険手続き・清掃業務の代行も可能です)。イベント利用など、その他の形態もご相談ください。
+    </p>
+    <p class="reveal" style="margin-top: 10px; font-size: 11.5px; line-height: 1.9; color: var(--ink-mute); letter-spacing: .04em;">
+      ※ KAZARI KITCHENの運営およびご契約の主体は、現在 KAZARI(個人事業主)です。株式会社TOWN DESIGN LABOへの統合を準備しています。
+    </p>
+  </div>
+</section>
+
 <!-- OUR ROLE -->
 <section class="approach" id="role">
   <div class="wrap">
     <div class="s-head reveal">
-      <div class="num">— 03 / Our Role</div>
+      <div class="num">— 04 / Our Role</div>
       <div>
         <h2>どう<em>つくるか</em>を決める。<br>それが<strong>TOWN DESIGN LABO</strong>の仕事です。</h2>
-        <p>TOWN DESIGN LABO は西日本の案件において、下記のレイヤーを担います。Works 001 は当スタジオの設計案件です。002以降と Interior・Stories は、製造パートナーの製造事例をセレクトしたものです。</p>
+        <p>TOWN DESIGN LABO は西日本の案件において、下記のレイヤーを担います。Works 001〜003 は当スタジオの設計案件で、うち 002・003 は自社で保有し、KAZARI KITCHEN として運用している車両です。004以降と Interior・Stories は、製造パートナーの製造事例をセレクトしたものです。</p>
       </div>
     </div>
     <div class="approach-grid">
@@ -1008,10 +1088,10 @@ footer {
 <section class="works" id="works">
   <div class="wrap">
     <div class="s-head reveal">
-      <div class="num">— 04 / Works</div>
+      <div class="num">— 05 / Works</div>
       <div>
         <h2>製造実績<strong>セレクション</strong></h2>
-        <p>001はTOWN DESIGN LABOが設計した案件です。002以降は、製造パートナーの実績から私たちが推奨する8件をセレクトしました。詳細仕様・図面・現場見学のご希望は、Contactより。</p>
+        <p>001〜003はTOWN DESIGN LABOが設計した案件です(002・003は自社で保有し、KAZARI KITCHENとして運用している車両)。004以降は、製造パートナーの実績から私たちが推奨する8件をセレクトしました。詳細仕様・図面・現場見学のご希望は、Contactより。</p>
       </div>
     </div>
     <div class="works-grid">
@@ -1021,49 +1101,61 @@ footer {
         <div class="tdl">Design: TOWN DESIGN LABO</div>
         <div class="cap">OTAFUKU okonomiyaki caravan car — オタフクソース株式会社。お好み焼きの実演を運ぶキッチンカー。跳ね上げ式の大開口とオーニング、折りたたみデッキを展開し、駐車スペースに厨房と客席を同時に立ち上げます。TOWN DESIGN LABOが設計・製造ディレクションを担当。</div>
       </a>
+      <a class="work w9 reveal" href="./kazari-a-01.jpg" data-gallery="w9" data-count="5" onclick="return openLB('w9')">
+        <img src="./kazari-a-01-sm.webp" alt="KAZARI KITCHENのマットブラック×ガラスショーケースのキッチンカー Type A｜TOWN DESIGN LABO設計" width="1200" height="800" loading="lazy" decoding="async">
+        <div class="label">002 · Kitchen Car</div>
+        <div class="tdl">Design: TOWN DESIGN LABO</div>
+        <div class="cap">KAZARI KITCHEN Type A — マットブラックの車体に、大開口のガラスショーケース。サブウェイタイルと木造作でまとめた厨房に、ガスコンロ3口・冷蔵庫・エアコン・コーヒーマシンを実装し、物販と飲食の双方に対応します。自社で設計・保有し、シェア車両として運用中。</div>
+      </a>
+      <a class="work w10 reveal" href="./kazari-b-01.jpg" data-gallery="w10" data-count="5" onclick="return openLB('w10')">
+        <img src="./kazari-b-01-sm.webp" alt="KAZARI KITCHENの杉板張り×ミントグリーンのキッチンカー Type B｜TOWN DESIGN LABO設計" width="1200" height="800" loading="lazy" decoding="async">
+        <div class="label">003 · Kitchen Car</div>
+        <div class="tdl">Design: TOWN DESIGN LABO</div>
+        <div class="cap">KAZARI KITCHEN Type B — 杉板の縦張りとミントグリーンの角波トタンで構成した車体。跳ね上げ式の庇と折りたたみカウンターを開くと、そのまま店先になります。ヘリンボーンの床に大型鉄板を据え、お好み焼きなどの実演に対応。自社で設計・保有し、シェア車両として運用中。</div>
+      </a>
       <a class="work w1 reveal" href="./eagle-01.jpg" data-gallery="w1" data-count="4" onclick="return openLB('w1')">
         <img src="./eagle-01-sm.webp" alt="有楽町Slit Parkで稼働するトレーラーバー「wick Bar」" width="562" height="1000" loading="lazy" decoding="async">
-        <div class="label">002 · Bar</div>
+        <div class="label">004 · Bar</div>
         <div class="cap">WICK BAR — 都市の余白に置かれた小さなバー。Slit Park YURAKUCHOで稼働中。メンテナンスを経て再び現場へ。</div>
       </a>
       <a class="work w2 reveal" href="./CppfyPsv4kN_01.jpg" data-gallery="w2" data-count="5" onclick="return openLB('w2')">
         <img src="./CppfyPsv4kN_01-sm.webp" alt="セカンドハウス用トレーラーハウスの牽引・納車の様子" width="804" height="1000" loading="lazy" decoding="async">
-        <div class="label">003 · House</div>
+        <div class="label">005 · House</div>
         <div class="cap">Second House Delivery — セカンドハウスとしての納車事例。キャンピングトレーラー登録(車検取得)で公道を牽引移動できる仕様(要車検維持・総重量750kg超はけん引免許が必要)。</div>
       </a>
       <a class="work w3 reveal" href="./eagle-11.jpg" data-gallery="w3" data-count="5" onclick="return openLB('w3')">
         <img src="./eagle-11-sm.webp" alt="ピザ窯を搭載したキッチンカー「PIZZERIA Calcifer」" width="563" height="1000" loading="lazy" decoding="async">
-        <div class="label">004 · Pizzeria</div>
+        <div class="label">006 · Pizzeria</div>
         <div class="cap">PIZZERIA Calcifer — 北海道ルスツへ。床暖房付き極寒仕様、ハウルの城モチーフのデザイン。</div>
       </a>
       <a class="work w4 reveal" href="./CG2E9eDB-z0_01.jpg" data-gallery="w4" data-count="5" onclick="return openLB('w4')">
         <img src="./CG2E9eDB-z0_01-sm.webp" alt="古材と左官仕上げの軽トラベースフードトラック「PARA-SOL Kitchen Stand」" width="1000" height="999" loading="lazy" decoding="async">
-        <div class="label">005 · Food Truck</div>
+        <div class="label">007 · Food Truck</div>
         <div class="cap">PARA-SOL Kitchen Stand — 東京東エリアの軽トラベースフードトラック。古材ボードと左官モルタル仕上げで構成。</div>
       </a>
       <a class="work w5 reveal" href="./eagle-04.jpg" data-gallery="w5" data-count="3" onclick="return openLB('w5')">
         <img src="./eagle-04-sm.webp" alt="黒塗り杉板のレザークラフト移動工房（COFFEE & LEATHER）" width="563" height="1000" loading="lazy" decoding="async">
-        <div class="label">006 · Atelier</div>
+        <div class="label">008 · Atelier</div>
         <div class="cap">レザークラフト移動工房 — 黒塗り杉板・アイアン建具・古材造作。施主のアイデアからシャーシ設計。</div>
       </a>
       <a class="work w6 reveal" href="./CaGqL7fv3mc_03.jpg" data-gallery="w6" data-count="5" onclick="return openLB('w6')">
         <img src="./CaGqL7fv3mc_03-sm.webp" alt="八ヶ岳のトレーラーホテル「THE NOMAD」のサインと宿泊棟" width="1000" height="1000" loading="lazy" decoding="async">
-        <div class="label">007 · Hotel</div>
+        <div class="label">009 · Hotel</div>
         <div class="cap">THE NOMAD 八ヶ岳 — 傾斜地に設置したトレーラーホテルの宿泊棟。大開口から八ヶ岳を望む客室、木天井・無垢床・水回りまで一棟ごとに造作。</div>
       </a>
       <a class="work w7 reveal" href="./CERIUKlhGWp_01.jpg" data-gallery="w7" data-count="4" onclick="return openLB('w7')">
         <img src="./CERIUKlhGWp_01-sm.webp" alt="鉄骨フレームと大開口ガラスのフードトレーラー「Saratoga Mark2」" width="1000" height="1000" loading="lazy" decoding="async">
-        <div class="label">008 · Industrial</div>
+        <div class="label">010 · Industrial</div>
         <div class="cap">Saratoga Mark2 — 鉄骨フレーム×大開口ガラス×古材造作の重厚なフードトレーラー。建築としての存在感を持つ一台。</div>
       </a>
       <a class="work w8 reveal" href="./CrGPYCqvxna_01.jpg" data-gallery="w8" data-count="5" onclick="return openLB('w8')">
         <img src="./CrGPYCqvxna_01-sm.webp" alt="岡山県倉敷市へ陸送中のお寿司トレーラー" width="1000" height="750" loading="lazy" decoding="async">
-        <div class="label">009 · Delivery</div>
+        <div class="label">011 · Delivery</div>
         <div class="cap">納車・陸送 — 千葉本社から日本各地まで。岡山県倉敷市のお寿司トレーラー納車時の高速道路上の1コマ。</div>
       </a>
     </div>
     <p style="margin-top: 28px; font-size: 11px; color: var(--ink-mute);">
-      001: 設計・製造ディレクション TOWN DESIGN LABO ／ 002以降: セレクション・ディレクション TOWN DESIGN LABO、製造・写真 株式会社イーグルバレー(@eaglevalley_trailerhouse)
+      001〜003: 設計・製造ディレクション TOWN DESIGN LABO(002・003は自社保有・運用車両) ／ 004以降: セレクション・ディレクション TOWN DESIGN LABO、製造・写真 株式会社イーグルバレー(@eaglevalley_trailerhouse)
     </p>
   </div>
 </section>
@@ -1072,7 +1164,7 @@ footer {
 <section class="interior" id="interior">
   <div class="wrap">
     <div class="s-head reveal">
-      <div class="num">— 05 / Interior</div>
+      <div class="num">— 06 / Interior</div>
       <div>
         <h2>細部に、<em>住まう</em>が宿る。</h2>
         <p>「動く建築」の本質は、外観ではなく中で過ごす時間です。シャーシから設計するからこそ、断熱・水回り・収納・採光まで暮らしの解像度で組み立てます。</p>
@@ -1119,7 +1211,7 @@ footer {
 <section class="stories" id="stories">
   <div class="wrap">
     <div class="s-head reveal">
-      <div class="num">— 06 / Stories</div>
+      <div class="num">— 07 / Stories</div>
       <div>
         <h2>制作の<strong>物語</strong>と、納車先で<em>続く時間</em>。</h2>
         <p>製造パートナーが2019年からつくってきた車両のうち、設計の視点で印象に残る6件を私たちが抜粋しました。場所、施主の構想、設計のポイントを短く紹介します。</p>
@@ -1191,7 +1283,7 @@ footer {
 <section class="uses" id="uses">
   <div class="wrap">
     <div class="s-head reveal">
-      <div class="num">— 07 / Use Cases</div>
+      <div class="num">— 08 / Use Cases</div>
       <div>
         <h2>建てるのが<em>難しい</em>、<br>を<strong>解く</strong>3つのケース。</h2>
         <p>「土地はあるけれど建てづらい」「短期間で出店したい」「自然と暮らしたい」。可動建築は、その答えになりうる選択肢です。</p>
@@ -1233,7 +1325,7 @@ footer {
 <section class="process" id="process">
   <div class="wrap">
     <div class="s-head reveal">
-      <div class="num">— 08 / Process</div>
+      <div class="num">— 09 / Process</div>
       <div>
         <h2>設計から納車まで、<br><strong>5つのステップ</strong>。</h2>
         <p>初回相談から設計・製造監修・陸送・引き渡し・アフターサポートまで、TOWN DESIGN LABOが一貫してディレクションします。</p>
@@ -1273,7 +1365,7 @@ footer {
 <section class="faq" id="faq">
   <div class="wrap">
     <div class="s-head reveal">
-      <div class="num">— 09 / FAQ</div>
+      <div class="num">— 10 / FAQ</div>
       <div>
         <h2>よくある<em>ご質問</em>。</h2>
         <p>ご相談前に多くいただく質問をまとめました。ここにない点も、Contactよりお気軽にどうぞ。</p>
@@ -1380,7 +1472,7 @@ footer {
 <section class="contact" id="contact">
   <div class="wrap">
     <div class="s-head reveal">
-      <div class="num">— 10 / Contact</div>
+      <div class="num">— 11 / Contact</div>
       <div>
         <h2>まずは、<em>お話</em>から。</h2>
         <p>初回相談・お見積もり無料。構想段階からご一緒します。完成イメージが固まっていなくても結構です。</p>
@@ -1526,14 +1618,16 @@ if (cform && gsink) {
 /* ---- Works Lightbox ---- */
 const galleries = {
   w0: { title: "001 · Caravan Car — OTAFUKU okonomiyaki caravan car", imgs: ["otafuku-01.jpg","otafuku-02.jpg","otafuku-03.jpg","otafuku-04.jpg"] },
-  w1: { title: "002 · Bar — WICK BAR", imgs: ["eagle-01.jpg","wick-02.jpg","wick-03.jpg","wick-04.jpg"] },
-  w2: { title: "003 · House — Second House", imgs: ["CppfyPsv4kN_01.jpg","CppfyPsv4kN_02.jpg","CppfyPsv4kN_03.jpg","CppfyPsv4kN_04.jpg","CppfyPsv4kN_05.jpg"] },
-  w3: { title: "004 · Pizzeria — PIZZERIA Calcifer", imgs: ["eagle-11.jpg","calcifer-02.jpg","calcifer-03.jpg","calcifer-04.jpg","calcifer-05.jpg"] },
-  w4: { title: "005 · Food Truck — PARA-SOL Kitchen Stand", imgs: ["CG2E9eDB-z0_01.jpg","CG2E9eDB-z0_02.jpg","CG2E9eDB-z0_03.jpg","CG2E9eDB-z0_04.jpg","CG2E9eDB-z0_05.jpg"] },
-  w5: { title: "006 · Atelier — レザークラフト移動工房", imgs: ["eagle-04.jpg","eagle-05.jpg","eagle-10.jpg"] },
-  w6: { title: "007 · Hotel — THE NOMAD 八ヶ岳 トレーラーホテル", imgs: ["CaGqL7fv3mc_03.jpg","CaGqL7fv3mc_06.jpg","CccEOvgLPIY_04.jpg","CccEOvgLPIY_02.jpg","CccEOvgLPIY_05.jpg"] },
-  w7: { title: "008 · Industrial — Saratoga Mark2", imgs: ["CERIUKlhGWp_01.jpg","CERIUKlhGWp_02.jpg","CERIUKlhGWp_03.jpg","CERIUKlhGWp_04.jpg"] },
-  w8: { title: "009 · Delivery — 納車・陸送", imgs: ["CrGPYCqvxna_01.jpg","CrGPYCqvxna_02.jpg","CrGPYCqvxna_03.jpg","CrGPYCqvxna_04.jpg","CrGPYCqvxna_05.jpg"] }
+  w9: { title: "002 · Kitchen Car — KAZARI KITCHEN Type A", imgs: ["kazari-a-01.jpg","kazari-a-02.jpg","kazari-a-03.jpg","kazari-a-04.jpg","kazari-a-05.jpg"] },
+  w10: { title: "003 · Kitchen Car — KAZARI KITCHEN Type B", imgs: ["kazari-b-01.jpg","kazari-b-02.jpg","kazari-b-03.jpg","kazari-b-04.jpg","kazari-b-05.jpg"] },
+  w1: { title: "004 · Bar — WICK BAR", imgs: ["eagle-01.jpg","wick-02.jpg","wick-03.jpg","wick-04.jpg"] },
+  w2: { title: "005 · House — Second House", imgs: ["CppfyPsv4kN_01.jpg","CppfyPsv4kN_02.jpg","CppfyPsv4kN_03.jpg","CppfyPsv4kN_04.jpg","CppfyPsv4kN_05.jpg"] },
+  w3: { title: "006 · Pizzeria — PIZZERIA Calcifer", imgs: ["eagle-11.jpg","calcifer-02.jpg","calcifer-03.jpg","calcifer-04.jpg","calcifer-05.jpg"] },
+  w4: { title: "007 · Food Truck — PARA-SOL Kitchen Stand", imgs: ["CG2E9eDB-z0_01.jpg","CG2E9eDB-z0_02.jpg","CG2E9eDB-z0_03.jpg","CG2E9eDB-z0_04.jpg","CG2E9eDB-z0_05.jpg"] },
+  w5: { title: "008 · Atelier — レザークラフト移動工房", imgs: ["eagle-04.jpg","eagle-05.jpg","eagle-10.jpg"] },
+  w6: { title: "009 · Hotel — THE NOMAD 八ヶ岳 トレーラーホテル", imgs: ["CaGqL7fv3mc_03.jpg","CaGqL7fv3mc_06.jpg","CccEOvgLPIY_04.jpg","CccEOvgLPIY_02.jpg","CccEOvgLPIY_05.jpg"] },
+  w7: { title: "010 · Industrial — Saratoga Mark2", imgs: ["CERIUKlhGWp_01.jpg","CERIUKlhGWp_02.jpg","CERIUKlhGWp_03.jpg","CERIUKlhGWp_04.jpg"] },
+  w8: { title: "011 · Delivery — 納車・陸送", imgs: ["CrGPYCqvxna_01.jpg","CrGPYCqvxna_02.jpg","CrGPYCqvxna_03.jpg","CrGPYCqvxna_04.jpg","CrGPYCqvxna_05.jpg"] }
 };
 const IMG_BASE = "./";
 const lb = document.getElementById('lb');
