@@ -2,3 +2,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://towndesignlabo.jp/sitemap.xml
+
+# AI/LLM: https://towndesignlabo.jp/llms.txt
