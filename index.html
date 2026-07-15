@@ -142,7 +142,7 @@ header.scrolled { border-bottom-color: var(--line); }
 }
 .brand-mark { width: 30px; height: 30px; flex: none; display: block; }
 .brand-tx { display: flex; flex-direction: column; }
-.brand .b1 { font-size: 15px; color: var(--ink); }
+.brand .b1 { font-size: 15px; color: var(--ink); white-space: nowrap; }
 .brand .b2 {
   font-size: 9px; font-weight: 400; letter-spacing: .28em;
   color: var(--ink-mute); margin-top: 4px; white-space: nowrap;
@@ -150,6 +150,7 @@ header.scrolled { border-bottom-color: var(--line); }
 /* tagline needs ~308px; hide it where the horizontal menu leaves no room */
 @media (min-width: 881px) and (max-width: 1180px) { .brand .b2 { display: none; } }
 .menu { display: flex; gap: 26px; align-items: center; }
+@media (min-width: 881px) and (max-width: 1180px) { .menu { gap: 16px; } .menu a { font-size: 11px; letter-spacing: .06em; } }
 .menu a {
   font-size: 12px; font-weight: 500; letter-spacing: .12em;
   color: var(--ink); transition: opacity .2s;
@@ -876,7 +877,7 @@ footer {
     </h1>
     <p class="lead">
       TOWN DESIGN LABO は、広島県廿日市市を拠点に、トレーラーハウスとキッチンカーを「動く建築」として設計する西日本のスタジオです。
-      与件整理から空間設計、製造ディレクション、引き渡し後の運用まで、私たちが一貫して担います。製造は、2019年創業の信頼する製造パートナーと。
+      与件整理から空間設計、製造ディレクション、引き渡し後の運用まで。2019年創業の製造パートナーと共に、一棟ずつかたちにしています。
     </p>
     <div class="hero-actions">
       <a class="btn btn-primary" href="#services">View Services</a>
@@ -1050,8 +1051,8 @@ footer {
     <div class="s-head reveal">
       <div class="num">— 04 / Our Role</div>
       <div>
-        <h2>どう<em>つくるか</em>を決める。<br>それが<strong>TOWN DESIGN LABO</strong>の仕事です。</h2>
-        <p>TOWN DESIGN LABO は西日本の案件において、下記のレイヤーを担います。Works 001〜003 は当スタジオの設計案件で、うち 002・003 は自社で保有し、KAZARI KITCHEN として運用している車両です。004以降と Interior・Stories は、製造パートナーの製造事例をセレクトしたものです。</p>
+        <h2>どう<em>つくるか</em>を、<br><strong>つくり手と共に</strong>決める。</h2>
+        <p>TOWN DESIGN LABO は西日本の案件において、製造パートナーと役割を分け合いながら、下記のレイヤーを受け持っています。Works 001〜003 は当スタジオの設計案件で、うち 002・003 は自社で保有し、KAZARI KITCHEN として運用している車両です。004以降と Interior・Stories は、製造パートナーの製造事例をセレクトしたものです。</p>
       </div>
     </div>
     <div class="approach-grid">
@@ -1068,7 +1069,7 @@ footer {
       <div class="approach-card reveal">
         <div class="num">03</div>
         <h5>製造監修と、引き渡し後</h5>
-        <p>千葉の自社工房での製造工程を確認し、陸送経路・搬入・据付・ライフライン接続を現地で監理します。引き渡し後の点検・修繕・移設まで、使われ続ける状態を設計の対象とみなします。</p>
+        <p>千葉のパートナー工房で、製造工程を共に確認し、陸送経路・搬入・据付・ライフライン接続を現地で監理します。引き渡し後の点検・修繕・移設まで、使われ続ける状態を設計の対象とみなします。</p>
       </div>
     </div>
   </div>
@@ -1541,7 +1542,7 @@ footer {
       <div>
         <div class="foot-brand">TOWN DESIGN LABO</div>
         <div class="foot-brand-sub">Mobile Architecture Studio · West Japan</div>
-        <p>動かせる建築を、街と暮らしのために。設計・ディレクションはTOWN DESIGN LABO。製造は、信頼するパートナーと。</p>
+        <p>動かせる建築を、街と暮らしのために。設計から製造まで、信頼するパートナーと共に。</p>
       </div>
       <div class="foot-links">
         <a href="#about">Studio</a>
