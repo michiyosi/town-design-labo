@@ -1,11 +1,13 @@
 
 const hdr = document.getElementById('hdr');
-window.addEventListener('scroll', () => hdr.classList.toggle('scrolled', window.scrollY > 8));
+if (hdr) window.addEventListener('scroll', () => hdr.classList.toggle('scrolled', window.scrollY > 8));
 
 const burger = document.getElementById('burger');
 const menu = document.getElementById('menu');
-burger.addEventListener('click', () => menu.classList.toggle('open'));
-menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
+if (burger && menu) {
+  burger.addEventListener('click', () => menu.classList.toggle('open'));
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
+}
 
 const io = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('shown'); io.unobserve(e.target); } });
@@ -45,56 +47,58 @@ const galleries = {
   w7: { title: "010 · Industrial — Saratoga Mark2", imgs: ["CERIUKlhGWp_01.jpg","CERIUKlhGWp_02.jpg","CERIUKlhGWp_03.jpg","CERIUKlhGWp_04.jpg"] },
   w8: { title: "011 · Delivery — 納車・陸送", imgs: ["CrGPYCqvxna_01.jpg","CrGPYCqvxna_02.jpg","CrGPYCqvxna_03.jpg","CrGPYCqvxna_04.jpg","CrGPYCqvxna_05.jpg"] }
 };
-const IMG_BASE = "./";
-const lb = document.getElementById('lb');
-const lbImg = document.getElementById('lbImg');
-const lbTitle = document.getElementById('lbTitle');
-const lbCount = document.getElementById('lbCount');
-const lbPrev = document.getElementById('lbPrev');
-const lbNext = document.getElementById('lbNext');
-let lbKey = null, lbIdx = 0;
-function lbRender() {
-  const g = galleries[lbKey]; if (!g) return;
-  const multi = g.imgs.length > 1;
-  lbImg.src = IMG_BASE + g.imgs[lbIdx];
-  lbImg.alt = g.title + " — " + (lbIdx + 1);
-  lbTitle.textContent = g.title;
-  lbCount.textContent = multi ? (lbIdx + 1) + " / " + g.imgs.length : "";
-  lbPrev.style.visibility = multi ? "visible" : "hidden";
-  lbNext.style.visibility = multi ? "visible" : "hidden";
-  if (multi) {
-    [1, -1].forEach(function(d){ var n = (lbIdx + d + g.imgs.length) % g.imgs.length; var p = new Image(); p.src = IMG_BASE + g.imgs[n]; });
+const IMG_BASE = "./images/";
+if (document.getElementById('lb')) {
+  const lb = document.getElementById('lb');
+  const lbImg = document.getElementById('lbImg');
+  const lbTitle = document.getElementById('lbTitle');
+  const lbCount = document.getElementById('lbCount');
+  const lbPrev = document.getElementById('lbPrev');
+  const lbNext = document.getElementById('lbNext');
+  let lbKey = null, lbIdx = 0;
+  function lbRender() {
+    const g = galleries[lbKey]; if (!g) return;
+    const multi = g.imgs.length > 1;
+    lbImg.src = IMG_BASE + g.imgs[lbIdx];
+    lbImg.alt = g.title + " — " + (lbIdx + 1);
+    lbTitle.textContent = g.title;
+    lbCount.textContent = multi ? (lbIdx + 1) + " / " + g.imgs.length : "";
+    lbPrev.style.visibility = multi ? "visible" : "hidden";
+    lbNext.style.visibility = multi ? "visible" : "hidden";
+    if (multi) {
+      [1, -1].forEach(function(d){ var n = (lbIdx + d + g.imgs.length) % g.imgs.length; var p = new Image(); p.src = IMG_BASE + g.imgs[n]; });
+    }
   }
-}
-function openLB(key) {
-  if (!galleries[key]) return true;
-  lbKey = key; lbIdx = 0; lbRender();
-  lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false');
-  document.body.style.overflow = 'hidden';
-  return false;
-}
-function closeLB() {
-  lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true');
-  document.body.style.overflow = '';
-}
-function lbStep(d) {
-  const g = galleries[lbKey]; if (!g) return;
-  lbIdx = (lbIdx + d + g.imgs.length) % g.imgs.length; lbRender();
-}
-lbPrev.addEventListener('click', function(e){ e.stopPropagation(); lbStep(-1); });
-lbNext.addEventListener('click', function(e){ e.stopPropagation(); lbStep(1); });
-document.getElementById('lbClose').addEventListener('click', closeLB);
-lb.addEventListener('click', function(e){ if (e.target === lb) closeLB(); });
-document.addEventListener('keydown', function(e){
-  if (!lb.classList.contains('open')) return;
-  if (e.key === 'Escape') closeLB();
-  else if (e.key === 'ArrowLeft') lbStep(-1);
-  else if (e.key === 'ArrowRight') lbStep(1);
-});
-
-/* ---- CSP: onclick属性の代替（イベント委譲） ---- */
-document.querySelectorAll('a[data-gallery]').forEach(function (a) {
-  a.addEventListener('click', function (e) {
-    if (openLB(a.dataset.gallery) === false) e.preventDefault();
+  function openLB(key) {
+    if (!galleries[key]) return true;
+    lbKey = key; lbIdx = 0; lbRender();
+    lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    return false;
+  }
+  function closeLB() {
+    lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  function lbStep(d) {
+    const g = galleries[lbKey]; if (!g) return;
+    lbIdx = (lbIdx + d + g.imgs.length) % g.imgs.length; lbRender();
+  }
+  lbPrev.addEventListener('click', function(e){ e.stopPropagation(); lbStep(-1); });
+  lbNext.addEventListener('click', function(e){ e.stopPropagation(); lbStep(1); });
+  document.getElementById('lbClose').addEventListener('click', closeLB);
+  lb.addEventListener('click', function(e){ if (e.target === lb) closeLB(); });
+  document.addEventListener('keydown', function(e){
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLB();
+    else if (e.key === 'ArrowLeft') lbStep(-1);
+    else if (e.key === 'ArrowRight') lbStep(1);
   });
-});
+
+  /* ---- CSP: onclick属性の代替（イベント委譲） ---- */
+  document.querySelectorAll('a[data-gallery]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      if (typeof openLB === 'function' && openLB(a.dataset.gallery) === false) e.preventDefault();
+    });
+  });
+}

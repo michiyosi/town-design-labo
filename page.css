@@ -1,0 +1,145 @@
+/* ============================================================
+   page.css — 下層ページ共通レイアウト
+   site.css（ヘッダー・フッター・変数）と併用する
+   ============================================================ */
+
+.page-hero {
+  padding: 148px 0 72px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-soft);
+}
+.page-hero .code {
+  font-size: 11px; font-weight: 500; letter-spacing: .25em;
+  color: var(--ink-mute); text-transform: uppercase; margin-bottom: 18px;
+}
+.page-hero h1 {
+  font-family: "Cormorant Garamond", serif; font-weight: 300;
+  font-size: 46px; line-height: 1.3; letter-spacing: .02em; margin-bottom: 22px;
+}
+.page-hero h1 em { font-style: italic; }
+.page-hero .lead {
+  font-size: 14px; line-height: 2; color: var(--ink-mute); max-width: 640px;
+}
+
+.crumb { font-size: 11px; letter-spacing: .06em; color: var(--ink-mute); margin-bottom: 26px; }
+.crumb a { color: var(--ink-mute); text-decoration: none; }
+.crumb a:hover { color: var(--ink); }
+.crumb span { margin: 0 8px; opacity: .5; }
+
+.page-body { padding: 96px 0 112px; }
+.page-sec { margin-bottom: 84px; }
+.page-sec:last-child { margin-bottom: 0; }
+.page-sec > h2 {
+  font-size: 13px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
+  padding-bottom: 14px; margin-bottom: 30px; border-bottom: 1px solid var(--line-strong);
+}
+.page-sec h3 {
+  font-size: 17px; font-weight: 400; letter-spacing: .02em;
+  margin: 34px 0 14px;
+}
+.page-sec p { font-size: 13.5px; line-height: 2.05; color: var(--ink-mute); margin-bottom: 16px; }
+.page-sec p:last-child { margin-bottom: 0; }
+.page-sec strong { color: var(--ink); font-weight: 500; }
+
+/* 定義リスト（会社概要） */
+.spec { display: grid; grid-template-columns: 190px 1fr; }
+.spec dt {
+  font-size: 11.5px; font-weight: 500; letter-spacing: .08em; color: var(--ink);
+  padding: 20px 0; border-top: 1px solid var(--line);
+}
+.spec dd {
+  font-size: 13.5px; line-height: 1.85; color: var(--ink-mute);
+  padding: 20px 0; border-top: 1px solid var(--line);
+}
+.spec dd a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line-strong); }
+.spec dd a:hover { opacity: .6; }
+.spec dd small { display: block; margin-top: 6px; font-size: 11.5px; opacity: .8; }
+
+/* 沿革 */
+.history { display: grid; grid-template-columns: 96px 1fr; }
+.history dt {
+  font-size: 12px; font-weight: 500; letter-spacing: .06em; color: var(--ink);
+  padding: 20px 0; border-top: 1px solid var(--line);
+}
+.history dd {
+  font-size: 13.5px; line-height: 1.8; color: var(--ink);
+  padding: 20px 0; border-top: 1px solid var(--line);
+}
+.history dd span {
+  display: block; margin-top: 6px; font-size: 12px; line-height: 1.8; color: var(--ink-mute);
+}
+
+/* 比較表 */
+.cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--line); }
+.cmp-col { padding: 30px 28px; }
+.cmp-col + .cmp-col { border-left: 1px solid var(--line); background: var(--bg-soft); }
+.cmp-col h4 {
+  font-size: 11px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink-mute); padding-bottom: 14px; margin-bottom: 18px; border-bottom: 1px solid var(--line);
+}
+.cmp-col + .cmp-col h4 { color: var(--ink); }
+.cmp-col ul { list-style: none; }
+.cmp-col li {
+  font-size: 12.5px; line-height: 1.85; color: var(--ink-mute);
+  padding-left: 16px; position: relative; margin-bottom: 12px;
+}
+.cmp-col li::before {
+  content: ""; position: absolute; left: 0; top: 11px;
+  width: 6px; height: 1px; background: var(--ink-mute);
+}
+.cmp-col + .cmp-col li { color: var(--ink); }
+.cmp-col + .cmp-col li::before { background: var(--ink); }
+
+/* 価格 */
+.plans { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.plan { border: 1px solid var(--line); padding: 28px; }
+.plan h4 { font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+.plan .price {
+  font-family: "Cormorant Garamond", serif; font-size: 30px; font-weight: 300; margin: 12px 0 4px;
+}
+.plan .price small { font-size: 12px; font-family: "Inter", sans-serif; color: var(--ink-mute); margin-left: 4px; }
+.plan p { font-size: 12px; line-height: 1.8; color: var(--ink-mute); margin: 0; }
+
+/* 代表者 */
+.bio-head { display: flex; align-items: center; gap: 24px; margin-bottom: 40px; }
+.bio-photo {
+  width: 120px; height: 120px; border-radius: 50%; object-fit: cover;
+  background: var(--bg-deep); flex-shrink: 0; display: block;
+}
+.bio-head h2 { font-size: 24px; font-weight: 400; border: none; padding: 0; margin: 0 0 8px; text-transform: none; letter-spacing: .04em; }
+.bio-head .sub { font-size: 11px; letter-spacing: .12em; color: var(--ink-mute); text-transform: uppercase; }
+
+.callout {
+  border-left: 2px solid var(--line-strong); padding: 4px 0 4px 20px;
+  margin: 28px 0; font-size: 13.5px; line-height: 2; color: var(--ink);
+}
+
+/* CTA */
+.page-cta {
+  border-top: 1px solid var(--line); padding: 72px 0 0; margin-top: 84px; text-align: center;
+}
+.page-cta h3 { font-family: "Cormorant Garamond", serif; font-weight: 300; font-size: 30px; margin-bottom: 14px; }
+.page-cta p { font-size: 13px; color: var(--ink-mute); margin-bottom: 30px; }
+.page-cta .btn-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.pbtn {
+  display: inline-block; border: 1px solid var(--line-strong); padding: 15px 30px;
+  font-size: 12px; font-weight: 500; letter-spacing: .12em; color: var(--ink);
+  text-decoration: none; transition: .2s;
+}
+.pbtn:hover { background: var(--ink); color: #fff; }
+.pbtn.solid { background: var(--ink); color: #fff; }
+.pbtn.solid:hover { opacity: .8; }
+
+@media (max-width: 860px) {
+  .page-hero { padding: 116px 0 56px; }
+  .page-hero h1 { font-size: 32px; }
+  .page-body { padding: 64px 0 80px; }
+  .page-sec { margin-bottom: 60px; }
+  .spec, .history { grid-template-columns: 1fr; }
+  .spec dt, .history dt { padding-bottom: 4px; }
+  .spec dd, .history dd { padding-top: 0; border-top: none; }
+  .cmp { grid-template-columns: 1fr; }
+  .cmp-col + .cmp-col { border-left: none; border-top: 1px solid var(--line); }
+  .plans { grid-template-columns: 1fr; }
+  .bio-head { flex-direction: column; align-items: flex-start; gap: 18px; }
+}
