@@ -93,3 +93,7 @@ dl.info a:hover { opacity: .6; }
   .ph { padding: 16px 20px; }
   .ph-logo span { font-size: 11px; }
 }
+
+/* 共通ヘッダー使用に伴う調整 */
+.doc { padding-top: 140px; }
+@media (max-width: 640px) { .doc { padding-top: 110px; } }
