@@ -8,7 +8,7 @@
 - **フードトラック／キッチンカー**: 営業許可を見据えた厨房レイアウト設計。参考価格 4,950,000円〜（税込）
 - **モバイルショップ・移動工房**: 移動できる店舗をシャーシ設計から。参考価格 5,720,000円〜（税込）
 - **定置型ユニット**: グランピング棟・サウナ小屋・店舗棟。参考価格 4,180,000円〜（税込）
-- **KAZARI KITCHEN（MTR事業）**: 自社保有のキッチンカーを月額で貸し出すシェア・開業支援。リースプラン 月額76,000円〜（軽トラ）。許可申請・場所選定・設営・回収までワンストップ。運営・契約主体は現在KAZARI（個人事業主）で、株式会社TOWN DESIGN LABOへの統合を準備中。
+- **KAZARI KITCHEN（MTR事業）**: 自社保有のキッチンカーを月額で貸し出すシェア・開業支援。リースプラン 月額76,000円〜（軽トラ）。許可申請・場所選定の段取りをサポート。設営・回収はオプション。運営・契約主体は現在KAZARI（個人事業主）で、株式会社TOWN DESIGN LABOへの統合を準備中。
 
 ## 重要な前提（法規）
 
@@ -26,7 +26,7 @@
 ## リンク
 
 - [トップページ](https://towndesignlabo.jp/): Studio / Services / KAZARI KITCHEN / Our Role / Works / Interior / Stories / Use Cases / Process / FAQ / Director / Contact
-- [KAZARI KITCHEN](https://towndesignlabo.jp/kazari-kitchen.html): キッチンカーの月額シェアリングと開業支援。従来サービスとの比較、料金、改正食品衛生法対応車両について
+- [KAZARI KITCHEN](https://towndesignlabo.jp/kazari-kitchen.html): キッチンカーの月額シェアリングと開業支援。従来サービスとの比較、料金（設営・回収はオプション）、改正食品衛生法対応車両について
 - [会社概要](https://towndesignlabo.jp/company.html): 法人番号・設立・沿革・事業内容・所在地・製造パートナー・法規上の留意点
 - [代表者プロフィール](https://towndesignlabo.jp/director.html): 代表取締役 安村通芳の経歴と実績
 - [よくある質問](https://towndesignlabo.jp/#faq): 納期・建築確認・市街化調整区域・費用・対応エリア・営業許可
