@@ -28,6 +28,7 @@
 - [トップページ](https://towndesignlabo.jp/): Studio / Services / KAZARI KITCHEN / Our Role / Works / Interior / Stories / Use Cases / Process / FAQ / Contact
 - [よくある質問](https://towndesignlabo.jp/#faq): 納期・建築確認・市街化調整区域・費用・対応エリア・営業許可
 - [お問い合わせ](https://towndesignlabo.jp/#contact): Googleフォーム経由。初回相談・お見積もり無料
+- [プライバシーポリシー](https://towndesignlabo.jp/privacy.html): 個人情報の取り扱い・外部サービス・開示請求
 - [サイトマップ](https://towndesignlabo.jp/sitemap.xml)
 
 ## 連絡先
@@ -36,4 +37,5 @@
 - 対応エリア: 関西・中国・四国・九州（製造パートナーの陸送実績は北海道〜九州）
 - 営業時間: 10:00-18:00 / 不定休
 - 電話: 080-5615-9786（10:00-18:00 / 不定休）
-- お問い合わせ: 電話またはサイト内フォームより
+- メール: info@towndesignlabo.jp
+- お問い合わせ: 電話・メール・サイト内フォームより
