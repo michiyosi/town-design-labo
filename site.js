@@ -1,3 +1,15 @@
+/* Google Fonts を非ブロッキングで適用（CSP対応: インラインhandler不使用） */
+(function () {
+  var p = document.querySelector('link[rel="preload"][as="style"][href*="fonts.googleapis.com"]');
+  if (!p) return;
+  var href = p.href;
+  if (document.querySelector('link[rel="stylesheet"][href="' + href + '"]')) return;
+  var l = document.createElement('link');
+  l.rel = 'stylesheet';
+  l.href = href;
+  document.head.appendChild(l);
+})();
+
 
 const hdr = document.getElementById('hdr');
 if (hdr) window.addEventListener('scroll', () => hdr.classList.toggle('scrolled', window.scrollY > 8));
