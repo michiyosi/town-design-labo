@@ -18,7 +18,7 @@
 }
 .page-hero h1 em { font-style: italic; }
 .page-hero .lead {
-  font-size: 14px; line-height: 2; color: var(--ink-mute); max-width: 640px;
+  font-size: 15.5px; line-height: 2; color: var(--ink-mute); max-width: 640px;
 }
 
 .crumb { font-size: 11px; letter-spacing: .06em; color: var(--ink-mute); margin-bottom: 26px; }
