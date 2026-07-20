@@ -16,7 +16,14 @@
   font-family: "Cormorant Garamond", serif; font-weight: 300;
   font-size: 46px; line-height: 1.3; letter-spacing: .02em; margin-bottom: 22px;
 }
-.page-hero h1 em { font-style: italic; }
+/* 和文に斜体は存在しない。合成斜体を避け、太さで強調する。 */
+.page-hero h1 em {
+  font-family: inherit;
+  font-style: normal;
+  font-weight: 500;
+  font-variant-numeric: lining-nums proportional-nums;
+  font-feature-settings: "lnum" 1, "pnum" 1;
+}
 .page-hero .lead {
   font-size: 15.5px; line-height: 2; color: var(--ink-mute); max-width: 640px;
 }
