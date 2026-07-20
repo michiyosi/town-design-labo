@@ -825,3 +825,20 @@ h1, h2, h3, h4, h5, h6 {
   font-variant-numeric: lining-nums tabular-nums;
   font-feature-settings: "lnum" 1, "tnum" 1;
 }
+
+/* ── 和文の偽斜体を廃止する ─────────────────────────────
+   和文書体に斜体は存在しないため、font-style:italic を指定すると
+   ブラウザが機械的に字形を傾けた「合成斜体」を描画する。
+   可読性が落ち、数字が混ざると欧文セリフ体の斜体に切り替わって
+   高さ・太さが揃わなくなる。強調は太さと字間で表現する。      */
+.hero h1 em,
+.page-hero h1 em,
+.s-head h2 em,
+.about-text h3 em,
+.service-row h4 em {
+  font-family: inherit;
+  font-style: normal;
+  font-weight: 500;
+  font-variant-numeric: lining-nums proportional-nums;
+  font-feature-settings: "lnum" 1, "pnum" 1;
+}
