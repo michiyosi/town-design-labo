@@ -169,3 +169,22 @@
 }
 
 .page-sec p.fine-e { font-size: 13px; color: var(--ink-mute); line-height: 1.9; }
+
+/* ── 記事末尾の筆者欄 ─────────────────────────── */
+.author-box {
+  display: grid; grid-template-columns: 220px 1fr; gap: 28px; align-items: start;
+  border-top: 1px solid var(--line-strong); padding-top: 34px; margin-top: 8px;
+}
+.author-photo { display: block; overflow: hidden; background: var(--bg-deep); }
+.author-photo img { width: 100%; height: 165px; object-fit: cover; display: block; transition: opacity .2s ease; }
+.author-photo:hover img { opacity: .82; }
+.author-body .code { margin-bottom: 10px; }
+.author-body h3 { font-size: 19px; margin: 0 0 4px; border: none; padding: 0; }
+.author-body h3 a { color: var(--ink); text-decoration: none; }
+.author-body h3 a:hover { opacity: .65; }
+.author-role { font-size: 12.5px !important; color: var(--ink-mute); margin-bottom: 12px !important; letter-spacing: .04em; }
+.author-box p { font-size: 14px !important; line-height: 1.95 !important; }
+@media (max-width: 860px) {
+  .author-box { grid-template-columns: 1fr; gap: 18px; }
+  .author-photo img { height: 200px; }
+}

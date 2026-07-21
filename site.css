@@ -842,3 +842,28 @@ h1, h2, h3, h4, h5, h6 {
   font-variant-numeric: lining-nums proportional-nums;
   font-feature-settings: "lnum" 1, "pnum" 1;
 }
+
+/* ── ヘッダーのサブメニュー ───────────────────────── */
+.menu .has-sub { position: relative; display: inline-block; }
+.menu .submenu {
+  position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  background: var(--bg); border: 1px solid var(--line);
+  padding: 6px 0; min-width: 190px; white-space: nowrap;
+  opacity: 0; visibility: hidden; transition: opacity .18s ease, visibility .18s ease;
+  box-shadow: 0 8px 28px rgba(0,0,0,.07); z-index: 60;
+}
+.menu .has-sub:hover .submenu,
+.menu .has-sub:focus-within .submenu { opacity: 1; visibility: visible; }
+.menu .submenu a {
+  display: block; padding: 9px 18px; font-size: 12.5px; color: var(--ink);
+  letter-spacing: .02em; margin: 0;
+}
+.menu .submenu a:hover { background: var(--bg-soft); }
+@media (max-width: 860px) {
+  .menu .has-sub { display: block; }
+  .menu .submenu {
+    position: static; transform: none; opacity: 1; visibility: visible;
+    border: none; box-shadow: none; padding: 0 0 0 16px; min-width: 0; background: transparent;
+  }
+  .menu .submenu a { padding: 8px 0; font-size: 13px; opacity: .75; }
+}
