@@ -27,7 +27,7 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"></noscript>
 <link rel="stylesheet" href="/site.css?v=20260721a">
-<link rel="stylesheet" href="/page.css?v=20260721a">
+<link rel="stylesheet" href="/page.css?v=20260725lp">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -156,6 +156,14 @@ src="https://www.facebook.com/tr?id=1752804519503355&ev=PageView&noscript=1"
 <section class="page-body">
   <div class="wrap">
 
+    <div class="lp-quickcta">
+      <p><strong>「車検や牽引免許は、必要ですか？」</strong><br>車両区分の見きわめから、設計事務所がお答えします。初回相談は無料です。</p>
+      <div class="btn-row">
+        <a class="pbtn solid" href="#inquiry">無料で相談する</a>
+        <a class="pbtn" href="tel:08056159786">080-5615-9786</a>
+      </div>
+    </div>
+
     <div class="page-sec">
       <h2>まず、あなたの一台がどちらの類型かを知る</h2>
       <p>トレーラーハウスの公道走行は、<strong>車両のサイズで法的な扱いが根本から分かれます</strong>。境界線は道路運送車両の保安基準第2条の制限値——<strong>長さ12m・幅2.5m・高さ3.8m</strong>です。</p>
@@ -265,11 +273,49 @@ src="https://www.facebook.com/tr?id=1752804519503355&ev=PageView&noscript=1"
       <h3>法規の見きわめから、ご一緒します。</h3>
       <p>「この土地に置けるか」「この仕様で車両扱いを保てるか」。設計の前段にあるこの判断を、与件整理の段階からご一緒します。初回相談・お見積もりは無料です。</p>
       <div class="btn-row">
-        <a class="pbtn solid" href="/#contact">お問い合わせ &rarr;</a>
+        <a class="pbtn solid" href="#inquiry">この内容で相談する &rarr;</a>
         <a class="pbtn" href="tel:08056159786">080-5615-9786</a>
       </div>
     </div>
 
+  </div>
+</section>
+
+<section class="lp-inquiry" id="inquiry">
+  <div class="wrap">
+    <div class="lp-inq-head">
+      <h2>車両側の要件から、ご一緒に。</h2>
+      <p>サイズや仕様の決め方ひとつで、必要な免許も維持コストも変わります。</p>
+    </div>
+    <form id="cform" action="https://docs.google.com/forms/d/e/1FAIpQLSe0ioggwa5pgKEyCL_FwvP3mKaPQv50Lgj89eXzF6GyDkvoRg/formResponse" method="POST" target="gform-sink">
+      <h5>— Inquiry Form</h5>
+      <div id="cform-fields">
+        <div class="field"><label>お名前 *</label><input required name="entry.1951315019" type="text" autocomplete="name"></div>
+        <div class="field"><label>メールアドレス *</label><input required name="entry.437484033" type="email" autocomplete="email"></div>
+        <div class="field"><label>電話番号</label><input name="entry.2095176949" type="tel" autocomplete="tel"></div>
+        <div class="field"><label>ご用途</label>
+          <select name="entry.1401254800">
+              <option>未定 / 相談したい</option>
+              <option>別荘・セカンドハウス</option>
+              <option>店舗・カフェ・バー</option>
+              <option>事務所・サテライト</option>
+              <option>グランピング・宿泊施設</option>
+              <option>フードトラック・キッチンカー</option>
+              <option>その他</option>
+            </select>
+        </div>
+        <div class="field"><label>ご相談内容</label><textarea name="entry.1424514303" placeholder="例：想定サイズ／牽引車の有無／移動の頻度 など"></textarea></div>
+        <button type="submit" id="cform-submit">送信する</button>
+        <small>※ 送信内容はGoogleフォーム経由で受け付けます。内容を確認のうえ、2営業日以内にご返信します。<br>※ 送信をもって<a href="/privacy.html">プライバシーポリシー</a>にご同意いただいたものとみなします。</small>
+      </div>
+      <div id="cform-done" hidden>
+        <p class="cform-thanks">お問い合わせありがとうございます。<br>内容を確認のうえ、担当より2営業日以内にご連絡いたします。</p>
+      </div>
+      <input type="hidden" name="fvv" value="1">
+      <input type="hidden" name="pageHistory" value="0">
+      <iframe id="gform-sink" name="gform-sink" title="submission target" aria-hidden="true" class="is-hidden"></iframe>
+    </form>
+    <p class="lp-inq-alt">お急ぎの方はお電話でも承ります　<a href="tel:08056159786">080-5615-9786</a>（10:00–18:00 / 不定休）</p>
   </div>
 </section>
 </main>

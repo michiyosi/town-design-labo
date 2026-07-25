@@ -188,3 +188,38 @@
   .author-box { grid-template-columns: 1fr; gap: 18px; }
   .author-photo img { height: 200px; }
 }
+
+/* ------- LP: 上部クイックCTA（広告着地時の離脱防止） ------- */
+.lp-quickcta {
+  margin: 0 0 58px; padding: 22px 26px;
+  border: 1px solid var(--line-strong);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 22px; flex-wrap: wrap;
+}
+.lp-quickcta p { font-size: 13.5px; line-height: 1.9; margin: 0; flex: 1 1 320px; }
+.lp-quickcta .btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.lp-quickcta .pbtn { padding: 13px 24px; }
+
+/* ------- LP: ページ内フォーム ------- */
+.lp-inquiry { background: var(--ink); color: #f5f5f5; padding: 78px 0 86px; }
+.lp-inq-head { text-align: center; max-width: 640px; margin: 0 auto 42px; }
+.lp-inq-head h2 {
+  font-family: "Cormorant Garamond", serif; font-weight: 300;
+  font-size: 31px; color: #fff; margin-bottom: 14px; letter-spacing: .02em; line-height: 1.4;
+}
+.lp-inq-head p { font-size: 13px; color: rgba(255,255,255,.62); line-height: 2; }
+.lp-inquiry form { max-width: 640px; margin: 0 auto; }
+.lp-inq-alt {
+  max-width: 640px; margin: 26px auto 0; text-align: center;
+  font-size: 12.5px; color: rgba(255,255,255,.55); letter-spacing: .04em; line-height: 2;
+}
+.lp-inq-alt a { color: rgba(255,255,255,.9); border-bottom: 1px solid rgba(255,255,255,.35); }
+.lp-inq-alt a:hover { border-color: #fff; }
+
+@media (max-width: 640px) {
+  .lp-quickcta { padding: 20px; gap: 16px; }
+  .lp-quickcta .btn-row { width: 100%; }
+  .lp-quickcta .pbtn { flex: 1 1 auto; text-align: center; }
+  .lp-inquiry { padding: 60px 0 66px; }
+  .lp-inq-head h2 { font-size: 26px; }
+}

@@ -27,7 +27,7 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"></noscript>
 <link rel="stylesheet" href="/site.css?v=20260721a">
-<link rel="stylesheet" href="/page.css?v=20260721a">
+<link rel="stylesheet" href="/page.css?v=20260725lp">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -156,6 +156,14 @@ src="https://www.facebook.com/tr?id=1752804519503355&ev=PageView&noscript=1"
 <section class="page-body">
   <div class="wrap">
 
+    <div class="lp-quickcta">
+      <p><strong>「市街化調整区域でも、置けますか？」</strong><br>立地の可否は、設計に入る前に見きわめます。初回相談・お見積もりは無料です。</p>
+      <div class="btn-row">
+        <a class="pbtn solid" href="#inquiry">無料で相談する</a>
+        <a class="pbtn" href="tel:08056159786">080-5615-9786</a>
+      </div>
+    </div>
+
     <div class="page-sec">
       <h2>「調整区域でも置けます」の広告と、行政の注意喚起</h2>
       <p>市街化調整区域は原則として建築物を建てられない区域です。そこで「トレーラーハウスなら車両だから置ける」という宣伝が数多く見られます。<strong>条文上の出発点だけを見れば、この主張には根拠があります。</strong>都市計画法第43条の許可対象は「建築物の新築」と「第一種特定工作物の新設」で、トレーラーハウスは施行令第1条の特定工作物に該当しないからです。</p>
@@ -269,11 +277,49 @@ src="https://www.facebook.com/tr?id=1752804519503355&ev=PageView&noscript=1"
       <h3>法規の見きわめから、ご一緒します。</h3>
       <p>「この土地に置けるか」「この仕様で車両扱いを保てるか」。設計の前段にあるこの判断を、与件整理の段階からご一緒します。初回相談・お見積もりは無料です。</p>
       <div class="btn-row">
-        <a class="pbtn solid" href="/#contact">お問い合わせ &rarr;</a>
+        <a class="pbtn solid" href="#inquiry">この内容で相談する &rarr;</a>
         <a class="pbtn" href="tel:08056159786">080-5615-9786</a>
       </div>
     </div>
 
+  </div>
+</section>
+
+<section class="lp-inquiry" id="inquiry">
+  <div class="wrap">
+    <div class="lp-inq-head">
+      <h2>その土地に置けるか、確かめます。</h2>
+      <p>結論が出ていない段階のご相談で構いません。<br>管轄の特定行政庁への確認から、ご一緒します。</p>
+    </div>
+    <form id="cform" action="https://docs.google.com/forms/d/e/1FAIpQLSe0ioggwa5pgKEyCL_FwvP3mKaPQv50Lgj89eXzF6GyDkvoRg/formResponse" method="POST" target="gform-sink">
+      <h5>— Inquiry Form</h5>
+      <div id="cform-fields">
+        <div class="field"><label>お名前 *</label><input required name="entry.1951315019" type="text" autocomplete="name"></div>
+        <div class="field"><label>メールアドレス *</label><input required name="entry.437484033" type="email" autocomplete="email"></div>
+        <div class="field"><label>電話番号</label><input name="entry.2095176949" type="tel" autocomplete="tel"></div>
+        <div class="field"><label>ご用途</label>
+          <select name="entry.1401254800">
+              <option>未定 / 相談したい</option>
+              <option>別荘・セカンドハウス</option>
+              <option>店舗・カフェ・バー</option>
+              <option>事務所・サテライト</option>
+              <option>グランピング・宿泊施設</option>
+              <option>フードトラック・キッチンカー</option>
+              <option>その他</option>
+            </select>
+        </div>
+        <div class="field"><label>ご相談内容</label><textarea name="entry.1424514303" placeholder="例：検討中の土地の所在地／地目・区域区分／想定用途 など"></textarea></div>
+        <button type="submit" id="cform-submit">送信する</button>
+        <small>※ 送信内容はGoogleフォーム経由で受け付けます。内容を確認のうえ、2営業日以内にご返信します。<br>※ 送信をもって<a href="/privacy.html">プライバシーポリシー</a>にご同意いただいたものとみなします。</small>
+      </div>
+      <div id="cform-done" hidden>
+        <p class="cform-thanks">お問い合わせありがとうございます。<br>内容を確認のうえ、担当より2営業日以内にご連絡いたします。</p>
+      </div>
+      <input type="hidden" name="fvv" value="1">
+      <input type="hidden" name="pageHistory" value="0">
+      <iframe id="gform-sink" name="gform-sink" title="submission target" aria-hidden="true" class="is-hidden"></iframe>
+    </form>
+    <p class="lp-inq-alt">お急ぎの方はお電話でも承ります　<a href="tel:08056159786">080-5615-9786</a>（10:00–18:00 / 不定休）</p>
   </div>
 </section>
 </main>
