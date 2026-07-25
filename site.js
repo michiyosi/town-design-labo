@@ -40,8 +40,10 @@ if (cform && gsink) {
   });
   gsink.addEventListener('load', function () {
     if (!cfSubmitted) return;
+    /* 送信成功 -> 計測用サンクスページへ（広告コンバージョンの発火点） */
     if (cfFields) cfFields.hidden = true;
     if (cfDone) cfDone.hidden = false;
+    window.location.href = '/thanks.html';
   });
 }
 
@@ -59,7 +61,7 @@ const galleries = {
   w7: { title: "010 · Industrial — Saratoga Mark2", imgs: ["CERIUKlhGWp_01.jpg","CERIUKlhGWp_02.jpg","CERIUKlhGWp_03.jpg","CERIUKlhGWp_04.jpg"] },
   w8: { title: "011 · Delivery — 納車・陸送", imgs: ["CrGPYCqvxna_01.jpg","CrGPYCqvxna_02.jpg","CrGPYCqvxna_03.jpg","CrGPYCqvxna_04.jpg","CrGPYCqvxna_05.jpg"] }
 };
-const IMG_BASE = "/";
+const IMG_BASE = "./images/";
 if (document.getElementById('lb')) {
   const lb = document.getElementById('lb');
   const lbImg = document.getElementById('lbImg');
