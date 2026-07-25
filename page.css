@@ -223,3 +223,40 @@
   .lp-inquiry { padding: 60px 0 66px; }
   .lp-inq-head h2 { font-size: 26px; }
 }
+
+/* ------- 関連ガイド＋実績への導線 ------- */
+.rel-guides { margin: 64px 0 0; padding: 34px 0 0; border-top: 1px solid var(--line-strong); }
+.rel-guides > h4 {
+  font-family: "Inter", monospace; font-size: 10.5px; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--ink-mute); margin: 0 0 22px;
+}
+.rel-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.rel-list a {
+  display: block; border: 1px solid var(--line); padding: 20px 18px 18px;
+  transition: border-color .2s, transform .2s;
+}
+.rel-list a:hover { border-color: var(--ink); transform: translateY(-2px); }
+.rel-list .g-code {
+  display: block; font-family: "Inter", monospace; font-size: 10px;
+  letter-spacing: .2em; color: var(--ink-mute); margin-bottom: 9px;
+}
+.rel-list .g-title { font-size: 13.5px; line-height: 1.7; color: var(--ink); font-weight: 600; }
+
+.rel-works {
+  margin: 34px 0 0; padding: 26px 28px;
+  background: var(--bg-soft); border: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: space-between; gap: 22px; flex-wrap: wrap;
+}
+.rel-works p { margin: 0; font-size: 13.5px; line-height: 1.9; color: var(--ink-mute); flex: 1 1 340px; }
+.rel-works p strong { color: var(--ink); font-weight: 600; }
+
+@media (max-width: 860px) { .rel-list { grid-template-columns: 1fr; } }
+@media (max-width: 640px) {
+  .rel-works { padding: 22px 20px; }
+  .rel-works .pbtn { width: 100%; text-align: center; }
+}
+
+/* ------- Works: ギャラリー本体 ------- */
+.works-full { margin: 12px 0 0; }
+.works-full .works-grid { margin-bottom: 22px; }
+.works-full .fine-d { font-size: 11.5px; line-height: 1.9; color: var(--ink-mute); margin: 0; }
