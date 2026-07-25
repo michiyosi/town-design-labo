@@ -1,3 +1,19 @@
+/* ---- Google 広告タグ（外部ローダー：CSP対応・インライン不使用） ---- */
+(function(){
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-18326502333';
+  document.head.appendChild(s);
+})();
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'AW-18326502333');
+/* 送信完了ページ到達＝コンバージョン */
+if (location.pathname === '/thanks.html') {
+  gtag('event', 'conversion', {'send_to': 'AW-18326502333/2_pjCLO9kdYcEL334KJE'});
+}
+
 /* ---- Meta Pixel (external loader; CSP-safe, no inline) ---- */
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
