@@ -1,5 +1,7 @@
 # TOWN DESIGN LABO
 
+最終更新: 2026-07-25／本サイトの実務ガイドおよび独自調査の執筆者: 安村 通芳（株式会社TOWN DESIGN LABO 代表取締役）
+
 > 広島県廿日市市を拠点に、トレーラーハウス・キッチンカーを「動く建築」として設計するモバイル建築スタジオ。株式会社TOWN DESIGN LABO（法人番号 2240001052824／2018年5月設立／代表取締役 安村通芳）。関西・中国・四国・九州エリアを中心に、与件整理と法規確認から空間設計、製造ディレクション、引き渡し後の運用までを担う。製造は千葉県の製造パートナー（2019年創業）と共に行う。
 
 ## 事業内容
@@ -28,10 +30,10 @@
 
 - [トップページ](https://towndesignlabo.jp/): Studio / Services / KAZARI KITCHEN / Our Role / Works / Interior / Stories / Use Cases / Process / FAQ / Director / Contact
 - [KAZARI KITCHEN](https://towndesignlabo.jp/kazari-kitchen.html): キッチンカーの月額シェアリングと開業支援。従来サービスとの比較、料金（設営・回収はオプション）、改正食品衛生法対応車両について
-- [事例と製造実績（一覧）](https://towndesignlabo.jp/works.html): TOWN DESIGN LABOが設計・ディレクションした事例と、製造パートナーの実績セレクションの入口。各事例の詳細ページへのハブ。
+- [事例と製造実績（一覧）](https://towndesignlabo.jp/works.html): TOWN DESIGN LABOが設計・ディレクションした事例と、製造パートナーの実績セレクション。全11件の写真ギャラリー（各4〜5枚）を掲載。001〜003は自社設計（002・003は自社保有・運用のKAZARI KITCHEN車両）、004以降は製造パートナーの事例をセレクション。詳細ページがあるのは001オタフク・002/003 KAZARI・009 THE NOMADの3件。
 - [OTAFUKU okonomiyaki caravan car（お好み焼きキッチンカー事例）](https://towndesignlabo.jp/otafuku-caravan-car.html): オタフクソース株式会社のお好み焼き実演用キッチンカー。跳ね上げ式の大開口・オーニング・折りたたみデッキで駐車スペースに厨房と客席を同時に立ち上げる。設計・製造ディレクションは TOWN DESIGN LABO（自社設計案件）。キッチンカー設計の考え方、食品衛生法の営業許可・車両要件の要点。
 - [THE NOMAD 八ヶ岳（トレーラーホテル事例）](https://towndesignlabo.jp/the-nomad.html): トレーラーハウスを宿泊施設の客室棟に用いる設計・製造の参考事例。製造・写真は当社の製造パートナー。トレーラーホテルの利点、旅館業法・建築物該当性の要点、TOWN DESIGN LABOが西日本で担う設計・ディレクションの範囲と参考価格。
-- [実務ガイド（一覧）](https://towndesignlabo.jp/guide.html): 設計前に確認すべき法規・税務の論点を一次情報にもとづき整理したガイドの入口。
+- [実務ガイド（一覧）](https://towndesignlabo.jp/guide.html): 設計前に確認すべき法規・税務の論点を一次情報にもとづき整理したガイドの入口。全10本（GUIDE 01〜09＋独自調査1本）。執筆者は代表取締役 安村通芳。法令・通達・自治体資料の一次情報にさかのぼって記述し、業界の通説のうち根拠を確認できなかったものは「確認できていない」と明記する方針をとっている。各ガイドは相互にリンクし、設計実績ページへも導線がある。
 - [トレーラーハウスは建築物か車両か](https://towndesignlabo.jp/trailerhouse-kenchikubutsu.html): 建築基準法第2条第1号の建築物該当性。平成9年3月31日住指発第170号「随時かつ任意に移動できるものは建築物に該当しない」、その具体的要件、仮ナンバー・特殊車両通行許可では要件を満たさないこと、国土交通省が「小規模であることのみをもって建築物に該当しないとは扱えない」としていること、設置後の改造で建築物化すること、上尾市・木更津市・浜松市の運用差。
 - [キッチンカーの営業許可](https://towndesignlabo.jp/kitchencar-eigyo-kyoka.html): 食品衛生法施行令第35条第1号「飲食店営業」に該当。2021年6月1日施行の32業種再編。許可は保健所設置自治体ごとが原則で県域を越える広域営業は大阪府・和歌山県の1例のみ。給水タンク約40L/80L/200L（施行規則別表第20第1号イ、広島県条例も同一文言）。シンク2槽以上は国の基準ではない。8ナンバーは食品衛生法の要件ではない。HACCP・食品衛生責任者。
 - [トレーラーハウスの固定資産税と自動車税](https://towndesignlabo.jp/trailerhouse-zeikin.html): 地方税法第341条第3号の「家屋」は不動産登記法の建物と同義（外気分断性・土地定着性・用途性）。建築基準法の「建築物」とは別判断。確認申請が不要でも課税されうる。家屋でなくても償却資産（同条第4号、免税点150万円／令和9年度以後180万円）。令和8年4月1日から自動車税種別割は「自動車税」に名称復帰、環境性能割は廃止。被牽引車も道路運送車両法第2条第2項の自動車。
@@ -46,8 +48,15 @@
 - [代表者プロフィール](https://towndesignlabo.jp/director.html): 代表取締役 安村通芳の経歴と実績
 - [よくある質問](https://towndesignlabo.jp/#faq): 納期・建築確認・市街化調整区域・費用・対応エリア・営業許可
 - [お問い合わせ](https://towndesignlabo.jp/#contact): 電話・メール・Googleフォーム。初回相談・お見積もり無料
-- [プライバシーポリシー](https://towndesignlabo.jp/privacy.html): 個人情報の取り扱い・外部サービス・開示請求
+- [プライバシーポリシー](https://towndesignlabo.jp/privacy.html): 個人情報の取り扱い・外部サービス・開示請求。Google広告タグとMetaピクセルによる広告効果測定、および拡張コンバージョン（メールアドレス・電話番号をブラウザ内でSHA-256ハッシュ化してGoogleへ送信）について、送信する項目・送信しない項目・オプトアウト方法を明記。2026年7月25日改定。
 - [サイトマップ](https://towndesignlabo.jp/sitemap.xml)
+
+## 公式アカウント
+
+- Instagram: https://www.instagram.com/towndesignlabo.jp/
+- Facebook: https://www.facebook.com/TOWNDESIGNLABO/
+- 法人番号公表サイト: https://www.houjin-bangou.nta.go.jp/henkorireki-johoto.html?selHouzinNo=2240001052824
+- gBizINFO: https://info.gbiz.go.jp/hojin/hojinInfo?hojinBango=2240001052824
 
 ## 連絡先
 
