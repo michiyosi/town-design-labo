@@ -249,6 +249,16 @@
 }
 .rel-works p { margin: 0; font-size: 13.5px; line-height: 1.9; color: var(--ink-mute); flex: 1 1 340px; }
 .rel-works p strong { color: var(--ink); font-weight: 600; }
+.rel-case {
+  flex: 1 1 100% !important; order: 9;
+  margin: 4px 0 0 !important; padding-top: 15px; border-top: 1px solid var(--line);
+  font-size: 12.5px !important; line-height: 1.95; color: var(--ink-mute);
+}
+.rel-case .rc-lbl { display: block; font-family: "Inter", sans-serif; font-size: 10px;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 5px; }
+.rel-case a { color: var(--ink); border-bottom: 1px solid var(--line-strong); padding-bottom: 1px; transition: border-color .2s; }
+.rel-case a:hover { border-color: var(--ink); }
+.rel-case .sep { color: var(--ink-mute); margin: 0 7px; }
 
 @media (max-width: 860px) { .rel-list { grid-template-columns: 1fr; } }
 @media (max-width: 640px) {
