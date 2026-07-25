@@ -106,7 +106,7 @@ header.scrolled { border-bottom-color: var(--line); }
 }
 .hero-bg {
   position: absolute; inset: 0;
-  background: url('./hero.webp') center/cover no-repeat;
+  background: url('./images/hero.webp') center/cover no-repeat;
   filter: grayscale(15%) brightness(.7) contrast(1.05);
 }
 .hero-bg::after {
@@ -866,4 +866,9 @@ h1, h2, h3, h4, h5, h6 {
     border: none; box-shadow: none; padding: 0 0 0 16px; min-width: 0; background: transparent;
   }
   .menu .submenu a { padding: 8px 0; font-size: 13px; opacity: .75; }
+}
+
+/* ------- モバイル: 入力欄のフォントを16pxに（iOSの自動ズーム防止） ------- */
+@media (max-width: 900px) {
+  .field input, .field select, .field textarea { font-size: 16px; }
 }
