@@ -90,6 +90,7 @@ src="https://www.facebook.com/tr?id=1752804519503355&ev=PageView&noscript=1"
       <li>お問い合わせへの回答およびご連絡</li>
       <li>お見積もり、ご提案、図面・仕様書等の作成</li>
       <li>ご契約に関する手続き、および引き渡し後のご連絡・アフターフォロー</li>
+      <li>広告の効果測定（メールアドレス・電話番号をハッシュ化した値のみを使用。詳細は「7. Cookie と広告効果の測定」をご覧ください）</li>
     </ul>
     <p>上記以外の目的で利用する場合は、あらかじめご本人の同意を得ます。</p>
   </section>
@@ -110,15 +111,27 @@ src="https://www.facebook.com/tr?id=1752804519503355&ev=PageView&noscript=1"
     <dl class="info">
       <dt>Googleフォーム</dt><dd>Google LLC — お問い合わせ内容の受付・保管</dd>
       <dt>Google Fonts</dt><dd>Google LLC — Webフォントの配信</dd>
+      <dt>Google広告（Googleタグ）</dt><dd>Google LLC — 広告の効果測定</dd>
+      <dt>Metaピクセル</dt><dd>Meta Platforms, Inc. — 広告の効果測定</dd>
       <dt>Cloudflare</dt><dd>Cloudflare, Inc. — サイト配信、セキュリティ保護、メール転送、アクセス状況の把握</dd>
       <dt>GitHub Pages</dt><dd>GitHub, Inc. — サイトのホスティング</dd>
     </dl>
   </section>
 
   <section>
-    <h2>7. Cookie とアクセス解析</h2>
-    <p>当サイトは、広告配信や行動追跡を目的とした Cookie を使用していません。</p>
-    <p>アクセス状況の把握のため Cloudflare のアクセス解析機能を利用しています。同機能は Cookie を使用せず、個人を特定する情報を収集しません。</p>
+    <h2>7. Cookie と広告効果の測定</h2>
+    <p>当サイトは、広告の効果を測定するため Google広告（Googleタグ）および Metaピクセルを設置しています。これらは Cookie 等の識別子を用いて、広告経由でのご訪問とお問い合わせの送信を関連付けます。</p>
+    <p>アクセス状況の把握には Cloudflare のアクセス解析機能を利用しています。同機能は Cookie を使用せず、個人を特定する情報を収集しません。</p>
+
+    <h3>拡張コンバージョン（Google広告）について</h3>
+    <p>お問い合わせフォームを送信いただいた際、ご入力のメールアドレスおよび電話番号を、お客様のブラウザ内で <strong>SHA-256 によりハッシュ化（元に戻せない形へ変換）</strong> したうえで Google LLC に送信します。Google は同社が保有する情報とこのハッシュ値を照合し、一致した場合に広告の成果として計上します。</p>
+    <ul>
+      <li>送信されるのはハッシュ化された値のみです。メールアドレス・電話番号そのものが送信されることはありません</li>
+      <li>お名前・ご用途・お問い合わせ内容は送信しません</li>
+      <li>ブラウザに一時保存した値は、送信の直後に削除されます</li>
+      <li>利用目的は広告の効果測定に限られ、それ以外の目的では使用しません</li>
+    </ul>
+    <p class="note">この処理をご希望されない場合は、フォームではなくお電話（080-5615-9786）にてお問い合わせください。また、ブラウザの設定で Cookie を無効にする、Google の<a href="https://myadcenter.google.com/" target="_blank" rel="noopener">広告設定</a>や Meta の<a href="https://www.facebook.com/adpreferences/ad_settings" target="_blank" rel="noopener">広告設定</a>から、パーソナライズ広告を停止することもできます。</p>
   </section>
 
   <section>
@@ -137,7 +150,7 @@ src="https://www.facebook.com/tr?id=1752804519503355&ev=PageView&noscript=1"
   </section>
 
   <div class="doc-foot">
-    <p>制定日: 2026年7月17日</p>
+    <p>制定日: 2026年7月17日<br>最終改定日: 2026年7月25日（広告の効果測定に関する記載を追加）</p>
     <a class="btn" href="/">トップページへ戻る →</a>
   </div>
 </main>
@@ -170,6 +183,6 @@ src="https://www.facebook.com/tr?id=1752804519503355&ev=PageView&noscript=1"
   </div>
 </footer>
 
-<script src="/site.js?v=20260724gads" defer></script>
+<script src="/site.js?v=20260725ec" defer></script>
 </body>
 </html>

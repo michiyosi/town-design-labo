@@ -9,6 +9,39 @@ window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'AW-18326502333');
+
+/* ---- 拡張コンバージョン用：ユーザー提供データの受け渡し ----
+   フォーム送信時にメール・電話を sessionStorage に一時保存し、
+   /thanks.html でコンバージョン発火の直前に gtag へ渡す。
+   値は gtag によりブラウザ内で SHA-256 ハッシュ化されてから送信され、
+   送信後は直ちに sessionStorage から削除する。                       */
+var TDL_UD_KEY = 'tdl_ud';
+function tdlNormalizePhone(v) {
+  if (!v) return '';
+  var s = String(v).trim();
+  if (s.charAt(0) === '+') return '+' + s.slice(1).replace(/\D/g, '');
+  var d = s.replace(/\D/g, '');
+  if (!d) return '';
+  if (d.charAt(0) === '0') return '+81' + d.slice(1);
+  if (d.slice(0, 2) === '81') return '+' + d;
+  return '+81' + d;
+}
+if (location.pathname === '/thanks.html') {
+  try {
+    var tdlRaw = sessionStorage.getItem(TDL_UD_KEY);
+    if (tdlRaw) {
+      var tdlUd = JSON.parse(tdlRaw);
+      var tdlPayload = {};
+      if (tdlUd.email) tdlPayload.email = tdlUd.email;
+      if (tdlUd.phone) tdlPayload.phone_number = tdlUd.phone;
+      if (tdlPayload.email || tdlPayload.phone_number) {
+        gtag('set', 'user_data', tdlPayload);
+      }
+      sessionStorage.removeItem(TDL_UD_KEY);
+    }
+  } catch (e) { /* 取得に失敗してもコンバージョン計測は継続する */ }
+}
+
 /* 送信完了ページ到達＝コンバージョン */
 if (location.pathname === '/thanks.html') {
   gtag('event', 'conversion', {'send_to': 'AW-18326502333/2_pjCLO9kdYcEL334KJE'});
@@ -65,6 +98,15 @@ let cfSubmitted = false;
 if (cform && gsink) {
   cform.addEventListener('submit', function () {
     cfSubmitted = true;
+    /* 拡張コンバージョン用にメール・電話を一時保存（/thanks.html で使用後すぐ削除） */
+    try {
+      var udEmail = cform.querySelector('input[type="email"]');
+      var udTel = cform.querySelector('input[type="tel"]');
+      var ud = {};
+      if (udEmail && udEmail.value) ud.email = udEmail.value.trim().toLowerCase();
+      if (udTel && udTel.value) ud.phone = tdlNormalizePhone(udTel.value);
+      if (ud.email || ud.phone) sessionStorage.setItem(TDL_UD_KEY, JSON.stringify(ud));
+    } catch (e) { /* 保存に失敗しても送信は継続する */ }
     if (cfBtn) { cfBtn.disabled = true; cfBtn.textContent = 'Sending…'; }
   });
   gsink.addEventListener('load', function () {
