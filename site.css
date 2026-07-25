@@ -106,7 +106,7 @@ header.scrolled { border-bottom-color: var(--line); }
 }
 .hero-bg {
   position: absolute; inset: 0;
-  background: url('./images/hero.webp') center/cover no-repeat;
+  background: url('./hero.webp') center/cover no-repeat;
   filter: grayscale(15%) brightness(.7) contrast(1.05);
 }
 .hero-bg::after {
