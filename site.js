@@ -120,17 +120,18 @@ if (cform && gsink) {
 
 /* ---- Works Lightbox ---- */
 const galleries = {
-  w0: { title: "001 · Caravan Car — OTAFUKU okonomiyaki caravan car", imgs: ["otafuku-01.jpg","otafuku-02.jpg","otafuku-03.jpg","otafuku-04.jpg"] },
+  w0: { title: "001 · Caravan Car — OTAFUKU okonomiyaki caravan car", imgs: ["otafuku-01.jpg","otafuku-02.jpg","otafuku-03.jpg","otafuku-04.jpg","otafuku-05.jpg"] },
   w9: { title: "002 · Kitchen Car — KAZARI KITCHEN Type A", imgs: ["kazari-a-01.jpg","kazari-a-02.jpg","kazari-a-03.jpg","kazari-a-04.jpg","kazari-a-05.jpg"] },
   w10: { title: "003 · Kitchen Car — KAZARI KITCHEN Type B", imgs: ["kazari-b-01.jpg","kazari-b-02.jpg","kazari-b-03.jpg","kazari-b-04.jpg","kazari-b-05.jpg"] },
-  w1: { title: "004 · Bar — WICK BAR", imgs: ["eagle-01.jpg","wick-02.jpg","wick-03.jpg","wick-04.jpg"] },
-  w2: { title: "005 · House — Second House", imgs: ["CppfyPsv4kN_01.jpg","CppfyPsv4kN_02.jpg","CppfyPsv4kN_03.jpg","CppfyPsv4kN_04.jpg","CppfyPsv4kN_05.jpg"] },
-  w3: { title: "006 · Pizzeria — PIZZERIA Calcifer", imgs: ["eagle-11.jpg","calcifer-02.jpg","calcifer-03.jpg","calcifer-04.jpg","calcifer-05.jpg"] },
-  w4: { title: "007 · Food Truck — PARA-SOL Kitchen Stand", imgs: ["CG2E9eDB-z0_01.jpg","CG2E9eDB-z0_02.jpg","CG2E9eDB-z0_03.jpg","CG2E9eDB-z0_04.jpg","CG2E9eDB-z0_05.jpg"] },
-  w5: { title: "008 · Atelier — レザークラフト移動工房", imgs: ["eagle-04.jpg","eagle-05.jpg","eagle-10.jpg"] },
-  w6: { title: "009 · Hotel — THE NOMAD 八ヶ岳 トレーラーホテル", imgs: ["CaGqL7fv3mc_03.jpg","CaGqL7fv3mc_06.jpg","CccEOvgLPIY_04.jpg","CccEOvgLPIY_02.jpg","CccEOvgLPIY_05.jpg"] },
-  w7: { title: "010 · Industrial — Saratoga Mark2", imgs: ["CERIUKlhGWp_01.jpg","CERIUKlhGWp_02.jpg","CERIUKlhGWp_03.jpg","CERIUKlhGWp_04.jpg"] },
-  w8: { title: "011 · Delivery — 納車・陸送", imgs: ["CrGPYCqvxna_01.jpg","CrGPYCqvxna_02.jpg","CrGPYCqvxna_03.jpg","CrGPYCqvxna_04.jpg","CrGPYCqvxna_05.jpg"] }
+  w11: { title: "004 · Kitchen Car — 生協ひろしま KITCHEN CAR", imgs: ["coop-01.jpg","coop-02.jpg","coop-03.jpg","coop-04.jpg","coop-05.jpg"] },
+  w1: { title: "005 · Bar — WICK BAR", imgs: ["eagle-01.jpg","wick-02.jpg","wick-03.jpg","wick-04.jpg"] },
+  w2: { title: "006 · House — Second House", imgs: ["CppfyPsv4kN_01.jpg","CppfyPsv4kN_02.jpg","CppfyPsv4kN_03.jpg","CppfyPsv4kN_04.jpg","CppfyPsv4kN_05.jpg"] },
+  w3: { title: "007 · Pizzeria — PIZZERIA Calcifer", imgs: ["eagle-11.jpg","calcifer-02.jpg","calcifer-03.jpg","calcifer-04.jpg","calcifer-05.jpg"] },
+  w4: { title: "008 · Food Truck — PARA-SOL Kitchen Stand", imgs: ["CG2E9eDB-z0_01.jpg","CG2E9eDB-z0_02.jpg","CG2E9eDB-z0_03.jpg","CG2E9eDB-z0_04.jpg","CG2E9eDB-z0_05.jpg"] },
+  w5: { title: "009 · Atelier — レザークラフト移動工房", imgs: ["eagle-04.jpg","eagle-05.jpg","eagle-10.jpg"] },
+  w6: { title: "010 · Hotel — THE NOMAD 八ヶ岳 トレーラーホテル", imgs: ["CaGqL7fv3mc_03.jpg","CaGqL7fv3mc_06.jpg","CccEOvgLPIY_04.jpg","CccEOvgLPIY_02.jpg","CccEOvgLPIY_05.jpg"] },
+  w7: { title: "011 · Industrial — Saratoga Mark2", imgs: ["CERIUKlhGWp_01.jpg","CERIUKlhGWp_02.jpg","CERIUKlhGWp_03.jpg","CERIUKlhGWp_04.jpg"] },
+  w8: { title: "012 · Delivery — 納車・陸送", imgs: ["CrGPYCqvxna_01.jpg","CrGPYCqvxna_02.jpg","CrGPYCqvxna_03.jpg","CrGPYCqvxna_04.jpg","CrGPYCqvxna_05.jpg"] }
 };
 const IMG_BASE = "./";
 if (document.getElementById('lb')) {
