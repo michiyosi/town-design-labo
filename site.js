@@ -120,7 +120,7 @@ if (cform && gsink) {
 
 /* ---- Works Lightbox ---- */
 const galleries = {
-  w0: { title: "001 · Caravan Car — OTAFUKU okonomiyaki caravan car", imgs: ["otafuku-01.jpg","otafuku-02.jpg","otafuku-03.jpg","otafuku-04.jpg","otafuku-05.jpg"] },
+  w0: { title: "001 · Caravan Car — OTAFUKU okonomiyaki caravan car", imgs: ["otafuku-01.jpg","otafuku-02.jpg","otafuku-03.jpg","otafuku-04.jpg","otafuku-05.jpg","otafuku-06.jpg","otafuku-07.jpg","otafuku-08.jpg"] },
   w9: { title: "002 · Kitchen Car — KAZARI KITCHEN Type A", imgs: ["kazari-a-01.jpg","kazari-a-02.jpg","kazari-a-03.jpg","kazari-a-04.jpg","kazari-a-05.jpg"] },
   w10: { title: "003 · Kitchen Car — KAZARI KITCHEN Type B", imgs: ["kazari-b-01.jpg","kazari-b-02.jpg","kazari-b-03.jpg","kazari-b-04.jpg","kazari-b-05.jpg"] },
   w11: { title: "004 · Kitchen Car — 生協ひろしま KITCHEN CAR", imgs: ["coop-01.jpg","coop-02.jpg","coop-03.jpg","coop-04.jpg","coop-05.jpg"] },
