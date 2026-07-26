@@ -60,6 +60,18 @@ fbq('init', '1752804519503355');
 fbq('track', 'PageView');
 if (location.pathname === '/thanks.html') { fbq('track', 'Lead'); }
 
+/* ---- Meta: フォーム入力開始をContactとして計測（低予算時の最適化用マイクロCV） ---- */
+document.addEventListener('DOMContentLoaded', function () {
+  var mcForm = document.getElementById('cform');
+  if (!mcForm || typeof fbq !== 'function') return;
+  var mcFired = false;
+  mcForm.addEventListener('focusin', function () {
+    if (mcFired) return;
+    mcFired = true;
+    try { fbq('track', 'Contact'); } catch (e) { /* 計測失敗は無視 */ }
+  });
+});
+
 /* Google Fonts を非ブロッキングで適用（CSP対応: インラインhandler不使用） */
 (function () {
   var p = document.querySelector('link[rel="preload"][as="style"][href*="fonts.googleapis.com"]');
