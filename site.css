@@ -1004,3 +1004,33 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 860px) {
   .legal-grid { grid-template-columns: 1fr; gap: 14px; }
 }
+
+/* ------- Phase2 (2026-07-28): 導入・採用実績バー ------- */
+.trust { background: var(--bg); border-top: 1px solid var(--line); padding: 84px 0; }
+.trust-head { margin-bottom: 26px; }
+.trust-head .num {
+  font-family: "Inter", monospace; font-size: 11px; letter-spacing: .25em;
+  color: var(--brass); padding-top: 16px; border-top: 1px solid var(--line-strong);
+  display: inline-block; margin-bottom: 16px;
+}
+.trust-head p { color: var(--ink-mute); font-size: 13.5px; line-height: 1.9; max-width: 640px; margin: 0; }
+.trust-table { border-top: 1px solid var(--line-strong); }
+.trust-row {
+  display: grid; grid-template-columns: 1.5fr 1fr 1.7fr; gap: 24px;
+  padding: 17px 4px; border-bottom: 1px solid var(--line); align-items: baseline;
+}
+.trust-row--head {
+  font-family: "Inter", monospace; font-size: 10px; letter-spacing: .2em;
+  color: var(--ink-mute); padding: 10px 4px;
+}
+.trust-row > div { font-size: 13px; color: var(--ink-mute); line-height: 1.6; }
+.trust-client { color: var(--ink); font-size: 15px; font-weight: 600; letter-spacing: .01em; }
+.trust-client sup { color: var(--brass); font-size: 11px; margin-left: 2px; }
+.trust-note { margin-top: 18px; font-size: 11.5px; color: var(--ink-mute); line-height: 1.8; letter-spacing: .01em; }
+@media (max-width: 720px) {
+  .trust { padding: 60px 0; }
+  .trust-row--head { display: none; }
+  .trust-row { grid-template-columns: 1fr; gap: 3px; padding: 15px 2px; }
+  .trust-row > div { font-size: 12.5px; }
+  .trust-client { font-size: 14px; }
+}
