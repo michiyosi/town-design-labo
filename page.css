@@ -416,3 +416,52 @@
   .ht-result h3{ font-size:21px; }
   .ht-after .pbtn{ width:100%; text-align:center; }
 }
+
+/* ---- 費用シミュレーター ---- */
+.cs-wrap{ border:1px solid var(--line-strong); background:#fff; }
+.cs-form{ padding:28px 30px; border-bottom:1px solid var(--line); background:#fbfbfa; }
+.cs-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); gap:16px 18px; }
+.cs-f{ display:block; }
+.cs-f > span{ display:block; font-size:11.5px; letter-spacing:.04em; color:#6b6b68; margin-bottom:6px; }
+.cs-f select, .cs-f input{
+  width:100%; padding:10px 12px; font-size:14px; font-family:inherit;
+  border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:0;
+}
+.cs-f select:focus, .cs-f input:focus{ outline:2px solid var(--ink); outline-offset:-2px; }
+.cs-check{ display:flex; align-items:center; gap:9px; margin-top:20px; font-size:13.5px; cursor:pointer; }
+.cs-check input{ width:15px; height:15px; accent-color:#111; }
+#cs-bizfields{ margin-top:18px; padding-top:18px; border-top:1px solid var(--line); }
+
+.cs-out{ padding:30px 30px 34px; }
+.cs-cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin-bottom:34px; }
+.cs-card{ background:#fff; padding:18px 18px 16px; }
+.cs-card span{ display:block; font-size:11px; letter-spacing:.06em; color:#8a8a86; margin-bottom:7px; }
+.cs-card strong{ display:block; font-size:24px; font-weight:400; line-height:1.25; letter-spacing:-.01em; }
+.cs-card em{ display:block; font-style:normal; font-size:11.5px; color:#8a8a86; margin-top:4px; }
+.cs-card.is-key{ background:var(--ink); }
+.cs-card.is-key span{ color:rgba(255,255,255,.55); }
+.cs-card.is-key strong{ color:#fff; }
+.cs-card.is-key em{ color:rgba(255,255,255,.55); }
+.cs-card.is-pos strong{ color:#2e7d4f; }
+.cs-card.is-neg strong{ color:#b0413e; }
+
+.cs-h{ font-size:14px; font-weight:600; margin:30px 0 12px; letter-spacing:.02em; }
+.cs-h:first-child{ margin-top:0; }
+.cs-table{ border-top:1px solid var(--line); }
+.cs-row{ display:flex; gap:18px; align-items:flex-start; padding:13px 0; border-bottom:1px solid var(--line); font-size:13px; }
+.cs-n{ flex:1; min-width:0; line-height:1.7; }
+.cs-n span{ display:block; font-size:11.5px; line-height:1.85; color:#8a8a86; margin-top:3px; }
+.cs-v{ flex:0 0 auto; text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; padding-top:1px; }
+.cs-total{ font-weight:600; border-bottom:0; border-top:1px solid var(--line-strong); padding-top:15px; }
+.cs-total div:last-child{ margin-left:auto; font-variant-numeric:tabular-nums; }
+.cs-note{ margin-top:28px; padding:20px 22px; background:#fbfbfa; border-left:3px solid var(--line-strong);
+  font-size:12.5px; line-height:1.95; color:var(--ink-mute); }
+.cs-note strong{ color:var(--ink); }
+.cs-src{ display:block; font-size:11.5px; color:#8a8a86; margin-top:6px; }
+
+@media (max-width:600px){
+  .cs-form{ padding:22px 20px; }
+  .cs-out{ padding:24px 20px 26px; }
+  .cs-card strong{ font-size:21px; }
+  .cs-row{ gap:12px; }
+}
