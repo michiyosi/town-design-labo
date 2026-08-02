@@ -9,6 +9,8 @@ window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'AW-18326502333');
+/* GA4（回遊・滞在・スクロール深度の計測） */
+gtag('config', 'G-SD0J17P6ST');
 
 /* ---- 拡張コンバージョン用：ユーザー提供データの受け渡し ----
    フォーム送信時にメール・電話を sessionStorage に一時保存し、
