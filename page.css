@@ -299,3 +299,54 @@
   .nextq h3{ font-size:15.5px; }
   .nextq p{ font-size:13.5px; }
 }
+
+/* ---- 資料ダウンロード ---- */
+.dl-toc{ margin:18px 0 6px; }
+.dl-item{ display:flex; gap:16px; padding:15px 0; border-top:1px solid var(--line); font-size:13.5px; line-height:1.95; }
+.dl-item:last-child{ border-bottom:1px solid var(--line); }
+.dl-item .dl-n{ font-family:"Inter",monospace; font-size:11px; color:#9a9a96; padding-top:4px; flex:0 0 26px; letter-spacing:.08em; }
+.dl-item strong{ display:block; font-weight:600; margin-bottom:3px; }
+
+.dl-form{ margin-top:16px; }
+.dl-form label{ display:block; font-size:12px; letter-spacing:.06em; color:#6b6b68; margin-bottom:8px; }
+.dl-row{ display:flex; gap:10px; flex-wrap:wrap; }
+.dl-row input[type=email]{
+  flex:1 1 300px; min-width:0; padding:13px 15px; font-size:15px;
+  border:1px solid var(--line-strong); background:#fff; color:var(--ink);
+  border-radius:0; font-family:inherit;
+}
+.dl-row input[type=email]:focus{ outline:2px solid var(--ink); outline-offset:-2px; }
+.dl-row button{
+  flex:0 0 auto; padding:13px 30px; font-size:14px; font-weight:600;
+  background:var(--ink); color:#fff; border:1px solid var(--ink); cursor:pointer;
+  font-family:inherit; letter-spacing:.04em;
+}
+.dl-row button:hover{ opacity:.82; }
+.dl-row button:disabled{ opacity:.5; cursor:default; }
+.dl-form small{ display:block; margin-top:12px; font-size:11.5px; line-height:1.9; color:#8a8a86; }
+.dl-thanks{ font-size:14px; line-height:1.95; margin:0 0 16px; }
+#dl-done{ padding:22px 24px; border:1px solid var(--line-strong); background:#fbfbfa; }
+.is-hidden{ display:none; width:0; height:0; border:0; }
+@media (max-width:560px){
+  .dl-row button{ width:100%; }
+  .dl-item{ gap:12px; font-size:13px; }
+}
+
+/* ---- 資料DL誘導バー（ガイド末尾） ---- */
+.dlbar{
+  display:flex; align-items:center; gap:20px; flex-wrap:wrap;
+  margin:44px 0 0; padding:22px 26px;
+  background:var(--ink); color:#fff;
+}
+.dlbar-tx{ flex:1 1 320px; min-width:0; }
+.dlbar-tx strong{ display:block; font-size:14px; font-weight:600; line-height:1.7; margin-bottom:5px; }
+.dlbar-tx span{ display:block; font-size:12px; line-height:1.85; color:rgba(255,255,255,.66); }
+.dlbar-btn{
+  flex:0 0 auto; padding:12px 28px; font-size:13px; font-weight:600; letter-spacing:.04em;
+  background:#fff; color:var(--ink); text-decoration:none; border:1px solid #fff;
+}
+.dlbar-btn:hover{ background:transparent; color:#fff; }
+@media (max-width:560px){
+  .dlbar{ padding:20px; gap:16px; }
+  .dlbar-btn{ width:100%; text-align:center; }
+}
