@@ -270,3 +270,32 @@
 .works-full { margin: 12px 0 0; }
 .works-full .works-grid { margin-bottom: 22px; }
 .works-full .fine-d { font-size: 11.5px; line-height: 1.9; color: var(--ink-mute); margin: 0; }
+
+/* ---- Next Question（次の問いへ接続するブリッジ） ---- */
+.nextq{
+  margin:52px 0 8px; padding:26px 28px 24px;
+  border:1px solid var(--line-strong); border-left-width:3px;
+  background:#fbfbfa;
+}
+.nextq .nq-lbl{
+  display:block; font-size:10.5px; letter-spacing:.2em;
+  color:#8a8a86; margin-bottom:12px; font-family:"Inter",sans-serif;
+}
+.nextq h3{
+  font-size:17px; font-weight:600; line-height:1.75;
+  margin:0 0 12px; color:var(--ink);
+}
+.nextq p{
+  font-size:14px; line-height:2.05; color:#3a3a38; margin:0 0 18px;
+}
+.nextq .nq-link{
+  display:inline-block; font-size:13.5px; font-weight:500;
+  color:var(--ink); text-decoration:none;
+  border-bottom:1px solid var(--ink); padding-bottom:3px;
+}
+.nextq .nq-link:hover{ opacity:.6; }
+@media (max-width:640px){
+  .nextq{ padding:22px 18px 20px; margin:40px 0 8px; }
+  .nextq h3{ font-size:15.5px; }
+  .nextq p{ font-size:13.5px; }
+}
