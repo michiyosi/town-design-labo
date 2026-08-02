@@ -107,8 +107,17 @@ header.scrolled { border-bottom-color: var(--line); }
 }
 .hero-bg {
   position: absolute; inset: 0;
-  background: url('./hero.webp?v=728') center/cover no-repeat;
+  background-image: url('hero-mobile.webp');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 40%;
   filter: grayscale(0%) brightness(.82) contrast(1.03);
+}
+@media (min-width: 769px) {
+  .hero-bg {
+    background-image: url('hero-desktop.webp');
+    background-position: 50% 50%;
+  }
 }
 .hero-bg::after {
   content: ""; position: absolute; inset: 0;
