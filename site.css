@@ -107,17 +107,13 @@ header.scrolled { border-bottom-color: var(--line); }
 }
 .hero-bg {
   position: absolute; inset: 0;
-  background-image: url('hero-mobile.webp');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 50% 40%;
+  /* モバイルは軽量版（2400px）。データ量を抑えつつ現状より高精細 */
+  background: url('./hero-sm.webp?v=730') center/cover no-repeat;
   filter: grayscale(0%) brightness(.82) contrast(1.03);
 }
-@media (min-width: 769px) {
-  .hero-bg {
-    background-image: url('hero-desktop.webp');
-    background-position: 50% 50%;
-  }
+/* デスクトップは高解像度版（3544px）＝拡大ではなく縮小表示になり最も鮮明 */
+@media (min-width: 721px) {
+  .hero-bg { background-image: url('./hero-2x.webp?v=730'); }
 }
 .hero-bg::after {
   content: ""; position: absolute; inset: 0;
