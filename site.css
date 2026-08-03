@@ -1096,3 +1096,45 @@ a.trust-row:hover .trust-thumb img { transform: scale(1.05); filter: grayscale(0
   .trust-client { font-size: 14px; }
   a.trust-row::after { opacity: .5; right: 9px; font-size: 15px; }
 }
+
+/* ===== Hero split — 導線分離（トレーラーハウス / キッチンカー） ===== */
+.hero-split{ align-items:flex-start; }
+.hero-split .hero-inner{ padding-top:2px; }
+.hero-h1{
+  font-family:"BIZ UDPGothic","Noto Sans JP",sans-serif; font-weight:400;
+  font-size:clamp(28px,4.4vw,52px); line-height:1.18; letter-spacing:.02em; margin-bottom:14px;
+}
+.hero-h1 strong{ font-weight:600; }
+.hero-h1-sub{
+  font-size:clamp(12px,1.2vw,14.5px); line-height:1.8; opacity:.82; font-weight:300;
+  max-width:660px; margin-bottom:26px;
+}
+.hero-split-wrap{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.hero-half{
+  position:relative; border-radius:14px; overflow:hidden;
+  min-height:400px; display:flex; align-items:flex-end;
+  border:1px solid rgba(255,255,255,.14);
+}
+.hh-bg{ position:absolute; inset:0; background-size:cover; background-position:center; transition:transform .7s ease; }
+.hero-half:hover .hh-bg{ transform:scale(1.045); }
+.hh-bg--th{ background-image:url('./CaGqL7fv3mc_01-sm.webp'); }
+.hh-bg--kc{ background-image:url('./kazari-b-01-sm.webp'); background-position:center 60%; }
+.hero-half::after{ content:""; position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(10,10,10,.10) 0%, rgba(10,10,10,.34) 44%, rgba(10,10,10,.86) 100%); }
+.hh-body{ position:relative; z-index:1; padding:26px 26px 28px; color:#fff; width:100%; }
+.hh-kicker{ font-family:"Inter",monospace; font-size:10.5px; letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,.74); }
+.hh-title{ font-family:"BIZ UDPGothic","Noto Sans JP",sans-serif; font-weight:500; font-size:clamp(22px,2.5vw,30px); line-height:1.28; margin:10px 0 10px; letter-spacing:.02em; }
+.hh-lead{ font-size:13px; line-height:1.8; opacity:.9; font-weight:300; margin-bottom:12px; max-width:34em; }
+.hh-price{ font-size:12px; letter-spacing:.05em; opacity:.95; border-top:1px solid rgba(255,255,255,.26); padding-top:10px; margin-bottom:18px; }
+.hh-actions{ display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+.hh-sub{ color:#fff; font-size:12px; letter-spacing:.08em; opacity:.85; border-bottom:1px solid rgba(255,255,255,.4); padding-bottom:2px; transition:opacity .2s; }
+.hh-sub:hover{ opacity:1; }
+.hero-tel-row{ margin-top:22px; font-family:"Inter",monospace; font-size:12px; letter-spacing:.08em; color:rgba(255,255,255,.72); }
+.hero-tel-row a{ color:#fff; border-bottom:1px solid rgba(255,255,255,.4); }
+.hero-split .hero-band{ margin-top:24px; }
+@media (max-width:720px){
+  .hero-split-wrap{ grid-template-columns:1fr; gap:12px; }
+  .hero-half{ min-height:290px; }
+  .hh-title{ font-size:24px; }
+  .hh-body{ padding:22px 20px 24px; }
+}
