@@ -465,3 +465,55 @@
   .cs-card strong{ font-size:21px; }
   .cs-row{ gap:12px; }
 }
+
+/* ---- 自治体別データベース ---- */
+.jt-wrap{ margin:22px 0 8px; }
+.jt-ctrl{ padding:20px 22px; background:#fbfbfa; border:1px solid var(--line-strong); border-bottom:0; }
+.jt-search label{ display:block; font-size:11.5px; letter-spacing:.04em; color:#6b6b68; margin-bottom:6px; }
+.jt-search input{
+  width:100%; max-width:340px; padding:10px 13px; font-size:14px; font-family:inherit;
+  border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:0;
+}
+.jt-search input:focus{ outline:2px solid var(--ink); outline-offset:-2px; }
+.jt-filters{ margin-top:18px; display:flex; flex-direction:column; gap:12px; }
+.jt-fg{ display:flex; align-items:center; gap:7px; flex-wrap:wrap; }
+.jt-fg > span{ flex:0 0 76px; font-size:11px; letter-spacing:.06em; color:#8a8a86; }
+.jt-b{
+  padding:6px 13px; font-size:12px; font-family:inherit; cursor:pointer;
+  border:1px solid var(--line); background:#fff; color:var(--ink-mute); border-radius:0;
+}
+.jt-b:hover{ border-color:var(--ink); color:var(--ink); }
+.jt-b.is-on{ background:var(--ink); border-color:var(--ink); color:#fff; }
+.jt-count{ margin-top:16px; font-size:11.5px; color:#8a8a86; font-variant-numeric:tabular-nums; }
+
+.jt-list{ border:1px solid var(--line-strong); border-top:1px solid var(--line); }
+.jt-row{ padding:16px 22px; border-bottom:1px solid var(--line); }
+.jt-row:last-child{ border-bottom:0; }
+.jt-head{ display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:8px; }
+.jt-name{ font-size:15px; font-weight:600; }
+.jt-meta{ font-size:11px; color:#9a9a96; }
+.jt-badge{ margin-left:auto; font-size:10.5px; letter-spacing:.04em; padding:3px 10px; border:1px solid var(--line); white-space:nowrap; }
+.jt-badge.lv1{ background:var(--ink); color:#fff; border-color:var(--ink); }
+.jt-badge.lv2{ border-color:var(--ink); color:var(--ink); }
+.jt-badge.lv3{ color:var(--ink-mute); }
+.jt-badge.lv4{ color:var(--brass); border-color:var(--brass); }
+.jt-badge.lvC{ color:#8a8a86; }
+.jt-badge.lv0{ color:#a8a8a4; background:#f6f6f5; }
+.jt-body p{ font-size:13px; line-height:1.95; color:var(--ink-mute); margin:0; }
+.jt-body blockquote{
+  margin:10px 0 0; padding:11px 15px; background:#fbfbfa; border-left:2px solid var(--line-strong);
+  font-size:12.5px; line-height:1.9; color:var(--ink);
+}
+.jt-body blockquote::before{ content:'「'; } .jt-body blockquote::after{ content:'」'; }
+.jt-src{ margin-top:8px; font-size:11px; color:#9a9a96; line-height:1.8; }
+.jt-tags{ margin-top:9px; display:flex; gap:6px; flex-wrap:wrap; }
+.jt-tags span{ font-size:10.5px; color:#8a8a86; border:1px solid var(--line); padding:2px 8px; }
+.jt-empty{ padding:34px 22px; text-align:center; font-size:13px; color:#8a8a86;
+  border:1px solid var(--line-strong); border-top:0; }
+
+@media (max-width:640px){
+  .jt-ctrl{ padding:18px; }
+  .jt-fg > span{ flex:0 0 100%; margin-bottom:2px; }
+  .jt-row{ padding:15px 18px; }
+  .jt-badge{ margin-left:0; }
+}

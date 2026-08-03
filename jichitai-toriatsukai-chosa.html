@@ -27,7 +27,7 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"></noscript>
 <link rel="stylesheet" href="/site.css?v=20260730a">
-<link rel="stylesheet" href="/page.css?v=20260803c">
+<link rel="stylesheet" href="/page.css?v=20260803d">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -124,6 +124,31 @@
 src="https://www.facebook.com/tr?id=1752804519503355&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "@id": "https://towndesignlabo.jp/jichitai-toriatsukai-chosa.html#dataset",
+  "name": "西日本 自治体別 トレーラーハウス取扱い公表状況データベース",
+  "description": "中国・四国・九州・関西の自治体について、建築基準法第2条第1号（建築物該当性）に関する取扱いの公表状況を、各自治体の公式ドメイン上の取扱い集・運用基準・FAQ・注意喚起ページを実見して分類したデータセット。公表段階を「独自基準を明文化」「JCBA適用事例の準用を明示」「参照指示のみ」「注意喚起レベル」「コンテナのみ記載」「公表なし」の6段階に区分し、31自治体を収録。業者サイト等の伝聞は不採用。",
+  "url": "https://towndesignlabo.jp/jichitai-toriatsukai-chosa.html",
+  "license": "https://towndesignlabo.jp/jichitai-toriatsukai-chosa.html",
+  "isAccessibleForFree": true,
+  "inLanguage": "ja",
+  "dateCreated": "2026-07-20",
+  "datePublished": "2026-07-20",
+  "dateModified": "2026-08-03",
+  "temporalCoverage": "2026-07-20",
+  "spatialCoverage": { "@type": "Place", "name": "日本・西日本（中国・四国・九州・関西）" },
+  "keywords": ["トレーラーハウス","建築基準法","特定行政庁","建築物該当性","取扱い集","自治体比較","住指発第170号"],
+  "variableMeasured": ["自治体名","地域","自治体区分","公表段階","出典資料","引用文"],
+  "creator": {
+    "@type": "Organization",
+    "name": "株式会社TOWN DESIGN LABO",
+    "url": "https://towndesignlabo.jp/"
+  }
+}
+</script>
 </head>
 <body id="top">
 
@@ -188,42 +213,81 @@ src="https://www.facebook.com/tr?id=1752804519503355&ev=PageView&noscript=1"
       <p>※ JCBA＝日本建築行政会議。『建築確認のための基準総則・集団規定の適用事例』という民間発行の解説書で、多くの特定行政庁が実務上の拠り所にしています。法令や通達ではありません。</p>
     </div>
 
-    <div class="page-sec">
-      <h2>自治体別の一覧</h2>
-      <h3>中国地方</h3>
-      <dl class="spec">
-        <dt>広島県</dt><dd><strong>公表なし</strong>。建築課サイトの建築基準法関係15件を確認。取扱い集自体を公表していない。</dd>
-        <dt>広島市</dt><dd><strong>公表なし</strong>。『広島市建築基準法取扱集』（令和7年4月改訂版）全28項目のうち、法第2条第1号の項目は「立体駐艇庫」のみ。</dd>
-        <dt>福山市・呉市</dt><dd><strong>公表なし</strong>。呉市はコンテナについて「コンテナを利用した倉庫や店舗なども建築物に該当します」と記載（2024年7月1日）。</dd>
-        <dt>山口県</dt><dd><strong>あり（段階3）</strong>。『山口県建築基準法取扱集』総則－2「車両を利用した工作物の取扱い」。適用事例に従うとした上で、<strong>「ただし、同一敷地内に永続的に設置する場合は、原則として建築物と取り扱う」</strong>という時間軸の一文を独自に付加。</dd>
-        <dt>下関市</dt><dd><strong>あり（段階1）</strong>。「コンテナや車両を利用した倉庫や住宅等について」（2023年11月17日）＋Q&amp;A。後述。</dd>
-        <dt>岡山県</dt><dd><strong>公表なし</strong>。『岡山県建築基準法等運用基準』全28項目に該当なし。</dd>
-        <dt>岡山市</dt><dd><strong>あり（段階3）</strong>。『岡山市建築基準法取扱基準（第四版）』A-001で、判断に迷う場合の参考として<strong>平成9年3月31日住指発第170号</strong>を明示的に列挙。</dd>
-        <dt>島根県・鳥取県</dt><dd><strong>公表なし</strong>。島根県は取扱い全9件、鳥取県は公式データベース全49件に該当項目なし。</dd>
-      </dl>
+    <div class="page-sec" id="db">
+      <h2>自治体別データベース</h2>
+      <p>本調査で確認した自治体を、地域・公表段階・自治体区分で絞り込めるようにしました。名称での検索もできます。内容は上の調査結果と同一で、追加も削除もしていません。</p><div class="callout">上の集計（25自治体）は取扱い集・運用基準を主対象とした母数です。この一覧には、それに加えて<strong>コンテナのみ記載のある自治体など、調査の過程で公式資料を確認した自治体もすべて含めて掲載しています（計31件）</strong>。母数を絞らずに全件を出すほうが、読む側にとって有用だと考えたためです。</div>
 
-      <h3>四国</h3>
-      <dl class="spec">
-        <dt>香川県・高松市・徳島県・高知県・高知市・松山市</dt><dd><strong>いずれも公表なし</strong>。高松市は全35項目、高知市は全13項目を確認。高知県の運用は法第2条について小規模倉庫・ビニールハウス・小規模テント・大規模修繕の4項目のみで、テントは「一時的な使用の目的」、ビニールハウスは「土地への定着性（時間的な定着性）が認められないもの」という表現。</dd>
-        <dt>愛媛県</dt><dd><strong>コンテナのみ</strong>。「継続的に倉庫として利用し、随時かつ任意に移動できないコンテナは建築物に該当する」（2015年2月3日）。</dd>
-      </dl>
+      <div class="jt-wrap" id="jt-root">
+        <div class="jt-ctrl">
+          <div class="jt-search">
+            <label for="jt-q">自治体名で探す</label>
+            <input id="jt-q" type="search" placeholder="広島、福岡、下関 …" autocomplete="off">
+          </div>
+          <div class="jt-filters">
+            <div class="jt-fg"><span>地域</span>
+              <button type="button" class="jt-b is-on" data-f="reg" data-v="">すべて</button>
+              <button type="button" class="jt-b" data-f="reg" data-v="中国">中国</button>
+              <button type="button" class="jt-b" data-f="reg" data-v="四国">四国</button>
+              <button type="button" class="jt-b" data-f="reg" data-v="九州">九州</button>
+              <button type="button" class="jt-b" data-f="reg" data-v="関西">関西</button>
+            </div>
+            <div class="jt-fg"><span>公表の段階</span>
+              <button type="button" class="jt-b is-on" data-f="lv" data-v="">すべて</button>
+              <button type="button" class="jt-b" data-f="lv" data-v="1">独自基準</button>
+              <button type="button" class="jt-b" data-f="lv" data-v="2">JCBA準用</button>
+              <button type="button" class="jt-b" data-f="lv" data-v="3">参照指示</button>
+              <button type="button" class="jt-b" data-f="lv" data-v="4">注意喚起</button>
+              <button type="button" class="jt-b" data-f="lv" data-v="C">コンテナのみ</button>
+              <button type="button" class="jt-b" data-f="lv" data-v="0">公表なし</button>
+            </div>
+            <div class="jt-fg"><span>区分</span>
+              <button type="button" class="jt-b is-on" data-f="typ" data-v="">すべて</button>
+              <button type="button" class="jt-b" data-f="typ" data-v="都道府県">都道府県</button>
+              <button type="button" class="jt-b" data-f="typ" data-v="政令市">政令市</button>
+              <button type="button" class="jt-b" data-f="typ" data-v="中核市">中核市</button>
+            </div>
+          </div>
+          <div class="jt-count" id="jt-count">31件を表示中</div>
+        </div>
 
-      <h3>九州</h3>
-      <dl class="spec">
-        <dt>福岡県</dt><dd><strong>あり（段階1・最も詳細）</strong>。『福岡県建築確認申請の手引き 2024年版』令5総則002「車両を利用した工作物」。後述。</dd>
-        <dt>鹿児島県・佐賀県・長崎県</dt><dd><strong>あり（段階2）</strong>。いずれも一覧表で「車両を利用した工作物」をJCBA適用事例のとおり扱うと明示。長崎県は凡例で「全ての機関が取扱基準として適用しているもの」とし、異なる基準の機関は「現時点で該当なし」＝県内統一。</dd>
-        <dt>宮崎県</dt><dd><strong>あり（段階4）</strong>。『建築基準法等質疑応答』（H30.4.1）で「車両、客貨車、コンテナ、船舶等でも、随時かつ任意に移動できないもので、店舗、事務所、倉庫、ホテル等の建築物的用途に利用するもの」は建築物とし、<strong>「土地に定着するとは、必ずしも物理的に強固に結合された様態のみでなく、本来の用法上、定常的に移動しない様態をいいます」</strong>と注記。</dd>
-        <dt>大分市</dt><dd><strong>あり（段階4）</strong>。「トレーラーハウス等を住宅・事務所・店舗等として使用する場合はご相談ください」（2019年12月16日）。「規模、形態および設置状況等から、建築物に該当する場合があります」。※大分県自体は公表なし。</dd>
-        <dt>北九州市・熊本県</dt><dd><strong>公表なし</strong>。北九州市は第1総則全26項目に該当なし（コンテナ項目はあり）。熊本県はJCBA適用事例2022年度版に包括的に「準拠」とのみ記載。</dd>
-      </dl>
+        <div class="jt-list" id="jt-list">
+<div class="jt-row" data-reg="中国" data-lv="0" data-typ="都道府県" data-tags="" data-name="広島県"><div class="jt-head"><span class="jt-name">広島県</span><span class="jt-meta">中国・都道府県</span><span class="jt-badge lv0">公表なし</span></div><div class="jt-body"><p>建築課サイトの建築基準法関係15件を確認。取扱い集自体を公表していない。</p></div></div>
+<div class="jt-row" data-reg="中国" data-lv="0" data-typ="政令市" data-tags="" data-name="広島市"><div class="jt-head"><span class="jt-name">広島市</span><span class="jt-meta">中国・政令市</span><span class="jt-badge lv0">公表なし</span></div><div class="jt-body"><p>『広島市建築基準法取扱集』（令和7年4月改訂版）全28項目のうち、法第2条第1号の項目は「立体駐艇庫」のみ。</p><div class="jt-src">出典：広島市建築基準法取扱集（令和7年4月改訂版）</div></div></div>
+<div class="jt-row" data-reg="中国" data-lv="0" data-typ="中核市" data-tags="" data-name="福山市"><div class="jt-head"><span class="jt-name">福山市</span><span class="jt-meta">中国・中核市</span><span class="jt-badge lv0">公表なし</span></div><div class="jt-body"><p>取扱い集に該当項目なし。</p></div></div>
+<div class="jt-row" data-reg="中国" data-lv="0" data-typ="中核市" data-tags="コンテナ" data-name="呉市"><div class="jt-head"><span class="jt-name">呉市</span><span class="jt-meta">中国・中核市</span><span class="jt-badge lv0">公表なし</span></div><div class="jt-body"><p>コンテナについて「コンテナを利用した倉庫や店舗なども建築物に該当します」と記載。</p><blockquote>コンテナを利用した倉庫や店舗なども建築物に該当します</blockquote><div class="jt-src">出典：呉市（2024年7月1日）</div><div class="jt-tags"><span>コンテナ</span></div></div></div>
+<div class="jt-row" data-reg="中国" data-lv="3" data-typ="都道府県" data-tags="時間軸" data-name="山口県"><div class="jt-head"><span class="jt-name">山口県</span><span class="jt-meta">中国・都道府県</span><span class="jt-badge lv3">参照指示のみ</span></div><div class="jt-body"><p>『山口県建築基準法取扱集』総則－2「車両を利用した工作物の取扱い」。適用事例に従うとした上で、時間軸の一文を独自に付加。</p><blockquote>ただし、同一敷地内に永続的に設置する場合は、原則として建築物と取り扱う</blockquote><div class="jt-src">出典：山口県建築基準法取扱集 総則－2</div><div class="jt-tags"><span>時間軸</span></div></div></div>
+<div class="jt-row" data-reg="中国" data-lv="1" data-typ="中核市" data-tags="車検・配管・時間軸・コンテナ" data-name="下関市"><div class="jt-head"><span class="jt-name">下関市</span><span class="jt-meta">中国・中核市</span><span class="jt-badge lv1">独自基準を明文化</span></div><div class="jt-body"><p>Q&amp;Aで具体的に記述。今回の調査で公式文書に「車検」の語が登場した唯一の自治体。</p><blockquote>随時かつ任意に移動ができる場合は（車検を受けているなど）建築物ではありません。給排水やガスなどの設備を設ける場合は、工具を使わずに取り外すことができる簡易な着脱式とする必要があります</blockquote><div class="jt-src">出典：下関市「コンテナや車両を利用した倉庫や住宅等について」（2023年11月17日）＋Q&amp;A</div><div class="jt-tags"><span>車検</span><span>配管</span><span>時間軸</span><span>コンテナ</span></div></div></div>
+<div class="jt-row" data-reg="中国" data-lv="0" data-typ="都道府県" data-tags="" data-name="岡山県"><div class="jt-head"><span class="jt-name">岡山県</span><span class="jt-meta">中国・都道府県</span><span class="jt-badge lv0">公表なし</span></div><div class="jt-body"><p>『岡山県建築基準法等運用基準』全28項目に該当なし。</p><div class="jt-src">出典：岡山県建築基準法等運用基準</div></div></div>
+<div class="jt-row" data-reg="中国" data-lv="3" data-typ="政令市" data-tags="" data-name="岡山市"><div class="jt-head"><span class="jt-name">岡山市</span><span class="jt-meta">中国・政令市</span><span class="jt-badge lv3">参照指示のみ</span></div><div class="jt-body"><p>『岡山市建築基準法取扱基準（第四版）』A-001で、判断に迷う場合の参考として平成9年3月31日住指発第170号を明示的に列挙。</p><div class="jt-src">出典：岡山市建築基準法取扱基準（第四版）A-001</div></div></div>
+<div class="jt-row" data-reg="中国" data-lv="0" data-typ="都道府県" data-tags="" data-name="島根県"><div class="jt-head"><span class="jt-name">島根県</span><span class="jt-meta">中国・都道府県</span><span class="jt-badge lv0">公表なし</span></div><div class="jt-body"><p>取扱い全9件に該当項目なし。</p></div></div>
+<div class="jt-row" data-reg="中国" data-lv="0" data-typ="都道府県" data-tags="" data-name="鳥取県"><div class="jt-head"><span class="jt-name">鳥取県</span><span class="jt-meta">中国・都道府県</span><span class="jt-badge lv0">公表なし</span></div><div class="jt-body"><p>公式データベース全49件に該当項目なし。</p></div></div>
+<div class="jt-row" data-reg="四国" data-lv="0" data-typ="都道府県" data-tags="" data-name="香川県"><div class="jt-head"><span class="jt-name">香川県</span><span class="jt-meta">四国・都道府県</span><span class="jt-badge lv0">公表なし</span></div><div class="jt-body"><p>該当項目なし。</p></div></div>
+<div class="jt-row" data-reg="四国" data-lv="0" data-typ="中核市" data-tags="" data-name="高松市"><div class="jt-head"><span class="jt-name">高松市</span><span class="jt-meta">四国・中核市</span><span class="jt-badge lv0">公表なし</span></div><div class="jt-body"><p>全35項目を確認、該当項目なし。</p></div></div>
+<div class="jt-row" data-reg="四国" data-lv="0" data-typ="都道府県" data-tags="" data-name="徳島県"><div class="jt-head"><span class="jt-name">徳島県</span><span class="jt-meta">四国・都道府県</span><span class="jt-badge lv0">公表なし</span></div><div class="jt-body"><p>該当項目なし。</p></div></div>
+<div class="jt-row" data-reg="四国" data-lv="0" data-typ="都道府県" data-tags="時間軸" data-name="高知県"><div class="jt-head"><span class="jt-name">高知県</span><span class="jt-meta">四国・都道府県</span><span class="jt-badge lv0">公表なし</span></div><div class="jt-body"><p>法第2条の運用は小規模倉庫・ビニールハウス・小規模テント・大規模修繕の4項目のみ。テントは「一時的な使用の目的」、ビニールハウスは「土地への定着性（時間的な定着性）が認められないもの」という表現。</p><blockquote>土地への定着性（時間的な定着性）が認められないもの</blockquote><div class="jt-src">出典：高知県 運用基準</div><div class="jt-tags"><span>時間軸</span></div></div></div>
+<div class="jt-row" data-reg="四国" data-lv="0" data-typ="中核市" data-tags="" data-name="高知市"><div class="jt-head"><span class="jt-name">高知市</span><span class="jt-meta">四国・中核市</span><span class="jt-badge lv0">公表なし</span></div><div class="jt-body"><p>全13項目を確認、該当項目なし。</p></div></div>
+<div class="jt-row" data-reg="四国" data-lv="0" data-typ="中核市" data-tags="" data-name="松山市"><div class="jt-head"><span class="jt-name">松山市</span><span class="jt-meta">四国・中核市</span><span class="jt-badge lv0">公表なし</span></div><div class="jt-body"><p>該当項目なし。</p></div></div>
+<div class="jt-row" data-reg="四国" data-lv="C" data-typ="都道府県" data-tags="コンテナ・時間軸" data-name="愛媛県"><div class="jt-head"><span class="jt-name">愛媛県</span><span class="jt-meta">四国・都道府県</span><span class="jt-badge lvC">コンテナのみ</span></div><div class="jt-body"><p>コンテナのみ記載。</p><blockquote>継続的に倉庫として利用し、随時かつ任意に移動できないコンテナは建築物に該当する</blockquote><div class="jt-src">出典：愛媛県（2015年2月3日）</div><div class="jt-tags"><span>コンテナ</span><span>時間軸</span></div></div></div>
+<div class="jt-row" data-reg="九州" data-lv="1" data-typ="都道府県" data-tags="配管・通路・公道走行・造作・事後定着" data-name="福岡県"><div class="jt-head"><span class="jt-name">福岡県</span><span class="jt-meta">九州・都道府県</span><span class="jt-badge lv1">独自基準を明文化</span></div><div class="jt-body"><p>今回の調査で判断基準を最も細かく明文化していた自治体。移動を妨げる造作・配管の着脱方式・公道までの通路・適法な公道走行・事後的な定着の5点を明記。旧「15総則007 トレーラーハウスの取り扱いについて」（H16.5.10追加）を令和3年4月1日に削除し、令和6年4月1日から「車両を利用した工作物」として再整備。</p><blockquote>臨時運行許可（仮ナンバー）や特殊車両通行許可等を受けたことだけでは、「随時かつ任意に移動できるもの」との判断はできない</blockquote><div class="jt-src">出典：福岡県建築確認申請の手引き 2024年版 令5総則002「車両を利用した工作物」</div><div class="jt-tags"><span>配管</span><span>通路</span><span>公道走行</span><span>造作</span><span>事後定着</span></div></div></div>
+<div class="jt-row" data-reg="九州" data-lv="2" data-typ="都道府県" data-tags="" data-name="鹿児島県"><div class="jt-head"><span class="jt-name">鹿児島県</span><span class="jt-meta">九州・都道府県</span><span class="jt-badge lv2">JCBA準用を明示</span></div><div class="jt-body"><p>一覧表と凡例で「車両を利用した工作物」をJCBA適用事例のとおり扱うと明示。</p><div class="jt-src">出典：JCBA『建築確認のための基準総則・集団規定の適用事例』準用</div></div></div>
+<div class="jt-row" data-reg="九州" data-lv="2" data-typ="都道府県" data-tags="" data-name="佐賀県"><div class="jt-head"><span class="jt-name">佐賀県</span><span class="jt-meta">九州・都道府県</span><span class="jt-badge lv2">JCBA準用を明示</span></div><div class="jt-body"><p>一覧表と凡例で「車両を利用した工作物」をJCBA適用事例のとおり扱うと明示。</p><div class="jt-src">出典：JCBA『建築確認のための基準総則・集団規定の適用事例』準用</div></div></div>
+<div class="jt-row" data-reg="九州" data-lv="2" data-typ="都道府県" data-tags="" data-name="長崎県"><div class="jt-head"><span class="jt-name">長崎県</span><span class="jt-meta">九州・都道府県</span><span class="jt-badge lv2">JCBA準用を明示</span></div><div class="jt-body"><p>凡例で「全ての機関が取扱基準として適用しているもの」とし、異なる基準の機関は「現時点で該当なし」＝県内統一。</p><div class="jt-src">出典：JCBA『建築確認のための基準総則・集団規定の適用事例』準用</div></div></div>
+<div class="jt-row" data-reg="九州" data-lv="4" data-typ="都道府県" data-tags="時間軸・コンテナ" data-name="宮崎県"><div class="jt-head"><span class="jt-name">宮崎県</span><span class="jt-meta">九州・都道府県</span><span class="jt-badge lv4">注意喚起レベル</span></div><div class="jt-body"><p>『建築基準法等質疑応答』で「車両、客貨車、コンテナ、船舶等でも、随時かつ任意に移動できないもので、店舗、事務所、倉庫、ホテル等の建築物的用途に利用するもの」は建築物とする。</p><blockquote>土地に定着するとは、必ずしも物理的に強固に結合された様態のみでなく、本来の用法上、定常的に移動しない様態をいいます</blockquote><div class="jt-src">出典：宮崎県『建築基準法等質疑応答』（H30.4.1）</div><div class="jt-tags"><span>時間軸</span><span>コンテナ</span></div></div></div>
+<div class="jt-row" data-reg="九州" data-lv="4" data-typ="中核市" data-tags="" data-name="大分市"><div class="jt-head"><span class="jt-name">大分市</span><span class="jt-meta">九州・中核市</span><span class="jt-badge lv4">注意喚起レベル</span></div><div class="jt-body"><p>注意喚起レベル。大分県自体は公表なし。</p><blockquote>規模、形態および設置状況等から、建築物に該当する場合があります</blockquote><div class="jt-src">出典：大分市（2019年12月16日）</div></div></div>
+<div class="jt-row" data-reg="九州" data-lv="0" data-typ="政令市" data-tags="コンテナ" data-name="北九州市"><div class="jt-head"><span class="jt-name">北九州市</span><span class="jt-meta">九州・政令市</span><span class="jt-badge lv0">公表なし</span></div><div class="jt-body"><p>第1総則全26項目に該当なし（コンテナ項目はあり）。</p><div class="jt-tags"><span>コンテナ</span></div></div></div>
+<div class="jt-row" data-reg="九州" data-lv="0" data-typ="都道府県" data-tags="" data-name="熊本県"><div class="jt-head"><span class="jt-name">熊本県</span><span class="jt-meta">九州・都道府県</span><span class="jt-badge lv0">公表なし</span></div><div class="jt-body"><p>JCBA適用事例2022年度版に包括的に「準拠」とのみ記載。個別項目の公表なし。</p></div></div>
+<div class="jt-row" data-reg="関西" data-lv="2" data-typ="都道府県" data-tags="" data-name="滋賀県"><div class="jt-head"><span class="jt-name">滋賀県</span><span class="jt-meta">関西・都道府県</span><span class="jt-badge lv2">JCBA準用を明示</span></div><div class="jt-body"><p>『滋賀県内建築基準法取扱基準』別紙-1で「車両を利用した工作物 ○＝取扱基準として扱うもの」。県内全特定行政庁が追記なしでJCBA準拠。</p><div class="jt-src">出典：滋賀県内建築基準法取扱基準 別紙-1</div></div></div>
+<div class="jt-row" data-reg="関西" data-lv="0" data-typ="都道府県" data-tags="" data-name="大阪府"><div class="jt-head"><span class="jt-name">大阪府</span><span class="jt-meta">関西・都道府県</span><span class="jt-badge lv0">公表なし</span></div><div class="jt-body"><p>該当項目なし。</p></div></div>
+<div class="jt-row" data-reg="関西" data-lv="0" data-typ="都道府県" data-tags="" data-name="奈良県"><div class="jt-head"><span class="jt-name">奈良県</span><span class="jt-meta">関西・都道府県</span><span class="jt-badge lv0">公表なし</span></div><div class="jt-body"><p>該当項目なし。</p></div></div>
+<div class="jt-row" data-reg="関西" data-lv="0" data-typ="都道府県" data-tags="" data-name="和歌山県"><div class="jt-head"><span class="jt-name">和歌山県</span><span class="jt-meta">関西・都道府県</span><span class="jt-badge lv0">公表なし</span></div><div class="jt-body"><p>「101 建築物」の参考欄にJCBA適用事例2022年度版P14を明記するにとどまる。</p></div></div>
+<div class="jt-row" data-reg="関西" data-lv="C" data-typ="政令市" data-tags="コンテナ" data-name="大阪市"><div class="jt-head"><span class="jt-name">大阪市</span><span class="jt-meta">関西・政令市</span><span class="jt-badge lvC">コンテナのみ</span></div><div class="jt-body"><p>コンテナのみ記載。</p><blockquote>随時かつ任意に移動できないコンテナは建築物に該当します</blockquote><div class="jt-src">出典：大阪市（2025年12月5日）</div><div class="jt-tags"><span>コンテナ</span></div></div></div>
+<div class="jt-row" data-reg="関西" data-lv="C" data-typ="都道府県" data-tags="コンテナ・時間軸" data-name="兵庫県"><div class="jt-head"><span class="jt-name">兵庫県</span><span class="jt-meta">関西・都道府県</span><span class="jt-badge lvC">コンテナのみ</span></div><div class="jt-body"><p>コンテナのみ記載。</p><blockquote>土地に定着とは、基本的に一定の場所に存置することをいう</blockquote><div class="jt-src">出典：兵庫県</div><div class="jt-tags"><span>コンテナ</span><span>時間軸</span></div></div></div>
+        </div>
+        <div class="jt-empty" id="jt-empty" hidden>該当する自治体がありません。条件を減らしてください。</div>
+      </div>
 
-      <h3>関西</h3>
-      <dl class="spec">
-        <dt>滋賀県</dt><dd><strong>あり（段階2）</strong>。『滋賀県内建築基準法取扱基準』別紙-1で「車両を利用した工作物 ○＝取扱基準として扱うもの」。県内全特定行政庁が追記なしでJCBA準拠。</dd>
-        <dt>大阪府・奈良県・和歌山県</dt><dd><strong>公表なし</strong>。和歌山県は「101 建築物」の参考欄にJCBA適用事例2022年度版P14を明記するにとどまる。</dd>
-        <dt>大阪市・兵庫県</dt><dd><strong>コンテナのみ</strong>。大阪市は「随時かつ任意に移動できないコンテナは建築物に該当します」（2025年12月5日）、兵庫県はコンテナについて「土地に定着とは、基本的に一定の場所に存置することをいう」と記載。</dd>
-      </dl>
       <p class="fine-e">※ 関西圏には近畿建築行政会議『建築基準法 共通取扱い集』があり、兵庫県公表資料によれば「近畿の48特定行政庁が了解」した文書ですが、全62問にトレーラーハウスの設問はありません。</p>
+      <p class="fine-e">※ 「コンテナのみ」は、トレーラーハウスの記載はないがコンテナについては記載がある自治体です。判断の枠組みは共通するため、参考として区分を分けて掲載しています。</p>
     </div>
 
     <div class="page-sec">
@@ -427,5 +491,6 @@ src="https://www.facebook.com/tr?id=1752804519503355&ev=PageView&noscript=1"
 </footer>
 
 <script src="/site.js?v=20260730c" defer></script>
+<script src="/jichitai.js?v=20260803a" defer></script>
 </body>
 </html>
