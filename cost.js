@@ -37,8 +37,9 @@
   }
 
   var fired = false;
+  var userTouched = false;
   function calc() {
-    if (!fired) { fired = true; track('cost_sim_use', {}); }
+    if (userTouched && !fired) { fired = true; track('cost_sim_use', {}); }
 
     var cat = $('cs-cat').value;
     var b = BASE[cat];
@@ -179,8 +180,9 @@
     calc();
   }
 
-  root.addEventListener('input', calc);
+  root.addEventListener('input', function () { userTouched = true; calc(); });
   root.addEventListener('change', function (e) {
+    userTouched = true;
     if (e.target.id === 'cs-biz') { toggleBiz(); return; }
     if (e.target.id === 'cs-route' || e.target.id === 'cs-cat') { toggleRoute(); return; }
     calc();
