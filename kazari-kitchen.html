@@ -27,7 +27,7 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"></noscript>
 <link rel="stylesheet" href="/site.css?v=20260730a">
-<link rel="stylesheet" href="/page.css?v=20260803f">
+<link rel="stylesheet" href="/page.css?v=20260803h">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -190,6 +190,40 @@ src="https://www.facebook.com/tr?id=1752804519503355&ev=PageView&noscript=1"
       <p>これらの車両は<strong>当スタジオが設計し、自社で保有しています</strong>。トップページの Works 002・003 として掲載しているものと同じ車両です。</p>
     </div>
 
+    <div class="page-sec" id="kengaku">
+      <h2>実車を見てから、決める。</h2>
+      <p class="kg-lead">Type A・Type B の2台を、広島県廿日市市の拠点でご覧いただけます。厨房の広さ、給排水、電源、収納 ── 写真では分からない使い勝手を、実物で確かめてから、リースや製造をご検討ください。その場での契約や勧誘はありません。まず、見に来てください。</p>
+      <div class="kg-note">
+        <span><b>予約制</b>ご希望日時を調整します</span>
+        <span><b>見学は無料</b></span>
+        <span>広島県廿日市市対厳山</span>
+      </div>
+      <form id="kgform" class="kg-form" action="https://docs.google.com/forms/d/e/1FAIpQLSe0ioggwa5pgKEyCL_FwvP3mKaPQv50Lgj89eXzF6GyDkvoRg/formResponse" method="POST" target="kg-sink">
+        <div id="kg-fields">
+          <div class="kg-row">
+            <label>お名前<input required name="entry.1951315019" type="text" autocomplete="name"></label>
+            <label>メールアドレス<input required name="entry.437484033" type="email" autocomplete="email"></label>
+          </div>
+          <div class="kg-row">
+            <label>電話番号<input name="entry.2095176949" type="tel" autocomplete="tel"></label>
+            <label>ご希望の日時<input id="kg-datetime" type="text" placeholder="例：8/15(土)午後、平日夕方など"></label>
+          </div>
+          <label>見たい車両・ご相談内容（任意）<textarea id="kg-memo" placeholder="Type A / Type B、業態、開業希望時期など"></textarea></label>
+          <input type="hidden" name="entry.1401254800" value="フードトラック・キッチンカー">
+          <input type="hidden" name="entry.1087811776" value="（KAZARI実車 見学予約）">
+          <input type="hidden" id="kg-message" name="entry.1424514303" value="">
+          <input type="hidden" name="fvv" value="1">
+          <input type="hidden" name="pageHistory" value="0">
+          <button type="submit" id="kg-submit">見学を予約する</button>
+          <small>ご予約後、日程調整のご連絡を差し上げます。その場での契約・勧誘はありません。送信をもって<a href="/privacy.html">プライバシーポリシー</a>に同意いただいたものとみなします。</small>
+        </div>
+        <div id="kg-done" hidden>
+          <p class="kg-thanks">ありがとうございます。ご希望の日時をもとに、日程調整のご連絡を差し上げます。当日は現地で、2台の実車をゆっくりご覧ください。</p>
+        </div>
+        <iframe id="kg-sink" name="kg-sink" title="submission target" aria-hidden="true" class="is-hidden"></iframe>
+      </form>
+    </div>
+
     <div class="page-sec">
       <h2>この車両について</h2>
       <p>2022年に導入した2トン車は、200リットルの給水タンクを搭載することで、<strong>飲食店の営業許可と2021年改正食品衛生法の基準を満たしています</strong>。固定店舗と同等の範囲で営業できる車両として、西日本で最初の一台として報道されました。</p>
@@ -250,5 +284,6 @@ src="https://www.facebook.com/tr?id=1752804519503355&ev=PageView&noscript=1"
 </footer>
 
 <script src="/site.js?v=20260730c" defer></script>
+<script src="/kengaku.js?v=20260803a" defer></script>
 </body>
 </html>
