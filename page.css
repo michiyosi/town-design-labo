@@ -517,3 +517,32 @@
   .jt-row{ padding:15px 18px; }
   .jt-badge{ margin-left:0; }
 }
+
+/* ---- お金と責任 ---- */
+.os-flow{ margin:26px 0 18px; padding:26px 24px; border:1px solid var(--line-strong); background:#fbfbfa; text-align:center; }
+.os-node{ display:inline-block; padding:14px 20px; background:#fff; border:1px solid var(--line); min-width:180px; }
+.os-node span{ display:block; font-size:13.5px; font-weight:600; }
+.os-node em{ display:block; font-style:normal; font-size:11px; line-height:1.7; color:#8a8a86; margin-top:4px; }
+.os-node.is-you{ border-color:var(--line-strong); }
+.os-node.is-us{ background:var(--ink); border-color:var(--ink); min-width:280px; }
+.os-node.is-us span{ color:#fff; }
+.os-node.is-us em{ color:rgba(255,255,255,.62); }
+.os-arrow{ font-size:10.5px; letter-spacing:.06em; color:#8a8a86; line-height:1.6; padding:12px 0; position:relative; }
+.os-arrow::before{ content:''; display:block; width:1px; height:14px; background:var(--line-strong); margin:0 auto 6px; }
+.os-arrow::after{ content:''; display:block; width:1px; height:14px; background:var(--line-strong); margin:6px auto 0; }
+.os-sub{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:22px; padding-top:22px; border-top:1px dashed var(--line); }
+.os-sub .os-node{ min-width:140px; padding:11px 14px; background:#f6f6f5; }
+.os-sub .os-node span{ font-size:12px; font-weight:500; }
+.os-note{ margin-top:12px; font-size:11px; color:#9a9a96; }
+
+.os-steps{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:20px; }
+.os-step{ background:#fff; padding:18px 20px; }
+.os-n{ display:block; font-family:"Inter",monospace; font-size:11px; color:#9a9a96; letter-spacing:.1em; margin-bottom:8px; }
+.os-step strong{ display:block; font-size:14px; margin-bottom:6px; }
+.os-step p{ font-size:12.5px; line-height:1.9; color:var(--ink-mute); margin:0; }
+
+@media (max-width:600px){
+  .os-flow{ padding:20px 16px; }
+  .os-node, .os-node.is-us{ min-width:0; width:100%; }
+  .os-sub{ flex-direction:column; }
+}
