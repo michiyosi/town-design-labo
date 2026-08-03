@@ -573,3 +573,9 @@
 .kg-note span{ display:inline-flex; align-items:center; gap:7px; }
 .kg-note b{ font-weight:600; }
 @media(max-width:560px){ .kg-row{ grid-template-columns:1fr; gap:0; } .kg-form .kg-row label{ margin-bottom:14px; } }
+
+/* ===== 定点観測ページ 更新履歴 ===== */
+.ss-log{ list-style:none; padding:0; margin:8px 0 0; }
+.ss-log li{ padding:12px 2px; border-top:1px solid #ececea; font-size:13.5px; line-height:1.75; color:var(--ink); }
+.ss-log li:first-child{ border-top:none; }
+.ss-log li strong{ font-family:"Inter",monospace; font-size:12px; letter-spacing:.03em; margin-right:12px; color:#6a6a66; }
