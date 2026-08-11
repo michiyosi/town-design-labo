@@ -66,7 +66,7 @@
           <input type="hidden" name="entry.1424514303" value="【資料DL】価格表・仕様一覧・法規チェックリスト">
           <input type="hidden" name="fvv" value="1">
           <input type="hidden" name="pageHistory" value="0">
-          <small>営業のご連絡はいたしません。新しい実務ガイドを公開したときにだけ、まれにお知らせを差し上げることがあります。<br>送信をもって　<a href="/privacy.html">プライバシーポリシー</a>にご同意いただいたものとみなします。</small>
+          <small>営業のご連絡はいたしません。新しい実務ガイドを公開したときにだけ、まれにお知らせを差し上げることがあります。<br>送信をもって<a href="/privacy.html">プライバシーポリシー</a>にご同意いただいたものとみなします。</small>
         </div>
         <div id="dl-done" hidden>
           <p class="dl-thanks">ありがとうございます。下のボタンからダウンロードいただけます。</p>
@@ -74,7 +74,46 @@
         </div>
         <iframe id="dl-sink" name="dl-sink" title="submission target" aria-hidden="true" class="is-hidden"></iframe>
       </form>
-      <p style="font-size:13px;color:#8a8175;margin-top:14px">導入例：オタフクソース様・生協ひろしま様・IRIE KITCHEN様。</p>
+      <style>
+      .dlvoices{margin-top:26px}
+      .dlvoices-h{font-size:13px;letter-spacing:.08em;color:#8a8175;margin-bottom:14px}
+      .dlvoices-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+      .dlvoice{background:#fff;border:1px solid #e7e0d5;border-radius:4px;overflow:hidden;display:flex;flex-direction:column;margin:0}
+      .dlvoice>img{width:100%;height:150px;object-fit:cover;display:block}
+      .dlvoice-b{padding:18px 20px 16px;display:flex;flex-direction:column;flex-grow:1}
+      .dlvoice blockquote{margin:0 0 14px;padding:0;font-size:14px;line-height:1.95;color:#2a2a2a;flex-grow:1}
+      .dlvoice-co{font-weight:700;font-size:13px;color:#111}
+      .dlvoice-meta{font-size:11px;letter-spacing:.05em;color:#8a8175;margin-top:2px}
+      </style>
+      <div class="dlvoices">
+        <div class="dlvoices-h">— 導入いただいたお客様の声</div>
+        <div class="dlvoices-grid">
+          <figure class="dlvoice">
+            <img src="/otafuku-01-sm.webp" alt="オタフクソースのお好み焼きキッチンカー" width="1400" height="1050" loading="lazy" decoding="async">
+            <div class="dlvoice-b">
+              <blockquote>作って終わりではなく、納車後の改修やメンテナンスまで丁寧に対応いただけるので、安心して相談できます。こちらの要望にも柔軟に対応いただき、いつも助かっています。</blockquote>
+              <span class="dlvoice-co">オタフクソース株式会社</span>
+              <span class="dlvoice-meta">お好み焼きキッチンカーの設計｜広島</span>
+            </div>
+          </figure>
+          <figure class="dlvoice">
+            <img src="/coop-01-sm.webp" alt="生協ひろしまのキッチンカー" width="900" height="1200" loading="lazy" decoding="async">
+            <div class="dlvoice-b">
+              <blockquote>初めてのキッチンカー製作でしたが、こちらの要望や用途に合わせて丁寧に相談に乗っていただき、安心して進めることができました。納車後も相談に対応していただけるので、心強く感じています。</blockquote>
+              <span class="dlvoice-co">生協ひろしま</span>
+              <span class="dlvoice-meta">キッチンカーの設計｜広島</span>
+            </div>
+          </figure>
+          <figure class="dlvoice">
+            <img src="/irie-01-sm.webp" alt="IRIE KITCHENの軽トラキッチンカー" width="900" height="1200" loading="lazy" decoding="async" style="object-position:center 26%">
+            <div class="dlvoice-b">
+              <blockquote>いきなりキッチンカーを購入するのは不安でしたが、まずはリースで始めることができたので、実際に営業しながら自分たちのスタイルを作っていくことができました。車両のことだけでなく、分からないことも気軽に相談できるので、安心してスタートすることができました。</blockquote>
+              <span class="dlvoice-co">IRIE KITCHEN ／ IRIE FARM</span>
+              <span class="dlvoice-meta">軽トラキッチンカーのリース｜広島</span>
+            </div>
+          </figure>
+        </div>
+      </div>
     </div>
 
     <div class="page-sec">
