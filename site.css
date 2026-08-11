@@ -1138,3 +1138,27 @@ a.trust-row:hover .trust-thumb img { transform: scale(1.05); filter: grayscale(0
   .hh-title{ font-size:24px; }
   .hh-body{ padding:22px 20px 24px; }
 }
+
+
+/* ===== お客様の声 index #voices（CSPのためsite.cssへ移設） ===== */
+.voices{background:#f6f3ee;padding:clamp(64px,10vw,120px) 0}
+.voices .s-head{margin-bottom:40px}
+.voices-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;max-width:1000px;margin:0 auto}
+.voice{position:relative;background:#fff;border:1px solid #e7e0d5;border-radius:4px;margin:0;display:flex;flex-direction:column;overflow:hidden}
+.voice>img{width:100%!important;height:190px!important;object-fit:cover!important;object-position:center;display:block}
+.voice-body{position:relative;padding:30px 30px 24px;display:flex;flex-direction:column;flex-grow:1}
+.voice-body::before{content:"\201C";position:absolute;top:4px;left:18px;font-family:Georgia,"Times New Roman",serif;font-size:60px;line-height:1;color:#b0862f;opacity:.28}
+.voice blockquote{margin:0 0 20px;padding:0;font-size:16px;line-height:2.05;color:#2a2a2a;position:relative;z-index:1;flex-grow:1}
+.voice figcaption{display:flex;flex-direction:column;gap:3px;border-top:1px solid #eee;padding-top:14px}
+.voice-co{font-weight:700;font-size:15px;color:#111;letter-spacing:.02em}
+.voice-meta{font-size:12px;letter-spacing:.06em;color:#8a8175}
+/* ===== 導入いただいたお客様の声 price-download .dlvoices ===== */
+.dlvoices{margin-top:26px}
+.dlvoices-h{font-size:13px;letter-spacing:.08em;color:#8a8175;margin-bottom:14px}
+.dlvoices-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.dlvoice{background:#fff;border:1px solid #e7e0d5;border-radius:4px;overflow:hidden;display:flex;flex-direction:column;margin:0}
+.dlvoice>img{width:100%!important;height:150px!important;object-fit:cover!important;display:block;border-radius:0!important}
+.dlvoice-b{padding:18px 20px 16px;display:flex;flex-direction:column;flex-grow:1}
+.dlvoice blockquote{margin:0 0 14px;padding:0;font-size:14px;line-height:1.95;color:#2a2a2a;flex-grow:1}
+.dlvoice-co{font-weight:700;font-size:13px;color:#111}
+.dlvoice-meta{font-size:11px;letter-spacing:.05em;color:#8a8175;margin-top:2px}
