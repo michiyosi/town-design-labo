@@ -46,5 +46,13 @@ src="https://www.facebook.com/tr?id=1752804519503355&ev=PageView&noscript=1"
   <a class="btn" href="/">トップページへ戻る</a>
   <div class="tel">TEL 080-5615-9786（平日 9:00–18:00）</div>
 </div>
+<!-- GA4: 送信完了をリード（キーイベント）として計測。site.js(defer)でGA4設定後に発火 -->
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    if (typeof gtag === 'function') {
+      gtag('event', 'generate_lead', { 'send_to': 'G-SD0J17P6ST' });
+    }
+  });
+</script>
 </body>
 </html>
