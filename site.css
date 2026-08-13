@@ -982,7 +982,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 .sticky-cta a { text-decoration: none; text-align: center; font-weight: 700; border-radius: 2px; padding: 13px 12px; font-size: 14px; }
 .scta-primary { flex: 1; background: var(--ink); color: #fff; }
-.scta-tel { background: #fff; color: var(--ink); border: 1px solid var(--line-strong); white-space: nowrap; }
+.scta-doc { flex: 1; background: #fff; color: var(--ink); border: 1px solid var(--brass); white-space: nowrap; }
+.scta-tel { flex: 0 0 auto; min-width: 48px; background: #fff; color: var(--ink); border: 1px solid var(--line-strong); white-space: nowrap; font-size: 16px; }
 @media (max-width: 720px){ .sticky-cta { display: flex; } body { padding-bottom: 64px; } }
 
 /* ------- Phase2 (2026-07-28): 選ばれる理由 ------- */
