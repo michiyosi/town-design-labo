@@ -27,8 +27,8 @@ var lb=document.createElement('dialog');lb.id='lb';
 lb.innerHTML='<figure style="margin:0;position:relative"><button class="lbx" aria-label="閉じる">×</button><img alt=""><figcaption></figcaption></figure>';
 document.body.appendChild(lb);
 document.addEventListener('click',function(ev){
- var im=ev.target.closest('.mosaic img,.duo img,.strip img,.inset img,.wallgrid img');
- if(im){lb.querySelector('img').src=im.src;
+ var im=ev.target.closest('.mosaic img,.duo img,.strip img,.inset img,.wallgrid img,.gallery img');
+ if(im){lb.querySelector('img').src=(im.dataset.full||im.src);
   var f=im.closest('figure'),c=f?f.querySelector('figcaption'):null;
   lb.querySelector('figcaption').textContent=c?c.textContent:'';
   lb.showModal();return;}
