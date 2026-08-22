@@ -65,7 +65,7 @@ if(fossil){
   fossil.hidden=!fossil.hidden;
   if(!fossil.hidden){fossil.classList.remove('pop');void fossil.offsetWidth;fossil.classList.add('pop');
    fossil.scrollIntoView({behavior:'smooth',block:'nearest'});}
-  fb.textContent=fossil.hidden?'2014年の2マスの正体を見る ▶':'閉じる ▲';
+  fb.textContent=fossil.hidden?'2014年、この2日に何を書いたのか ▶':'閉じる ▲';
  });}
 }
 /* 日付で13年を引く（きょう／誕生日 共通） */
@@ -228,3 +228,16 @@ try{
   });
  }
 }catch(e){}
+
+/* 投稿URLは cta.json から読む（公開後に1行書き換えるだけで反映される） */
+(function(){
+ try{
+  fetch('cta.json', {cache:'no-store'}).then(function(r){return r.json();}).then(function(c){
+   if(!c || !c.url) return;
+   var p = document.getElementById('ctapost'), a = document.getElementById('ctalink');
+   if(p && a){ a.href = c.url; p.hidden = false; }
+   var pill = document.getElementById('pill');
+   if(pill) pill.href = c.url;
+  }).catch(function(){});
+ }catch(e){}
+})();
