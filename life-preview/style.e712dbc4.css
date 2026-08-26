@@ -58,12 +58,12 @@ a{color:inherit;text-underline-offset:.18em}
 .premise-in .lede{color:var(--c-ink-3);font-size:var(--fs-200)}
 /* 章の補足見出し（何の話か） */
 .chsub{font:700 var(--fs-200)/1.6 var(--font-round);color:var(--c-ink-2);margin:0 0 22px;letter-spacing:.01em}
-.stickers{position:absolute;inset:0;pointer-events:none}
+.stickers{position:absolute;inset:0;pointer-events:none;max-width:1040px;margin-inline:auto;padding-inline:var(--gutter)}
 .stk{position:absolute;background:#fff;color:var(--c-ink);border-radius:14px;
  font:900 var(--fs-500)/1 var(--font-round);padding:16px 22px;display:var(--deco)}
 .stk b{color:var(--c-green-text)}
-.stk1{top:9%;right:6%;transform:rotate(5deg)}
-.stk2{bottom:24%;left:4%;transform:rotate(-8deg)}
+.stk1{top:4%;right:0;transform:rotate(5deg)}
+.stk2{top:15%;right:9%;transform:rotate(-8deg)}
 .kvcard{background:#fff;color:var(--c-ink);border-radius:var(--r-card);
  padding:clamp(28px,5vw,56px) clamp(18px,4vw,48px);box-shadow:none}
 .kvlead{font:700 var(--fs-500)/2 var(--font-round);text-align:center;margin:0 0 8px}
