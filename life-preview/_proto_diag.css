@@ -1,0 +1,39 @@
+
+*{box-sizing:border-box}body{margin:0;background:#0d0d0d;color:#fff;
+ font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif}
+.intro,.outro{min-height:100svh;display:grid;place-content:center;padding:8vw;
+ background:#0d0d0d;background-image:radial-gradient(rgba(255,255,255,.13) 1px,transparent 1px);background-size:18px 18px}
+.intro h1{font:900 clamp(30px,4.6vw,56px)/1.5 sans-serif;margin:0 0 12px}
+.intro p,.outro p{font:400 13px/2 monospace;color:#999}
+.outro{background:#fff;color:#111}
+.hint{font:700 12px/1 monospace;color:#28DD34}
+/* ==== 斜めスクロール区間 ==== */
+.diag{height:340svh;position:relative}
+.stage{position:sticky;top:0;height:100svh;overflow:clip;
+ background:#0d0d0d;background-image:radial-gradient(rgba(255,255,255,.10) 1px,transparent 1px);background-size:18px 18px}
+.world{position:absolute;left:0;top:0;width:4200px;height:1750px;will-change:transform}
+.band{position:absolute;left:-200px;top:330px;transform:rotate(17.2deg);transform-origin:left top;opacity:.95}
+.card{position:absolute;width:230px;background:#161616;border:1px solid #2e2e2e;padding:10px 10px 12px;transform:rotate(17.2deg)}
+.card img{width:100%;height:130px;object-fit:cover;display:block;filter:grayscale(.15)}
+.card .ck{font:700 10.5px/1 monospace;color:#28DD34;margin:10px 0 4px}
+.card .ct{font:900 17px/1.4 sans-serif;color:#fff;margin:0}
+.card .cy{font:400 10.5px/1 monospace;color:#777;margin:6px 0 0}
+.big{position:absolute;font:900 120px/1 sans-serif;color:#1d1d1d;transform:rotate(17.2deg);white-space:nowrap}
+.prog{position:fixed;right:14px;bottom:12px;font:700 12px/1 monospace;color:#28DD34;z-index:9}
+body.fixedp .intro,body.fixedp .outro{display:none}
+body.fixedp .diag{height:100svh}
+@media (prefers-reduced-motion:reduce){
+ .diag{height:auto}.stage{position:static;height:auto;overflow:visible}
+ .world{position:static;width:auto;height:auto;transform:none!important}
+ .band,.card,.big{position:static;transform:none;margin:20px}
+}
+
+[data-ps="ps0"]{left:240px;top:140px}
+[data-ps="ps1"]{left:2350px;top:830px}
+[data-ps="ps2"]{left:1350px;top:520px}
+[data-ps="ps3"]{left:714px;top:125px}
+[data-ps="ps4"]{left:1120px;top:701px}
+[data-ps="ps5"]{left:1781px;top:456px}
+[data-ps="ps6"]{left:2188px;top:1033px}
+[data-ps="ps7"]{left:2849px;top:788px}
+[data-ps="ps8"]{left:3255px;top:1364px}
