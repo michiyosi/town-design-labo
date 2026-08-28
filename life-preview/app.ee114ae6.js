@@ -345,7 +345,7 @@ try{
    var c=el.className&&el.className.baseVal===undefined?el.className:'';
    if(/\b(wall|mosaic|gallery|duo|herofig|kvcard)\b/.test(c)) return 1.45;
    if(el.tagName==='FIGURE') return 1.40;
-   if(/\bstickers\b/.test(c)) return 1.95;
+   if(/\bstickers\b/.test(c)) return .95;
    if(/\bmq\b/.test(c)) return 1.55;
    if(el.tagName==='BLOCKQUOTE') return .90;
    return .75;                      /* 段落・見出し・リスト */
@@ -396,11 +396,15 @@ try{
    var _k=+(_qs.get('driftk')||0)||1;   /* 強さ比較用の倍率 */
    addEventListener('load',function(){
     scrollTo(0,+_dq);
+    var _W=innerWidth;
     for(var i=0;i<items.length;i++){
      var it=items[i], r=it.el.getBoundingClientRect();
      var t=((r.top+r.height/2)%_vh-_vh/2)/_vh*2;
      if(t>1.3)t=1.3; else if(t<-1.3)t=-1.3;
-     it.el.style.setProperty('--dx',(t*AMP*it.a*_k).toFixed(1)+'px');
+     var dx=t*AMP*it.a*_k, sr=_W-r.right-10, sl=r.left-10;
+     if(sr>=0&&dx>sr) dx=sr;
+     if(sl>=0&&dx<-sl) dx=-sl;
+     it.el.style.setProperty('--dx',dx.toFixed(1)+'px');
     }
    });
    return;
@@ -425,12 +429,22 @@ try{
   var raf=0;
   function apply(){
    raf=0;
-   var mid=VH/2;
+   var mid=VH/2, W=innerWidth;
    for(var i=0;i<active.length;i++){
     var it=active[i], r=it.el.getBoundingClientRect();
     var t=(r.top+r.height/2-mid)/VH;
     if(t>1.3)t=1.3; else if(t<-1.3)t=-1.3;
-    it.el.style.setProperty('--dx',(t*AMP*it.a).toFixed(1)+'px');
+    var dx=t*AMP*it.a;
+    /* 安全弁: 画面の外へ押し出さない。
+       html は overflow-x:clip なので、はみ出したものは消えてしまう。
+       いま当たっているずれ(it.dx)を引いて、素の位置で余白を測る。
+       もともと画面幅いっぱいの要素（帯など）は余白が負になるので、
+       そのときは制限しない（意図的にはみ出しているもの）。 */
+    var d0=it.dx||0, sr=W-(r.right-d0)-10, sl=(r.left-d0)-10;
+    if(sr>=0&&dx>sr) dx=sr;
+    if(sl>=0&&dx<-sl) dx=-sl;
+    it.dx=dx;
+    it.el.style.setProperty('--dx',dx.toFixed(1)+'px');
    }
   }
   function schedule(){ if(!raf) raf=requestAnimationFrame(apply); }
