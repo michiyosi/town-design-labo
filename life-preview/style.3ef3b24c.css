@@ -59,12 +59,14 @@ a{color:inherit;text-underline-offset:.18em}
 /* 章の補足見出し（何の話か） */
 .chsub{font:700 var(--fs-200)/1.6 var(--font-round);color:var(--c-ink-2);margin:0 0 22px;letter-spacing:.01em}
 .stickers{position:absolute;inset:0;pointer-events:none;max-width:1040px;margin-inline:auto;padding-inline:var(--gutter)}
-.stk{position:absolute;background:#fff;color:var(--c-ink);border-radius:14px;
+.stk{position:absolute;background:#fff;color:var(--c-ink);
+ clip-path:polygon(0 8px,4px 8px,4px 4px,8px 4px,8px 0,calc(100% - 8px) 0,calc(100% - 8px) 4px,calc(100% - 4px) 4px,calc(100% - 4px) 8px,100% 8px,100% calc(100% - 8px),calc(100% - 4px) calc(100% - 8px),calc(100% - 4px) calc(100% - 4px),calc(100% - 8px) calc(100% - 4px),calc(100% - 8px) 100%,8px 100%,8px calc(100% - 4px),4px calc(100% - 4px),4px calc(100% - 8px),0 calc(100% - 8px));
  font:900 var(--fs-500)/1 var(--font-round);padding:16px 22px;display:var(--deco)}
 .stk b{color:var(--c-green-text)}
 .stk1{top:4%;right:0;transform:rotate(5deg)}
 .stk2{top:15%;right:9%;transform:rotate(-8deg)}
-.kvcard{background:#fff;color:var(--c-ink);border-radius:var(--r-card);
+.kvcard{background:#fff;color:var(--c-ink);
+ clip-path:polygon(0 12px,6px 12px,6px 6px,12px 6px,12px 0,calc(100% - 12px) 0,calc(100% - 12px) 6px,calc(100% - 6px) 6px,calc(100% - 6px) 12px,100% 12px,100% calc(100% - 12px),calc(100% - 6px) calc(100% - 12px),calc(100% - 6px) calc(100% - 6px),calc(100% - 12px) calc(100% - 6px),calc(100% - 12px) 100%,12px 100%,12px calc(100% - 6px),6px calc(100% - 6px),6px calc(100% - 12px),0 calc(100% - 12px));
  padding:clamp(28px,5vw,56px) clamp(18px,4vw,48px);box-shadow:none}
 .kvlead{font:700 var(--fs-500)/2 var(--font-round);text-align:center;margin:0 0 8px}
 .kvlead p{margin:0}
@@ -86,7 +88,8 @@ a{color:inherit;text-underline-offset:.18em}
 .tint-a{background:#D9F4DD}
 .tint-b{background:#D5EFFB}
 .tint-a .njcard + .njcard,.tint-b .njcard + .njcard{margin-top:var(--sp-7)}
-.njcard{display:flow-root;background:#fff;border-radius:var(--card-r,16px);max-width:960px;margin:0 auto;
+.njcard{display:flow-root;background:#fff;max-width:960px;margin:0 auto;
+ clip-path:polygon(0 12px,6px 12px,6px 6px,12px 6px,12px 0,calc(100% - 12px) 0,calc(100% - 12px) 6px,calc(100% - 6px) 6px,calc(100% - 6px) 12px,100% 12px,100% calc(100% - 12px),calc(100% - 6px) calc(100% - 12px),calc(100% - 6px) calc(100% - 6px),calc(100% - 12px) calc(100% - 6px),calc(100% - 12px) 100%,12px 100%,12px calc(100% - 6px),6px calc(100% - 6px),6px calc(100% - 12px),0 calc(100% - 12px));
  padding:clamp(36px,7vw,88px) clamp(20px,5vw,64px) clamp(32px,5vw,56px)}
 .quiet{display:flow-root;border-top:1px solid var(--c-line);margin-top:var(--sp-6);padding-top:var(--sp-6)}
 
@@ -103,11 +106,15 @@ h2 em{font-style:normal;color:var(--accent-eff)}
 .range{color:var(--c-ink-3);font-size:13px;letter-spacing:.06em;margin:0 0 22px}
 .card{display:grid;grid-template-columns:repeat(3,1fr);margin:18px 0 30px;
  border-top:1px solid var(--c-line);padding-top:14px}
-.card .v{font:900 26px/1.1 var(--font-round);margin:0;font-variant-numeric:tabular-nums}
+.card .v{font:900 26px/1.1 var(--font-round);margin:0;font-variant-numeric:tabular-nums;
+ background-image:repeating-linear-gradient(to right,var(--c-cyan) 0 6px,transparent 6px 10px);
+ background-size:44px 4px;background-repeat:no-repeat;background-position:0 100%;padding-bottom:7px}
 .card .l{font-size:11px;color:var(--c-ink-3);letter-spacing:.1em;margin-top:4px}
 
 /* 引用 */
-.q{position:relative;margin:32px 0;padding:4px 0 4px 1.1em;
+.q{position:relative;margin:32px 0;padding:4px 0 4px 1.2em;
+ background-image:repeating-linear-gradient(to bottom,var(--c-green) 0 6px,transparent 6px 10px);
+ background-size:4px 100%;background-repeat:no-repeat;background-position:0 0;
  font-family:var(--font-body);font-weight:600;font-size:clamp(16.5px,2.4vw,19px);
  line-height:2.05;border-left:3px solid var(--c-green)}
 [data-temp="0"] .q,[data-temp="1"] .q{border-left:1px solid var(--c-line);font-weight:500}
@@ -187,6 +194,8 @@ figcaption{font-size:11.5px;color:var(--c-ink-3);line-height:1.65;margin-top:7px
 [data-temp="0"] .finding,[data-temp="1"] .finding{border-color:var(--c-line)}
 .lead-out{font-size:clamp(17px,2.6vw,20px);font-weight:700;margin-top:30px}
 .evi{clear:both;font-size:11px;color:var(--c-ink-3);letter-spacing:.04em;margin-top:34px;
+ background-image:repeating-linear-gradient(to right,var(--c-line) 0 4px,transparent 4px 8px);
+ background-size:100% 2px;background-repeat:no-repeat;background-position:0 0;padding-top:12px;
  padding-top:12px;border-top:1px solid var(--c-line)}
 .facts{margin:0 0 22px;padding-left:1.1em}
 .facts li{margin:0 0 9px}
@@ -196,9 +205,10 @@ figcaption{font-size:11.5px;color:var(--c-ink-3);line-height:1.65;margin-top:7px
 .cta{margin-top:var(--sp-7);border-top:1px solid var(--c-line);padding-top:var(--sp-7);text-align:center}
 .cta-lead{font-size:var(--fs-300);color:var(--c-ink-2)}
 .nj-btn{display:inline-block;background:var(--c-cta);color:var(--c-ink);text-decoration:none;
+ clip-path:polygon(0 8px,4px 8px,4px 4px,8px 4px,8px 0,calc(100% - 8px) 0,calc(100% - 8px) 4px,calc(100% - 4px) 4px,calc(100% - 4px) 8px,100% 8px,100% calc(100% - 8px),calc(100% - 4px) calc(100% - 8px),calc(100% - 4px) calc(100% - 4px),calc(100% - 8px) calc(100% - 4px),calc(100% - 8px) 100%,8px 100%,8px calc(100% - 4px),4px calc(100% - 4px),4px calc(100% - 8px),0 calc(100% - 8px));filter:drop-shadow(4px 4px 0 rgba(23,129,30,.35));
  font:900 var(--fs-500)/1 var(--font-round);padding:22px 64px;border-radius:var(--r-btn);
  transition:transform var(--dur-sm) var(--ease-ui)}
-.nj-btn:hover{transform:scale(1.05) rotate(-1deg)}
+.nj-btn:hover{transform:translate(2px,2px);filter:drop-shadow(2px 2px 0 rgba(23,129,30,.35))}
 /* 固定DMピル（発光はここだけ） */
 .dm-pill{position:fixed;right:22px;bottom:26px;z-index:8;background:var(--c-green);
  color:var(--c-ink);text-decoration:none;font:900 14px/1 var(--font-round);
@@ -235,6 +245,7 @@ html:not(.js) .mo{display:block}
 html:not(.js) .morew{display:none}
 .morew{margin:4px 0 26px}
 .morebtn{font:700 14px/1 var(--font-round);color:var(--c-green-text);background:none;
+ border-radius:0!important; clip-path:polygon(0 8px,4px 8px,4px 4px,8px 4px,8px 0,calc(100% - 8px) 0,calc(100% - 8px) 4px,calc(100% - 4px) 4px,calc(100% - 4px) 8px,100% 8px,100% calc(100% - 8px),calc(100% - 4px) calc(100% - 8px),calc(100% - 4px) calc(100% - 4px),calc(100% - 8px) calc(100% - 4px),calc(100% - 8px) 100%,8px 100%,8px calc(100% - 4px),4px calc(100% - 4px),4px calc(100% - 8px),0 calc(100% - 8px));
  border:2px solid currentColor;border-radius:999px;padding:12px 24px;cursor:pointer}
 .morebtn:hover{background:var(--c-green);border-color:var(--c-green);color:#fff}
 /* 章のドット絵（立体） */
@@ -288,7 +299,8 @@ figure.inset{rotate:-.9deg}
  .scrolldown{animation:none!important}
 }
 /* 投稿カード */
-.fbc{background:#fff;border:1px solid var(--c-line);border-radius:12px;
+.fbc{background:#fff;border:1px solid var(--c-line);
+ clip-path:polygon(0 8px,4px 8px,4px 4px,8px 4px,8px 0,calc(100% - 8px) 0,calc(100% - 8px) 4px,calc(100% - 4px) 4px,calc(100% - 4px) 8px,100% 8px,100% calc(100% - 8px),calc(100% - 4px) calc(100% - 8px),calc(100% - 4px) calc(100% - 4px),calc(100% - 8px) calc(100% - 4px),calc(100% - 8px) 100%,8px 100%,8px calc(100% - 4px),4px calc(100% - 4px),4px calc(100% - 8px),0 calc(100% - 8px));filter:drop-shadow(4px 4px 0 rgba(69,104,138,.14));
  padding:18px 20px;margin:26px 0;max-width:560px}
 .fbh{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .fbav{width:38px;height:38px;border-radius:50%;background:var(--c-cyan);color:#fff;
