@@ -1,0 +1,62 @@
+html,body{margin:0;min-height:100%;background:#00BEFF}
+body{display:grid;place-items:center;overflow:hidden;
+ font-family:"ZMG","Hiragino Maru Gothic ProN","Yu Gothic",sans-serif}
+.wrapc{position:relative;text-align:center;color:#fff;padding:24px;z-index:2}
+h1{font-weight:900;font-size:clamp(34px,6.4vw,64px);line-height:1.55;margin:0 0 14px;letter-spacing:.02em}
+h1 b{display:inline-block;font-weight:900}
+.lead{font-size:clamp(13px,1.6vw,15px);line-height:2.1;margin:0 0 34px;opacity:.96}
+.go{display:inline-block;font-weight:900;font-size:clamp(16px,2vw,19px);color:#060000;background:#fff;
+ border-radius:999px;padding:20px 48px;text-decoration:none;
+ box-shadow:0 10px 30px rgba(0,60,90,.25)}
+.go:hover{background:#28DD34;color:#fff;translate:0 -2px}
+.note{display:block;margin-top:20px;font-size:12px;opacity:.85}
+/* 街のドット絵 */
+.sp,.hb{position:fixed;image-rendering:pixelated;z-index:1;pointer-events:none}
+.sp-torii{left:max(1vw,10px);bottom:4vh;width:min(20vw,240px)}
+.sp-kirin{right:max(2vw,12px);bottom:10vh;width:min(9vw,110px)}
+.sp-kids{left:24vw;bottom:3vh;width:min(8vw,96px)}
+.sp-kcar{right:22vw;bottom:2.5vh;width:min(12vw,150px)}
+.sp-nobori{left:12vw;bottom:26vh;width:min(4.5vw,52px)}
+.sp-tree{right:9vw;bottom:38vh;width:min(6vw,70px)}
+.hb{width:min(6vw,72px)}
+.hb1{left:14vw;top:9vh}
+.hb2{right:16vw;top:7vh}
+.hb3{left:44vw;top:4vh}
+@media (max-width:700px){
+ .sp-nobori,.sp-tree{display:none}
+ .sp-torii{width:34vw}.sp-kcar{width:22vw}.sp-kirin{width:16vw}.sp-kids{width:15vw}
+ .hb{width:11vw}
+}
+/* はじまる動き（全部CSS） */
+@media (prefers-reduced-motion: no-preference){
+ h1 b{animation:pop .55s cubic-bezier(.2,1.6,.4,1) both}
+ .t1 b:nth-child(1){animation-delay:0.15s}
+ .t1 b:nth-child(2){animation-delay:0.24s}
+ .t1 b:nth-child(3){animation-delay:0.33s}
+ .t1 b:nth-child(4){animation-delay:0.42s}
+ .t1 b:nth-child(5){animation-delay:0.51s}
+ .t2 b:nth-child(1){animation-delay:0.60s}
+ .t2 b:nth-child(2){animation-delay:0.69s}
+ .t2 b:nth-child(3){animation-delay:0.78s}
+ .t2 b:nth-child(4){animation-delay:0.87s}
+ .t2 b:nth-child(5){animation-delay:0.96s}
+ .t2 b:nth-child(6){animation-delay:1.05s}
+ .t2 b:nth-child(7){animation-delay:1.14s}
+ .lead{animation:fadein .8s ease-out 1.35s both}
+ .go{animation:rise .7s cubic-bezier(.2,1.5,.4,1) 1.6s both}
+ .note{animation:fadein .8s ease-out 1.9s both}
+ .sp{animation:bob 3.4s ease-in-out infinite alternate, fadein .9s ease-out 1.2s both}
+ .sp-kirin{animation-delay:.4s,1.3s}
+ .sp-kids{animation-delay:.8s,1.35s}
+ .sp-kcar{animation-delay:.2s,1.4s}
+ .sp-nobori{animation-delay:.6s,1.5s}
+ .sp-tree{animation-delay:1s,1.55s}
+ .hb{animation:tw 2.6s ease-in-out infinite}
+ .hb2{animation-delay:.9s}
+ .hb3{animation-delay:1.7s}
+ @keyframes pop{from{opacity:0;transform:translateY(.5em) scale(.4) rotate(6deg)}}
+ @keyframes fadein{from{opacity:0}}
+ @keyframes rise{from{opacity:0;transform:translateY(26px)}}
+ @keyframes bob{to{transform:translateY(-10px)}}
+ @keyframes tw{0%,100%{opacity:0;transform:scale(.55)}45%{opacity:1;transform:scale(1)}70%{opacity:.25;transform:scale(1.15)}}
+}
