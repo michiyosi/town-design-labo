@@ -298,3 +298,33 @@ try{
   }).catch(function(){});
  }catch(e){}
 })();
+
+
+/* ===== 斜めの横断（scroll写像。ホイールは乗っ取らない） ===== */
+(function(){
+ try{
+  var seg=document.getElementById('diagx'); if(!seg) return;
+  var world=seg.querySelector('.world');
+  var WW=4200, WH=1750;
+  function apply(p){
+   var dx=p*(WW-innerWidth), dy=p*(WH-innerHeight);
+   world.style.transform='translate3d('+(-dx)+'px,'+(-dy)+'px,0)';
+  }
+  var q=new URLSearchParams(location.search), fp=q.get('diagp');
+  if(fp!==null){
+   document.documentElement.classList.add('diagfix');
+   apply(+fp);
+   return;
+  }
+  var mq=matchMedia('(prefers-reduced-motion: reduce)');
+  function tick(){
+   if(!mq.matches){
+    var r=seg.getBoundingClientRect();
+    var total=seg.offsetHeight-innerHeight;
+    if(total>0) apply(Math.min(1,Math.max(0,-r.top/total)));
+   }
+   requestAnimationFrame(tick);
+  }
+  tick();
+ }catch(e){}
+})();
