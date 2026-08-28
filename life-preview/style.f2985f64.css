@@ -228,6 +228,15 @@ section.ch.closing{clip-path:polygon(0 0,100% var(--cut),100% 100%,0 100%)}
 .js .world>p,.js .world>footer{position:relative;z-index:1}
 @media (max-width:900px){.town{display:none}}
 @media (prefers-reduced-motion:reduce){.town{display:none}}
+/* ダイジェスト（つづきを読む） */
+.mo{display:none}
+section.open .mo{display:block}
+html:not(.js) .mo{display:block}
+html:not(.js) .morew{display:none}
+.morew{margin:4px 0 26px}
+.morebtn{font:700 14px/1 var(--font-round);color:var(--c-green-text);background:none;
+ border:2px solid currentColor;border-radius:999px;padding:12px 24px;cursor:pointer}
+.morebtn:hover{background:var(--c-green);border-color:var(--c-green);color:#fff}
 /* 章のドット絵（立体） */
 .pxbox{width:clamp(132px,25%,228px);margin:0 0 16px;position:relative}
 .pxa{display:block;height:auto;width:100%;
@@ -298,7 +307,7 @@ figure.inset{rotate:-.9deg}
 .fbc details[open] summary{display:none}
 /* 写真の壁 */
 .wall{clear:both;margin:38px 0 8px}
-.wallgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:6px}
+.wallgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(122px,1fr));gap:8px}
 .wallgrid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:4px;display:block;background:#F2F2F2}
 .wall-cap{font-size:11px;color:var(--c-ink-3);margin-top:10px}
 /* ランダム引き */
@@ -542,8 +551,8 @@ img,svg{max-width:100%}
 
 }
 
-[data-ist="ist0"]{background-image:url(town0.07142082.svg);background-size:440px 2600px}
-[data-ist="ist1"]{background-image:url(town1.5b90d85e.svg);background-size:440px 3050px}
+[data-ist="ist0"]{background-image:url(town0.edef1eb8.svg);background-size:440px 2600px}
+[data-ist="ist1"]{background-image:url(town1.1792b507.svg);background-size:440px 3050px}
 [data-ist="ist2"]{white-space:nowrap}
 [data-ist="ist3"]{background-image:url(img/411-d8efd6f5.jpg)}
 [data-ist="ist4"]{text-align:center}
