@@ -16,13 +16,13 @@
  --ease:cubic-bezier(.19,1,.22,1);--ease-ui:cubic-bezier(.4,.4,0,1);
  --dur-sm:300ms;--dur-lg:600ms;
  /* NOUJIRU */
- --c-bg:#0D0D0D;--c-ink:#F2F5F7;--c-ink-2:#B9C4CC;--c-ink-3:#8B9AA5;
+ --c-bg:#0D0D0D;--c-ink:#E3E8EC;--c-ink-2:#C3CDD4;--c-ink-3:#9BA9B3;
  --c-line:rgba(255,255,255,.14);
  /* ブランド緑はライム1色。面は黒文字前提（白文字は1.83:1で不可）、
     白地に置く文字だけ同色相を暗くした -text を使う */
  --c-green:#28DD34;--c-green-text:#4ADE60;
  --c-cyan:#00BEFF;--c-cyan-text:#54D2FF;
- --c-hot:#28DD34;--c-hot-text:#17811E;--c-cta:#28DD34;
+ --c-hot:#28DD34;--c-hot-text:#5BE36F;--c-cta:#28DD34;
  --c-glow:rgba(0,25,255,.75);--halo:0 0 10px rgba(0,0,0,.5);
  --r-card:16px;--r-thumb:12px;--r-btn:16px;--r-pill:40px;
  --font-round:"PXM","ZMG","Hiragino Maru Gothic ProN","Yu Gothic",sans-serif;
@@ -37,9 +37,9 @@ html{-webkit-text-size-adjust:100%}
 body{margin:0;padding-top:30px;background:var(--c-bg);color:var(--c-ink);
  background-image:radial-gradient(rgba(255,255,255,.075) 1px,transparent 1px);background-size:18px 18px;
  font-family:var(--font-body);font-size:var(--fs-300);line-height:var(--lh-body);
- letter-spacing:var(--ls-body);font-feature-settings:"palt" 1;font-synthesis-weight:none;
+ letter-spacing:.055em;font-feature-settings:"palt" 1;font-synthesis-weight:none;
  line-break:strict;overflow-wrap:anywhere;overflow-x:clip;-webkit-font-smoothing:antialiased}
-p{margin:0 0 1.45em}
+p{margin:0 0 1.6em;line-height:2.05}
 a{color:inherit;text-underline-offset:.18em}
 :where(a,button):focus-visible{outline:3px solid var(--c-cyan);outline-offset:2px}
 .wrap{display:flow-root;max-width:calc(var(--w-prose) + var(--gutter)*2);margin-inline:auto;padding-inline:var(--gutter)}
@@ -205,7 +205,7 @@ figcaption{font-size:11.5px;color:var(--c-ink-3);line-height:1.65;margin-top:7px
 .closing{background:#101010}
 .cta{margin-top:var(--sp-7);border-top:1px solid var(--c-line);padding-top:var(--sp-7);text-align:center}
 .cta-lead{font-size:var(--fs-300);color:var(--c-ink-2)}
-.nj-btn{display:inline-block;background:var(--c-cta);color:var(--c-ink);text-decoration:none;
+.nj-btn{display:inline-block;background:var(--c-cta);color:#06210A;text-decoration:none;
  clip-path:polygon(0 8px,4px 8px,4px 4px,8px 4px,8px 0,calc(100% - 8px) 0,calc(100% - 8px) 4px,calc(100% - 4px) 4px,calc(100% - 4px) 8px,100% 8px,100% calc(100% - 8px),calc(100% - 4px) calc(100% - 8px),calc(100% - 4px) calc(100% - 4px),calc(100% - 8px) calc(100% - 4px),calc(100% - 8px) 100%,8px 100%,8px calc(100% - 4px),4px calc(100% - 4px),4px calc(100% - 8px),0 calc(100% - 8px));filter:drop-shadow(4px 4px 0 rgba(23,129,30,.35));
  font:900 var(--fs-500)/1 var(--font-round);padding:22px 64px;border-radius:var(--r-btn);
  transition:transform var(--dur-sm) var(--ease-ui)}
@@ -216,7 +216,7 @@ figcaption{font-size:11.5px;color:var(--c-ink-3);line-height:1.65;margin-top:7px
  padding:16px 20px;border-radius:var(--r-pill);box-shadow:0 0 16px var(--c-glow)}
 footer{background:#101010;color:var(--c-ink-2);text-align:center;
  font:700 var(--fs-200)/2 var(--font-round);padding:56px var(--gutter) 72px;margin-top:0}
-.draft{position:fixed;top:0;left:0;right:0;background:var(--c-ink);color:#fff;
+.draft{position:fixed;top:0;left:0;right:0;background:#000;color:#fff;
  font-size:12px;text-align:center;padding:7px;z-index:9;letter-spacing:.05em}
 .draft b{color:var(--c-green);font-weight:700}
 /* ===== 全体を斜めの文法に（角度17.2度で統一） ===== */
@@ -439,8 +439,8 @@ figure.inset{rotate:-.9deg}
 @media (hover:none),(max-width:640px){.fossil-tap{display:block}}
 .peek{bottom:calc(64px + env(safe-area-inset-bottom,0px))}
 .jswarn{display:none}
-html:not(.js) .jswarn{display:block;font:700 13px/1.9 var(--font-round);color:#7A4B00;
- background:#2A2416;border:1px solid #E8CF95;border-radius:10px;padding:14px 16px;margin:16px auto;
+html:not(.js) .jswarn{display:block;font:700 13px/1.9 var(--font-round);color:#FFD98A;
+ background:#3A2E12;border:1px solid #E8CF95;border-radius:10px;padding:14px 16px;margin:16px auto;
  max-width:560px;text-align:center}
 
 /* 共有（相談CTAより一段小さい副導線） */
@@ -449,7 +449,7 @@ html:not(.js) .jswarn{display:block;font:700 13px/1.9 var(--font-round);color:#7
 .share a{font:700 12px/1 var(--font-round);border:1px solid var(--c-line);color:var(--c-ink-2);
  border-radius:20px;padding:8px 14px;text-decoration:none;background:#191919}
 /* ===== 動きのパッケージ ===== */
-.mq{background:var(--c-ink);color:#fff;overflow:hidden;padding:13px 0}
+.mq{background:#000;color:#fff;overflow:hidden;padding:13px 0}
 .mq-lime{background:var(--c-green);color:var(--c-ink)}
 .mq-in{display:flex;width:max-content}
 .mq span{font:900 15px/1 var(--font-round);letter-spacing:.14em;white-space:nowrap}
@@ -568,7 +568,7 @@ img,svg{max-width:100%}
 [data-ist="ist0"]{background-image:url(town0.a31fb16b.svg);background-size:440px 2600px}
 [data-ist="ist1"]{background-image:url(town1.710180c9.svg);background-size:440px 3050px}
 [data-ist="ist2"]{white-space:nowrap}
-[data-ist="ist3"]{background-image:url(img/411-d8efd6f5.jpg)}
+[data-ist="ist3"]{background-image:url(img/405-d8efd6f5.jpg)}
 [data-ist="ist4"]{text-align:center}
 [data-ist="ist5"]{text-align:center;margin-top:18px}
 [data-ist="ist6"]{text-align:center;font-size:12px;color:var(--c-ink-3)}
