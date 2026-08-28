@@ -328,3 +328,115 @@ try{
   tick();
  }catch(e){}
 })();
+
+
+/* ===== ページ全体の斜め送り（山内方式の翻訳） =====
+   段落・写真ひとつずつが、画面を斜めに横切っていく。
+   中央＝いま読んでいる位置では、ずれが 0 に戻る。 */
+(function(){
+ try{
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  /* これ以上は割らない単位（中身がまとまって動くべきもの） */
+  var ATOM=/^(FIGURE|BLOCKQUOTE|UL|OL|TABLE|SVG|IMG|BUTTON|A)$/;
+  var ATOMC=/\b(wall|mosaic|gallery|duo|facts|chart|stickers|kvcard|herofig|mq-in|peek)\b/;
+  /* 文字ものは控えめ、写真ものは大きく流す */
+  function ampOf(el){
+   var c=el.className&&el.className.baseVal===undefined?el.className:'';
+   if(/\b(wall|mosaic|gallery|duo|herofig|kvcard)\b/.test(c)) return 1.45;
+   if(el.tagName==='FIGURE') return 1.40;
+   if(/\bstickers\b/.test(c)) return 1.95;
+   if(/\bmq\b/.test(c)) return 1.55;
+   if(el.tagName==='BLOCKQUOTE') return .90;
+   return .75;                      /* 段落・見出し・リスト */
+  }
+
+  var VH=innerHeight, AMP=60;
+  function measure(){
+   VH=innerHeight;
+   AMP=Math.max(22,Math.min(innerWidth*0.095,132));
+  }
+  measure();
+
+  /* 画面に収まる単位まで降りていく */
+  var items=[];
+  function walk(node,depth){
+   var kids=node.children;
+   for(var i=0;i<kids.length;i++){
+    var el=kids[i];
+    if(el.hidden||el.tagName==='SCRIPT'||el.tagName==='STYLE') continue;
+    var c=(el.className&&el.className.baseVal===undefined)?el.className:'';
+    var atom=ATOM.test(el.tagName)||ATOMC.test(c);
+    if(!atom&&depth<4&&el.children.length&&el.offsetHeight>VH*1.15){
+     walk(el,depth+1);
+    }else if(el.offsetHeight>4){
+     el.classList.add('dft');
+     items.push({el:el,a:ampOf(el),on:false});
+    }
+   }
+  }
+  var roots=document.querySelectorAll(
+   '.kv>.stickers,.kv>.kv-in,.mq,.premise>.premise-in,'+
+   'section.ch>.wrap,section.ch>.njcard,section.ch>.screen1');
+  for(var i=0;i<roots.length;i++){
+   var r=roots[i], c=r.className;
+   if(/\b(mq|stickers)\b/.test(c)){          /* 帯とステッカーは丸ごと1単位 */
+    r.classList.add('dft'); items.push({el:r,a:ampOf(r),on:false});
+   }else{ walk(r,0); }
+  }
+  if(!items.length) return;
+  document.documentElement.classList.add('drift');
+
+  /* 検証用: ?drift=<scrollY> で、その位置の状態を同期で描く
+     （ヘッドレスでは rAF / IntersectionObserver が当てにならないため） */
+  var _qs=new URLSearchParams(location.search), _dq=_qs.get('drift');
+  if(_dq!==null){
+   /* 仮想ビューポート高。縦長の1枚に、実機で見える斜めの流れを引き伸ばす */
+   var _vh=+(_qs.get('driftvh')||0)||innerHeight;
+   var _k=+(_qs.get('driftk')||0)||1;   /* 強さ比較用の倍率 */
+   addEventListener('load',function(){
+    scrollTo(0,+_dq);
+    for(var i=0;i<items.length;i++){
+     var it=items[i], r=it.el.getBoundingClientRect();
+     var t=((r.top+r.height/2)%_vh-_vh/2)/_vh*2;
+     if(t>1.3)t=1.3; else if(t<-1.3)t=-1.3;
+     it.el.style.setProperty('--dx',(t*AMP*it.a*_k).toFixed(1)+'px');
+    }
+   });
+   return;
+  }
+
+  /* 画面の近くにあるものだけ毎フレーム計算する */
+  var active=[];
+  var io=new IntersectionObserver(function(es){
+   for(var i=0;i<es.length;i++){
+    var it=es[i].target.__d; if(!it) continue;
+    if(es[i].isIntersecting){
+     if(!it.on){it.on=true;active.push(it);it.el.classList.add('near');}
+    }else if(it.on){
+     it.on=false; it.el.classList.remove('near');
+     var k=active.indexOf(it); if(k>=0) active.splice(k,1);
+    }
+   }
+   schedule();
+  },{rootMargin:'80% 0px 80% 0px'});
+  for(var i=0;i<items.length;i++){ items[i].el.__d=items[i]; io.observe(items[i].el); }
+
+  var raf=0;
+  function apply(){
+   raf=0;
+   var mid=VH/2;
+   for(var i=0;i<active.length;i++){
+    var it=active[i], r=it.el.getBoundingClientRect();
+    var t=(r.top+r.height/2-mid)/VH;
+    if(t>1.3)t=1.3; else if(t<-1.3)t=-1.3;
+    it.el.style.setProperty('--dx',(t*AMP*it.a).toFixed(1)+'px');
+   }
+  }
+  function schedule(){ if(!raf) raf=requestAnimationFrame(apply); }
+  addEventListener('scroll',schedule,{passive:true});
+  addEventListener('resize',function(){measure();schedule();},{passive:true});
+  addEventListener('load',schedule);
+  schedule();
+ }catch(e){}
+})();
