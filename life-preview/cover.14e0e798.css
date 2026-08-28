@@ -1,4 +1,5 @@
-html,body{margin:0;min-height:100%;background:#00BEFF}
+html,body{margin:0;min-height:100%;background:#0D0D0D}
+body{background-image:radial-gradient(rgba(255,255,255,.08) 1px,transparent 1px);background-size:18px 18px}
 body{display:grid;place-items:center;overflow:hidden;
  font-family:"ZMG","Hiragino Maru Gothic ProN","Yu Gothic",sans-serif}
 .wrapc{position:relative;text-align:center;color:#fff;padding:24px;z-index:2}
@@ -8,7 +9,7 @@ h1 b{display:inline-block;font-weight:900}
 .go{display:inline-block;font-weight:900;font-size:clamp(16px,2vw,19px);color:#060000;background:#fff;
  border-radius:999px;padding:20px 48px;text-decoration:none;
  box-shadow:0 10px 30px rgba(0,60,90,.25)}
-.go:hover{background:#28DD34;color:#fff;translate:0 -2px}
+.go:hover{background:#28DD34;color:#0D0D0D;translate:0 -2px}
 .note{display:block;margin-top:20px;font-size:12px;opacity:.85}
 /* 街のドット絵 */
 .sp,.hb{position:fixed;image-rendering:pixelated;z-index:1;pointer-events:none}

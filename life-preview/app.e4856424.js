@@ -640,6 +640,48 @@ try{
      }
     }
    }
+   /* --- 随伴プロップ: 大きめのアンカーの周りに遠景の木や旗を自動で添える --- */
+   var seedE=311;
+   function rndE(){ seedE=(seedE*1103515245+12345)&0x7FFFFFFF; return seedE/0x7FFFFFFF; }
+   for(var sd0=0;sd0<2;sd0++){
+    var base=sides[sd0].pl.slice();
+    for(var bi=0;bi<base.length;bi++){
+     var b0=base[bi];
+     if(b0[3]<70) continue;                      /* 幅70px以上=アンカー */
+     var np=2+((rndE()*2)|0);
+     for(var pi=0;pi<np;pi++){
+      var pk=[23,20,21,23][(rndE()*4)|0];        /* 木/のぼり/看板/木 */
+      var off=(rndE()<0.5?-1:1)*(50+rndE()*90);
+      var pw=(28+rndE()*18)|0;
+      var pox=Math.max(4,Math.min(436-pw,b0[1]+(b0[3]>>1)+off-(pw>>1)));
+      var pgy=b0[2]-(6+rndE()*14)|0;
+      sides[sd0].chs.push([pk,pox,pgy,pw,rndE()*6.283,0,b0[4],0.62,1]);
+     }
+    }
+   }
+   /* --- 遠景の街並み: 章の帯に沿って小さな建物列を敷く（y-n10の密度） --- */
+   for(var ti2=0;ti2<TOWNS.length;ti2++){
+    var st2=TOWNS[ti2], sec3=secs[st2.n];
+    if(!sec3) continue;
+    if(st2.n==='序章'||st2.n==='2019年9月') continue;
+    var pool=(st2.k||[]).concat([23]);
+    var step=650;
+    for(var yy=sec3.top+380;yy<sec3.top+sec3.H-380;yy+=step*(0.8+rndE()*0.5)){
+     var sd3=(rndE()<0.5)?0:1;
+     var cnt3=3+((rndE()*3)|0);
+     var x3=170+rndE()*90;
+     for(var c3=0;c3<cnt3;c3++){
+      var k3=pool[(rndE()*pool.length)|0];
+      var w3=(24+rndE()*22)|0;
+      var cx3=x3; x3+=w3*0.72+rndE()*14;
+      if(cx3>388) break;
+      var ox3=(sd3===0)?(440-cx3-(w3>>1)):(cx3-(w3>>1));
+      var gy3=(yy+(rndE()-0.5)*60)|0;
+      if(k3<13) sides[sd3].pl.push([k3,ox3,gy3,w3,satAt(sec3,gy3),0.62]);
+      else sides[sd3].chs.push([k3,ox3,gy3,w3,rndE()*6.283,0,satAt(sec3,gy3),0.62,1]);
+     }
+    }
+   }
    /* --- フィラー: 900px超の空白にだけ、1体/900px、決定論 --- */
    var wtop=0, wbot=0;
    var wEl=document.getElementById('world');
@@ -658,8 +700,8 @@ try{
     var edges=[sec2.top].concat(bands).concat([sec2.top+sec2.H]);
     for(var e=0;e<edges.length-1;e++){
      var a=edges[e]+300, b=edges[e+1]-300;
-     if(b-a<900) continue;
-     var count=Math.min(2,((b-a)/900)|0);
+     if(b-a<450) continue;
+     var count=Math.min(3,((b-a)/450)|0);
      for(var c2=0;c2<count;c2++){
       var gy2=(a+(b-a)*(0.3+0.4*rnd())+c2*430)|0;
       var sd2=(rnd()<0.5)?0:1;
@@ -695,7 +737,7 @@ try{
   function shadow(ctx,x,y,w,fl){
    ctx.save();
    ctx.globalAlpha=0.05+0.06*fl;
-   ctx.fillStyle='#27506B';
+   ctx.fillStyle='rgba(255,255,255,0.05)';
    ctx.beginPath();
    ctx.ellipse(x,y+2,w*0.5,Math.max(3,w*0.09),0,0,6.2832);
    ctx.fill();
