@@ -214,12 +214,27 @@ section.ch,section.premise{--cut:clamp(16px,2.4vw,40px);position:relative;
  margin-top:calc(var(--cut) * -1)}
 section.ch.closing{clip-path:polygon(0 0,100% var(--cut),100% 100%,0 100%)}
 .mq{transform:rotate(2.2deg) scale(1.06)}
-/* ページ全体の斜め送り。JSが --dx を配る。
-   transform ではなく独立プロパティ translate を使うので、
-   写真の rotate・マーキーの transform・.rv の出現と自然に重なる */
+/* ===== ページ全体を斜めの帯にする ===== */
 html{overflow-x:clip}
-.drift .dft{translate:var(--dx,0px)}
-.drift .dft.near{will-change:translate}
+.js .track{position:relative}
+.js .vp{position:sticky;top:0;height:100svh;overflow:clip;background:var(--c-bg);
+ background-image:radial-gradient(rgba(0,60,90,.13) 1px,transparent 1px);background-size:16px 16px}
+.js .world{position:absolute;left:0;top:0;width:var(--cw,1040px);
+ transform-origin:0 0;will-change:transform}
+/* 回した世界の中では、画面幅いっぱいを前提にした指定が効かないので直す */
+.js .world .mq{max-width:none}
+.js .world section.ch,.js .world section.premise,.js .world .kv{min-height:0}
+.js .world .kv{padding-block:clamp(40px,7vh,90px)}
+.js .world .scrolldown{margin-top:26px}
+/* 進んでいる向きの目印 */
+.js .vp::after{content:"";position:absolute;right:14px;bottom:14px;width:26px;height:26px;
+ border-right:3px solid var(--c-green);border-bottom:3px solid var(--c-green);
+ transform:rotate(calc(-45deg + var(--ang,0deg)));opacity:.5;pointer-events:none}
+@media (prefers-reduced-motion:reduce){
+ .js .track,.js .vp,.js .world{position:static;height:auto;overflow:visible;
+  width:auto;transform:none!important}
+ .js .vp::after{display:none}
+}
 .mosaic figure:nth-child(3n+1){rotate:-1.4deg}
 .mosaic figure:nth-child(3n+2){rotate:1.1deg}
 .duo figure:nth-child(odd){rotate:-1.2deg}
@@ -229,28 +244,6 @@ figure.inset{rotate:-.9deg}
 .gallery figure:nth-child(even){rotate:1deg}
 .ft:nth-child(4n+1){translate:0 5px}
 .ft:nth-child(4n+3){translate:0 -5px}
-/* ===== 斜めの横断（13年のマス目の帯） ===== */
-.diagx{display:none}
-.js .diagx{display:block;height:320svh;position:relative;margin-top:calc(clamp(16px,2.4vw,40px) * -1)}
-.diagx .stage{position:sticky;top:0;height:100svh;overflow:clip;background:var(--c-cyan);
- background-image:radial-gradient(rgba(255,255,255,.30) 1px,transparent 1px);background-size:18px 18px}
-.diagx .world{position:absolute;left:0;top:0;width:4200px;height:1750px;will-change:transform}
-.diagx .dband{position:absolute;left:-200px;top:330px;transform:rotate(17.2deg);transform-origin:left top}
-.diagx .dcard{position:absolute;width:230px;background:#fff;color:var(--c-ink);border-radius:12px;
- padding:10px 10px 12px;transform:rotate(17.2deg);box-shadow:0 12px 30px rgba(0,40,60,.20)}
-.diagx .dcard img{width:100%;height:130px;object-fit:cover;display:block;border-radius:8px}
-.diagx .dcard .ck{font:700 10.5px/1 monospace;color:var(--c-green-text);margin:10px 0 4px}
-.diagx .dcard .ct{font:900 17px/1.4 var(--font-round);margin:0}
-.diagx .dcard .cy{font:400 10.5px/1 monospace;color:var(--c-ink-3);margin:6px 0 0}
-.diagx .dbig{position:absolute;font:900 120px/1 var(--font-round);color:rgba(255,255,255,.30);
- transform:rotate(17.2deg);white-space:nowrap}
-.diagx .stage{transition:none}
-.diagx .dhint{position:absolute;left:50%;bottom:14px;translate:-50% 0;
- font:700 12px/1 monospace;color:#fff;opacity:.9;margin:0}
-@media (prefers-reduced-motion:reduce){.js .diagx{display:none}}
-/* 検証用: ?diagp= 指定時は横断だけを表示 */
-.diagfix .kv,.diagfix .mq,.diagfix .jswarn,.diagfix section.premise{display:none}
-.diagfix .diagx{height:100svh!important;margin-top:0!important}
 /* 出現：ブラーイン階段（脳汁の署名） */
 .js .rv{opacity:0;filter:blur(5px);transform:translate(16px,16px);
  transition:opacity .6s var(--ease),filter .6s var(--ease),transform .6s var(--ease);
@@ -526,16 +519,7 @@ img,svg{max-width:100%}
 }
 
 [data-ist="ist0"]{white-space:nowrap}
-[data-ist="ist1"]{left:240px;top:140px}
-[data-ist="ist2"]{left:1350px;top:520px}
-[data-ist="ist3"]{left:2350px;top:830px}
-[data-ist="ist4"]{left:714px;top:125px}
-[data-ist="ist5"]{left:1121px;top:701px}
-[data-ist="ist6"]{left:1781px;top:456px}
-[data-ist="ist7"]{left:2188px;top:1033px}
-[data-ist="ist8"]{left:2848px;top:788px}
-[data-ist="ist9"]{left:3255px;top:1364px}
-[data-ist="ist10"]{background-image:url(img/411-d8efd6f5.jpg)}
-[data-ist="ist11"]{text-align:center}
-[data-ist="ist12"]{text-align:center;margin-top:18px}
-[data-ist="ist13"]{text-align:center;font-size:12px;color:var(--c-ink-3)}
+[data-ist="ist1"]{background-image:url(img/411-d8efd6f5.jpg)}
+[data-ist="ist2"]{text-align:center}
+[data-ist="ist3"]{text-align:center;margin-top:18px}
+[data-ist="ist4"]{text-align:center;font-size:12px;color:var(--c-ink-3)}

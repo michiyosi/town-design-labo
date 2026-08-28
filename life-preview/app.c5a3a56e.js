@@ -300,161 +300,63 @@ try{
 })();
 
 
-/* ===== 斜めの横断（scroll写像。ホイールは乗っ取らない） ===== */
+/* ===== ページ全体を斜めの帯にして、その軸上を進む =====
+   画面上の位置 = T + R(A)・P。P=(列幅/2, s) が画面中央に来るように T を決める。
+   s はスクロール量そのものなので、ふつうに縦スクロールするだけで
+   視点が斜めに進んでいく。ホイールは乗っ取らない。 */
 (function(){
  try{
-  var seg=document.getElementById('diagx'); if(!seg) return;
-  var world=seg.querySelector('.world');
-  var WW=4200, WH=1750;
-  function apply(p){
-   var dx=p*(WW-innerWidth), dy=p*(WH-innerHeight);
-   world.style.transform='translate3d('+(-dx)+'px,'+(-dy)+'px,0)';
-  }
-  var q=new URLSearchParams(location.search), fp=q.get('diagp');
-  if(fp!==null){
-   document.documentElement.classList.add('diagfix');
-   apply(+fp);
-   return;
-  }
-  var mq=matchMedia('(prefers-reduced-motion: reduce)');
-  function tick(){
-   if(!mq.matches){
-    var r=seg.getBoundingClientRect();
-    var total=seg.offsetHeight-innerHeight;
-    if(total>0) apply(Math.min(1,Math.max(0,-r.top/total)));
-   }
-   requestAnimationFrame(tick);
-  }
-  tick();
- }catch(e){}
-})();
+  var track=document.getElementById('track'), world=document.getElementById('world');
+  if(!track||!world) return;
+  var rm=matchMedia('(prefers-reduced-motion: reduce)');
+  var A=0,cosA=1,sinA=0,cw=1040,H=0,vw=0,vh=0,ready=false;
 
-
-/* ===== ページ全体の斜め送り（山内方式の翻訳） =====
-   段落・写真ひとつずつが、画面を斜めに横切っていく。
-   中央＝いま読んでいる位置では、ずれが 0 に戻る。 */
-(function(){
- try{
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  /* これ以上は割らない単位（中身がまとまって動くべきもの） */
-  var ATOM=/^(FIGURE|BLOCKQUOTE|UL|OL|TABLE|SVG|IMG|BUTTON|A)$/;
-  var ATOMC=/\b(wall|mosaic|gallery|duo|facts|chart|stickers|kvcard|herofig|mq-in|peek)\b/;
-  /* 文字ものは控えめ、写真ものは大きく流す */
-  function ampOf(el){
-   var c=el.className&&el.className.baseVal===undefined?el.className:'';
-   if(/\b(wall|mosaic|gallery|duo|herofig|kvcard)\b/.test(c)) return 1.45;
-   if(el.tagName==='FIGURE') return 1.40;
-   if(/\bstickers\b/.test(c)) return .95;
-   if(/\bmq\b/.test(c)) return 1.55;
-   if(el.tagName==='BLOCKQUOTE') return .90;
-   return .75;                      /* 段落・見出し・リスト */
+  function layout(){
+   if(rm.matches){ track.style.height=''; world.style.transform=''; ready=false; return; }
+   vw=innerWidth; vh=innerHeight;
+   /* 狭い画面ほど角度を寝かせる。でないと列が細くなりすぎて読めない */
+   var deg = vw<760 ? 6 : (vw<1100 ? 9 : 12);
+   A=-deg*Math.PI/180;               /* 右下へ進む向き */
+   cosA=Math.cos(A); sinA=Math.sin(A);
+   document.documentElement.style.setProperty('--ang',deg+'deg');
+   /* 回しても画面に収まる列幅 */
+   var pad = vw<760 ? 12 : 24;
+   var w = (vw-pad*2 - vh*Math.abs(sinA))/Math.abs(cosA);
+   cw = Math.max(238, Math.min(1040, w));
+   world.style.setProperty('--cw', cw.toFixed(0)+'px');
+   H = world.offsetHeight;
+   track.style.height = (H+vh)+'px';
+   ready=true;
   }
-
-  var VH=innerHeight, AMP=60;
-  function measure(){
-   VH=innerHeight;
-   AMP=Math.max(22,Math.min(innerWidth*0.095,132));
-  }
-  measure();
-
-  /* 画面に収まる単位まで降りていく */
-  var items=[];
-  function walk(node,depth){
-   var kids=node.children;
-   for(var i=0;i<kids.length;i++){
-    var el=kids[i];
-    if(el.hidden||el.tagName==='SCRIPT'||el.tagName==='STYLE') continue;
-    var c=(el.className&&el.className.baseVal===undefined)?el.className:'';
-    var atom=ATOM.test(el.tagName)||ATOMC.test(c);
-    if(!atom&&depth<4&&el.children.length&&el.offsetHeight>VH*1.15){
-     walk(el,depth+1);
-    }else if(el.offsetHeight>4){
-     el.classList.add('dft');
-     items.push({el:el,a:ampOf(el),on:false});
-    }
-   }
-  }
-  var roots=document.querySelectorAll(
-   '.kv>.stickers,.kv>.kv-in,.mq,.premise>.premise-in,'+
-   'section.ch>.wrap,section.ch>.njcard,section.ch>.screen1');
-  for(var i=0;i<roots.length;i++){
-   var r=roots[i], c=r.className;
-   if(/\b(mq|stickers)\b/.test(c)){          /* 帯とステッカーは丸ごと1単位 */
-    r.classList.add('dft'); items.push({el:r,a:ampOf(r),on:false});
-   }else{ walk(r,0); }
-  }
-  if(!items.length) return;
-  document.documentElement.classList.add('drift');
-
-  /* 検証用: ?drift=<scrollY> で、その位置の状態を同期で描く
-     （ヘッドレスでは rAF / IntersectionObserver が当てにならないため） */
-  var _qs=new URLSearchParams(location.search), _dq=_qs.get('drift');
-  if(_dq!==null){
-   /* 仮想ビューポート高。縦長の1枚に、実機で見える斜めの流れを引き伸ばす */
-   var _vh=+(_qs.get('driftvh')||0)||innerHeight;
-   var _k=+(_qs.get('driftk')||0)||1;   /* 強さ比較用の倍率 */
-   addEventListener('load',function(){
-    scrollTo(0,+_dq);
-    var _W=innerWidth;
-    for(var i=0;i<items.length;i++){
-     var it=items[i], r=it.el.getBoundingClientRect();
-     var t=((r.top+r.height/2)%_vh-_vh/2)/_vh*2;
-     if(t>1.3)t=1.3; else if(t<-1.3)t=-1.3;
-     var dx=t*AMP*it.a*_k, _CAP=Math.min(84,_W*0.075);
-     if(dx>_CAP)dx=_CAP; else if(dx<-_CAP)dx=-_CAP;
-     var sr=_W-r.right-10, sl=r.left-10;
-     if(sr>=0&&dx>sr) dx=sr;
-     if(sl>=0&&dx<-sl) dx=-sl;
-     it.el.style.setProperty('--dx',dx.toFixed(1)+'px');
-    }
-   });
-   return;
-  }
-
-  /* 画面の近くにあるものだけ毎フレーム計算する */
-  var active=[];
-  var io=new IntersectionObserver(function(es){
-   for(var i=0;i<es.length;i++){
-    var it=es[i].target.__d; if(!it) continue;
-    if(es[i].isIntersecting){
-     if(!it.on){it.on=true;active.push(it);it.el.classList.add('near');}
-    }else if(it.on){
-     it.on=false; it.el.classList.remove('near');
-     var k=active.indexOf(it); if(k>=0) active.splice(k,1);
-    }
-   }
-   schedule();
-  },{rootMargin:'80% 0px 80% 0px'});
-  for(var i=0;i<items.length;i++){ items[i].el.__d=items[i]; io.observe(items[i].el); }
-
-  var raf=0;
+  var FORCE=null;                     /* 検証用: s を直接与える */
   function apply(){
-   raf=0;
-   var mid=VH/2, W=innerWidth;
-   for(var i=0;i<active.length;i++){
-    var it=active[i], r=it.el.getBoundingClientRect();
-    var t=(r.top+r.height/2-mid)/VH;
-    if(t>1.3)t=1.3; else if(t<-1.3)t=-1.3;
-    var dx=t*AMP*it.a;
-    /* 安全弁: 画面の外へ押し出さない。
-       html は overflow-x:clip なので、はみ出したものは消えてしまう。
-       いま当たっているずれ(it.dx)を引いて、素の位置で余白を測る。
-       もともと画面幅いっぱいの要素（帯など）は余白が負になるので、
-       そのときは制限しない（意図的にはみ出しているもの）。 */
-    var CAP=Math.min(84,W*0.075);        /* カードの外へ大きく飛び出さないための上限 */
-    if(dx>CAP)dx=CAP; else if(dx<-CAP)dx=-CAP;
-    var d0=it.dx||0, sr=W-(r.right-d0)-10, sl=(r.left-d0)-10;
-    if(sr>=0&&dx>sr) dx=sr;
-    if(sl>=0&&dx<-sl) dx=-sl;
-    it.dx=dx;
-    it.el.style.setProperty('--dx',dx.toFixed(1)+'px');
-   }
+   if(!ready) return;
+   var s=(FORCE===null?scrollY:FORCE)+vh/2, px=cw/2;
+   var tx=vw/2-(cosA*px-sinA*s), ty=vh/2-(sinA*px+cosA*s);
+   world.style.transform='translate3d('+tx.toFixed(1)+'px,'+ty.toFixed(1)+'px,0) rotate('+(A*180/Math.PI).toFixed(2)+'deg)';
   }
-  function schedule(){ if(!raf) raf=requestAnimationFrame(apply); }
-  addEventListener('scroll',schedule,{passive:true});
-  addEventListener('resize',function(){measure();schedule();},{passive:true});
-  addEventListener('load',schedule);
-  schedule();
+  var raf=0;
+  function tick(){ raf=0; apply(); }
+  function onScroll(){ if(!raf) raf=requestAnimationFrame(tick); }
+
+  /* 検証用: ?wy=<scrollY> でその位置を同期で描く */
+  var _wy=new URLSearchParams(location.search).get('wy');
+
+  function boot(){
+   layout();
+   if(_wy!==null) FORCE=+_wy;
+   apply();
+  }
+  boot();
+  addEventListener('scroll',onScroll,{passive:true});
+  addEventListener('resize',function(){layout();apply();},{passive:true});
+  addEventListener('load',boot);
+  /* 画像が入って高さが変わるので測り直す */
+  if(window.ResizeObserver){
+   var ro=new ResizeObserver(function(){ if(!rm.matches){ H=world.offsetHeight;
+     track.style.height=(H+vh)+'px'; apply(); } });
+   ro.observe(world);
+  }
+  if(rm.addEventListener) rm.addEventListener('change',function(){layout();apply();});
  }catch(e){}
 })();
