@@ -218,10 +218,10 @@ section.ch.closing{clip-path:polygon(0 0,100% var(--cut),100% 100%,0 100%)}
 /* 帯を縦に繰り返して敷く。高さは top と bottom の両方で取る
    （height:100% だと親(.world)の高さが auto なので 0 に潰れる） */
 .town{position:absolute;top:0;bottom:0;width:440px;
- background-repeat:repeat-y;pointer-events:none;z-index:0;opacity:.92}
+ background-repeat:repeat-y;pointer-events:none;z-index:0;opacity:.97}
 /* 立体で描けたときは、平面の帯を消して canvas に任せる */
 .town.on{background-image:none;top:auto;bottom:auto}
-.town canvas{display:block;width:440px}
+.town canvas{display:block;width:440px;position:absolute;left:0;top:0}
 .twl{right:100%}
 .twr{left:100%}
 .js .world>section,.js .world>div:not(.town),
@@ -542,8 +542,8 @@ img,svg{max-width:100%}
 
 }
 
-[data-ist="ist0"]{background-image:url(town0.9ccfe3eb.svg);background-size:440px 2600px}
-[data-ist="ist1"]{background-image:url(town1.f54ab439.svg);background-size:440px 3050px}
+[data-ist="ist0"]{background-image:url(town0.07142082.svg);background-size:440px 2600px}
+[data-ist="ist1"]{background-image:url(town1.5b90d85e.svg);background-size:440px 3050px}
 [data-ist="ist2"]{white-space:nowrap}
 [data-ist="ist3"]{background-image:url(img/411-d8efd6f5.jpg)}
 [data-ist="ist4"]{text-align:center}
