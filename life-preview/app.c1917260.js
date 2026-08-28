@@ -24,7 +24,8 @@ var io2=new IntersectionObserver(function(es){es.forEach(function(e){
 });},{rootMargin:'-40% 0px -55% 0px'});
 document.querySelectorAll('[data-chname]').forEach(function(sec){io2.observe(sec)});
 var lb=document.createElement('dialog');lb.id='lb';
-lb.innerHTML='<figure style="margin:0;position:relative"><button class="lbx" aria-label="閉じる">×</button><img alt=""><figcaption></figcaption></figure>';
+/* style属性はCSPで落とされるので #lb figure のCSSに出してある */
+lb.innerHTML='<figure><button class="lbx" aria-label="閉じる">×</button><img alt=""><figcaption></figcaption></figure>';
 document.body.appendChild(lb);
 document.addEventListener('click',function(ev){
  var im=ev.target.closest('.mosaic img,.duo img,.strip img,.inset img,.wallgrid img,.gallery img');
@@ -168,8 +169,13 @@ try{
     if('。、！？」'.indexOf(c)>=0&&chars.length){chars[chars.length-1]+=c;}
     else{chars.push(c);}
    }
-   return chars.map(function(c){return '<span class="ch" style="--d:'+(di++)+'">'+c+'</span>';}).join('');
+   return chars.map(function(c){return '<span class="ch">'+c+'</span>';}).join('');
   }).join('');
+  /* 遅延は style属性ではなくCSSOMで入れる。
+     本番CSPは style-src 'self' なので、innerHTMLに style="..." を混ぜると
+     属性ごと落とされ、全文字が同時に出る（本番だけ挙動が違った） */
+  var chs=kvh.querySelectorAll('.ch');
+  for(di=0;di<chs.length;di++) chs[di].style.setProperty('--d',di);
  }
 }catch(e){}
 /* statsの数字カウントアップ */
