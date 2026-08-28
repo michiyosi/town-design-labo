@@ -401,7 +401,9 @@ try{
      var it=items[i], r=it.el.getBoundingClientRect();
      var t=((r.top+r.height/2)%_vh-_vh/2)/_vh*2;
      if(t>1.3)t=1.3; else if(t<-1.3)t=-1.3;
-     var dx=t*AMP*it.a*_k, sr=_W-r.right-10, sl=r.left-10;
+     var dx=t*AMP*it.a*_k, _CAP=Math.min(84,_W*0.075);
+     if(dx>_CAP)dx=_CAP; else if(dx<-_CAP)dx=-_CAP;
+     var sr=_W-r.right-10, sl=r.left-10;
      if(sr>=0&&dx>sr) dx=sr;
      if(sl>=0&&dx<-sl) dx=-sl;
      it.el.style.setProperty('--dx',dx.toFixed(1)+'px');
@@ -440,6 +442,8 @@ try{
        いま当たっているずれ(it.dx)を引いて、素の位置で余白を測る。
        もともと画面幅いっぱいの要素（帯など）は余白が負になるので、
        そのときは制限しない（意図的にはみ出しているもの）。 */
+    var CAP=Math.min(84,W*0.075);        /* カードの外へ大きく飛び出さないための上限 */
+    if(dx>CAP)dx=CAP; else if(dx<-CAP)dx=-CAP;
     var d0=it.dx||0, sr=W-(r.right-d0)-10, sl=(r.left-d0)-10;
     if(sr>=0&&dx>sr) dx=sr;
     if(sl>=0&&dx<-sl) dx=-sl;
