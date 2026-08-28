@@ -9,9 +9,11 @@ html,body{margin:0;height:100%;overflow:hidden;background:#fff}
  font-family:"ZMG","Hiragino Maru Gothic ProN",sans-serif;color:#fff;z-index:5}
 #enter h1{font-size:clamp(30px,5vw,56px);font-weight:900;line-height:1.5;margin:0 0 10px}
 #enter p{font-size:14px;line-height:2;margin:0 0 26px;opacity:.94}
-#go{font:900 18px/1 "ZMG",sans-serif;color:#060000;background:#fff;border:0;border-radius:999px;
- padding:20px 46px;cursor:pointer}
+#go{display:inline-block;font:900 18px/1 "ZMG",sans-serif;color:#060000;background:#fff;border:0;
+ border-radius:999px;padding:20px 46px;cursor:pointer;text-decoration:none}
 #go:hover{background:#28DD34;color:#fff}
+#go2{display:block;margin:16px auto 0;font:700 13px/1 "ZMG",sans-serif;color:#fff;background:none;
+ border:0;border-bottom:1px solid rgba(255,255,255,.7);padding:4px 2px;cursor:pointer}
 #enter small{display:block;margin-top:18px;font-size:12px;opacity:.85}
 #endcard{position:fixed;left:50%;bottom:34px;translate:-50% 0;background:#fff;border-radius:16px;
  box-shadow:0 12px 40px rgba(0,40,60,.25);padding:20px 26px;text-align:center;

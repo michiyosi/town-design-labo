@@ -266,10 +266,11 @@ requestAnimationFrame(tick);
 
 /* ---- 入口 ---- */
 var ov=document.getElementById('enter');
-document.getElementById('go').addEventListener('click',function(){
+document.getElementById('go2').addEventListener('click',function(){
  ov.hidden=true; entered=true;
 });
 if(ws!==null){ ov.hidden=true; entered=true; s=target=+ws; }
+if(q.get('walk')!==null){ ov.hidden=true; entered=true; }
 if(matchMedia('(prefers-reduced-motion: reduce)').matches){
  /* 動きを減らす設定では慣性を切る */
  var _t=tick; s=target;
