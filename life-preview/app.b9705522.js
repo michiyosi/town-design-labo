@@ -234,8 +234,10 @@ try{
  try{
   fetch('cta.json', {cache:'no-store'}).then(function(r){return r.json();}).then(function(c){
    if(!c || !c.url) return;
-   var p = document.getElementById('ctapost'), a = document.getElementById('ctalink');
-   if(p && a){ a.href = c.url; p.hidden = false; }
+   var a = document.getElementById('ctalink');
+   if(a){ a.href = c.url; }
+   var note = document.getElementById('ctanote');
+   if(note){ note.hidden = true; }
    var pill = document.getElementById('pill');
    if(pill) pill.href = c.url;
   }).catch(function(){});
@@ -848,3 +850,15 @@ document.addEventListener('click',function(e){
  var open=sec.classList.toggle('open');
  b.textContent=open?'たたむ':'つづきを読む';
 });
+
+
+/* ===== シェアのリンクを、いま見ているURLで組む（JSなしでも静的URLで動く） ===== */
+(function(){
+ try{
+  var u=location.origin+location.pathname;
+  var x=document.querySelector('a[data-s="x"]');
+  if(x) x.href='https://twitter.com/intent/tweet?url='+encodeURIComponent(u);
+  var ln=document.querySelector('a[data-s="line"]');
+  if(ln) ln.href='https://social-plugins.line.me/lineit/share?url='+encodeURIComponent(u);
+ }catch(e){}
+})();
