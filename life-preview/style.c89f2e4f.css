@@ -1,4 +1,4 @@
-@font-face{font-family:"ZMG";font-weight:700 900;font-display:block;src:url(p4-zmg.f7d66107.woff2) format("woff2")}@font-face{font-family:"PXM";font-weight:400 500;font-display:block;src:url(p4-pxr.80580c58.woff2) format("woff2")}@font-face{font-family:"PXM";font-weight:700 900;font-display:block;src:url(p4-pxb.660f1c90.woff2) format("woff2")}
+@font-face{font-family:"ZMG";font-weight:700 900;font-display:block;src:url(p4-zmg.1b15ace1.woff2) format("woff2")}@font-face{font-family:"PXM";font-weight:400 500;font-display:block;src:url(p4-pxr.71cc6054.woff2) format("woff2")}@font-face{font-family:"PXM";font-weight:700 900;font-display:block;src:url(p4-pxb.a1ecc004.woff2) format("woff2")}
 :root{
  --fs-100:clamp(.8125rem,.7866rem + .1105vw,.875rem);
  --fs-200:clamp(.9375rem,.9116rem + .1105vw,1rem);
@@ -183,7 +183,9 @@ figcaption{font-size:11.5px;color:var(--c-ink-3);line-height:1.65;margin-top:7px
 /* スマホでは縦積みに。回転した世界の中の横スクロールはiOSで綴じ切れず
    （実機で写真とキャプションが列の外へはみ出た）、操作としても斜めの帯を
    横に引く動きは成立しない */
-@media (max-width:700px){
+/* タッチ端末は回転座標の横スクロールが綴じ切れない（iPhone実証・iPad帯域で実測再現）ので
+   1024pxまで縦積みにする */
+@media (max-width:1024px){
  .strip{grid-auto-flow:row;grid-template-columns:minmax(0,1fr);overflow-x:visible;scroll-snap-type:none}
  .strip figure{min-width:0}
  .strip img{width:100%;height:auto}
@@ -300,7 +302,7 @@ html:not(.js) .morew{display:none}
 /* ===== ページ全体を斜めの帯にする ===== */
 html{overflow-x:clip}
 .js .track{position:relative}
-.js .vp{position:sticky;top:0;height:100svh;overflow:clip;background:var(--c-bg);
+.js .vp{position:sticky;top:0;height:100svh;height:100dvh;overflow:clip;background:var(--c-bg);
  background-image:radial-gradient(rgba(255,255,255,.075) 1px,transparent 1px);background-size:16px 16px}
 .js .world{position:absolute;left:0;top:0;width:var(--cw,1040px);
  transform-origin:0 0;will-change:transform}

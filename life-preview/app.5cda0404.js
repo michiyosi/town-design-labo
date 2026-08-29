@@ -60,7 +60,9 @@ if(fossil){
   c.addEventListener('click',openF);
   c.addEventListener('keydown',function(e){if(e.key==='Enter')openF(e);});
  });
- document.addEventListener('keydown',function(e){if(e.key==='Escape')fossil.hidden=true;});
+ document.addEventListener('keydown',function(e){if(e.key==='Escape'){fossil.hidden=true;
+  var fb0=document.getElementById('fossilbtn');
+  if(fb0)fb0.textContent='2014年、この2日に何を書いたのか ▶';}});
  var fb=document.getElementById('fossilbtn');
  if(fb){fb.addEventListener('click',function(){
   fossil.hidden=!fossil.hidden;
@@ -148,10 +150,11 @@ try{
    bar.querySelector('#bkx').textContent='×';
    bar.classList.add('pop');document.body.appendChild(bar);
    bar.querySelector('#bkgo').addEventListener('click',function(e){e.preventDefault();scrollTo({top:savedY,behavior:'smooth'});bar.remove();});
-   bar.querySelector('#bkx').addEventListener('click',function(){localStorage.setItem('bk_dis','1');bar.remove();});
+   bar.querySelector('#bkx').addEventListener('click',function(){bar.remove();
+    try{localStorage.setItem('bk_dis','1');}catch(e){}});
   }
   addEventListener('scroll',function(){
-   if(scrollY>innerHeight)localStorage.setItem('bk_pos',String(scrollY));
+   try{if(scrollY>innerHeight)localStorage.setItem('bk_pos',String(scrollY));}catch(e){}
   },{passive:true});
  }
 }catch(e){}
@@ -820,26 +823,51 @@ try{
   function paraY(gy,fl,sc){ return gy+(sc-gy)*(1-fl)*0.38; }   /* 視差: 奥ほど遅い */
   function drawSide(sd,bandTop,bandH,th,lo,hi,sc){
    if(sd.hide) return;
-   var ctx=sd.ctx, W=440;
-   var cT=Math.cos(th), sT=Math.sin(th), cP=Math.cos(TILT), sP=Math.sin(TILT);
+   var ctx=sd.ctx;
+   /* 建物はfl層ごとに一度だけ焼く。paraYの差はgyに依らないので同一fl層は剛体移動し、
+      毎フレームは drawImage をずらして貼るだけで無損失。毎フレーム約700本の
+      パスをラスタライズすると最密部でフレームが落ちる（実測34/152→0） */
+   var needBake=(sd.bakeBand!==bandTop)||(sd.bakeTh===undefined)||Math.abs(th-sd.bakeTh)>=0.02;
+   if(needBake){
+    sd.bakeBand=bandTop; sd.bakeTh=th; sd.bakeS=sc;
+    sd.bakeCv=sd.bakeCv||{}; sd.bakeFls=[];
+    var cT=Math.cos(th), sT=Math.sin(th), cP=Math.cos(TILT), sP=Math.sin(TILT);
+    var byFl={};
+    for(var i=0;i<sd.pl.length;i++){
+     var pl=sd.pl[i], gy=pl[2];
+     /* 焼く範囲は帯全域。視界だけ焼くと、角が動かない区間で端が欠ける */
+     if(gy<bandTop-420||gy>bandTop+bandH+300) continue;
+     var fl=pl[5]||1, k=String(fl);
+     (byFl[k]=byFl[k]||[]).push(pl);
+    }
+    var keys=Object.keys(byFl).sort(function(a,b){return (+a)-(+b);});
+    for(var q=0;q<keys.length;q++){
+     var k2=keys[q], flv=+k2, cvb=sd.bakeCv[k2];
+     if(!cvb){ cvb=document.createElement('canvas'); sd.bakeCv[k2]=cvb; }
+     if(cvb.width!==sd.cv.width||cvb.height!==sd.cv.height){ cvb.width=sd.cv.width; cvb.height=sd.cv.height; }
+     var bctx=cvb.getContext('2d');
+     bctx.setTransform(1,0,0,1,0,0);
+     bctx.clearRect(0,0,cvb.width,cvb.height);
+     bctx.setTransform(DPR,0,0,DPR,0,0);
+     var list=byFl[k2];
+     for(var a=0;a<list.length;a++){
+      var p2=list[a];
+      shadow(bctx,p2[1]+p2[3]/2,paraY(p2[2],flv,sc)-bandTop,p2[3],flv);
+     }
+     var fade=(flv<1)?(1-flv)*0.75:0;
+     for(var b=0;b<list.length;b++){
+      var p3=list[b];
+      drawOne(bctx,MODELS[p3[0]],p3[1],paraY(p3[2],flv,sc)-bandTop,p3[3],cT,sT,cP,sP,p3[4],fade);
+     }
+     sd.bakeFls.push(flv);
+    }
+   }
    ctx.setTransform(1,0,0,1,0,0);
    ctx.clearRect(0,0,sd.cv.width,sd.cv.height);
-   ctx.setTransform(DPR,0,0,DPR,0,0);
-   var vis=[];
-   for(var i=0;i<sd.pl.length;i++){
-    var pl=sd.pl[i], gy=pl[2];
-    if(gy<lo-420||gy>hi+300) continue;
-    vis.push(pl);
-   }
-   for(var i2=0;i2<vis.length;i2++){          /* 影のパス */
-    var p2=vis[i2], fl2=p2[5]||1;
-    shadow(ctx,p2[1]+p2[3]/2,paraY(p2[2],fl2,sc)-bandTop,p2[3],fl2);
-   }
-   for(var i3=0;i3<vis.length;i3++){          /* 絵のパス */
-    var p3=vis[i3], fl3=p3[5]||1;
-    var py=paraY(p3[2],fl3,sc)-bandTop;
-    var fade=(fl3<1)?(1-fl3)*0.75:0;
-    drawOne(ctx,MODELS[p3[0]],p3[1],py,p3[3],cT,sT,cP,sP,p3[4],fade);
+   for(var f2=0;f2<sd.bakeFls.length;f2++){
+    var flq=sd.bakeFls[f2];
+    var dy=(sc-sd.bakeS)*(1-flq)*0.38;   /* 視差ぶんのずれ。fl=1は0 */
+    ctx.drawImage(sd.bakeCv[String(flq)],0,Math.round(dy*DPR));
    }
   }
 
@@ -915,7 +943,7 @@ try{
      sd.cv2.width=Math.round(wq*DPR); sd.cv2.height=Math.round(bandH*DPR);
     });
    }
-   if(!need&&lastTh!==null&&Math.abs(th-lastTh)<0.02&&lastS!==null&&Math.abs(s-lastS)<18) return;
+   if(!need&&lastTh!==null&&Math.abs(th-lastTh)<0.02&&lastS!==null&&Math.abs(s-lastS)<2) return;
    lastTh=th; lastS=s;
    var lo=s-vh*0.85, hi=s+vh*0.85;
    sides.forEach(function(sd){ drawSide(sd,bandTop,bandH,th,lo,hi,s); });
