@@ -1,4 +1,4 @@
-@font-face{font-family:"ZMG";font-weight:700 900;font-display:block;src:url(p4-zmg.a0a828c8.woff2) format("woff2")}@font-face{font-family:"PXM";font-weight:400 500;font-display:block;src:url(p4-pxr.a347f63b.woff2) format("woff2")}@font-face{font-family:"PXM";font-weight:700 900;font-display:block;src:url(p4-pxb.59d4113f.woff2) format("woff2")}
+@font-face{font-family:"ZMG";font-weight:700 900;font-display:block;src:url(p4-zmg.cf490c8b.woff2) format("woff2")}@font-face{font-family:"PXM";font-weight:400 500;font-display:block;src:url(p4-pxr.1d0e49e8.woff2) format("woff2")}@font-face{font-family:"PXM";font-weight:700 900;font-display:block;src:url(p4-pxb.3f9a9846.woff2) format("woff2")}
 :root{
  --fs-100:clamp(.8125rem,.7866rem + .1105vw,.875rem);
  --fs-200:clamp(.9375rem,.9116rem + .1105vw,1rem);
@@ -422,6 +422,16 @@ figure.inset{rotate:-.9deg}
 .alllog time{font-size:12px;color:var(--c-ink-3);line-height:1.9;white-space:nowrap}
 .alllog p{margin:0;font-size:var(--fs-200);line-height:1.85}
 @media (max-width:480px){.alllog li{grid-template-columns:1fr;gap:3px}.alllog time{font-size:11px}}
+.evlist{margin:52px 0 0}
+.evlist h3{font:900 var(--fs-500)/1.5 var(--font-round);margin:0 0 12px;color:var(--c-green-text)}
+.evlist>p{margin:0 0 26px;font-size:var(--fs-200);line-height:1.95}
+.ev-cat{margin:0 0 22px;padding:0 0 0 14px;border-left:2px solid var(--c-line)}
+.ev-cat h4{font:900 var(--fs-300)/1.5 var(--font-round);margin:0 0 8px;color:var(--c-cyan-text)}
+.ev-cat h4 span{font:400 12px/1 var(--font-body);color:var(--c-ink-3);margin-left:10px}
+.ev-cat ul{list-style:none;margin:0;padding:0}
+.ev-cat li{display:block;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:var(--fs-200);line-height:1.7}
+.ev-yr{display:inline-block;font-size:12px;color:var(--c-ink-3);margin-left:10px;white-space:nowrap}
+@media (max-width:700px){.ev-cat{padding-left:10px}.ev-yr{display:block;margin:2px 0 0}}
 .dlbox{margin:52px 0;padding:30px 26px;border-left:3px solid var(--c-cyan);background:#022134;border-radius:0 10px 10px 0}
 .dlbox h3{font:900 var(--fs-400)/1.5 var(--font-round);margin:0 0 10px;color:var(--c-cyan-text)}
 .dlbox p{margin:0 0 16px;font-size:var(--fs-200);line-height:1.95}
