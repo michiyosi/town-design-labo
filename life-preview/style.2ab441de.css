@@ -50,7 +50,7 @@ a{color:inherit;text-underline-offset:.18em}
 .kv{background:transparent;color:#fff;min-height:100svh;display:grid;align-content:center;
  padding:80px var(--gutter) 90px;position:relative;overflow:clip}
 .kv-in{max-width:1040px;margin:0 auto;width:100%}
-.kv h1{font:900 clamp(2.1rem,9.6vw,5.5rem)/1.4 var(--font-round);letter-spacing:.02em;margin:0 0 20px;
+.kv h1{font:900 clamp(2.1rem,8.6vw,5.5rem)/1.4 var(--font-round);letter-spacing:.02em;margin:0 0 20px;
  text-shadow:var(--halo);font-feature-settings:"palt" 1}
 .kv .kv-sub{color:#fff;opacity:.95;font:700 var(--fs-300)/1.7 var(--font-round);margin:0 0 20px;text-shadow:var(--halo)}
 .kv-intro{color:#fff;opacity:.96;font-size:var(--fs-200);line-height:1.95;max-width:40em;margin:0 0 34px;text-shadow:0 0 8px rgba(0,0,0,.4)}
@@ -60,6 +60,8 @@ a{color:inherit;text-underline-offset:.18em}
 .premise-in b{color:var(--c-cyan-text);font-weight:900;font-family:var(--font-round)}
 .premise-in .lede{color:var(--c-ink-3);font-size:var(--fs-200)}
 /* 章の補足見出し（何の話か） */
+.brm{display:none}
+@media (max-width:700px){.brm{display:inline}}
 .chsub{font:700 var(--fs-200)/1.6 var(--font-round);color:var(--c-ink-2);margin:0 0 22px;letter-spacing:.01em}
 .stickers{position:absolute;inset:0;pointer-events:none;max-width:1040px;margin-inline:auto;padding-inline:var(--gutter)}
 .stk{position:absolute;background:#1B1B1B;color:#fff;
@@ -71,7 +73,7 @@ a{color:inherit;text-underline-offset:.18em}
 .kvcard{background:#151515;color:var(--c-ink);
  clip-path:polygon(0 12px,6px 12px,6px 6px,12px 6px,12px 0,calc(100% - 12px) 0,calc(100% - 12px) 6px,calc(100% - 6px) 6px,calc(100% - 6px) 12px,100% 12px,100% calc(100% - 12px),calc(100% - 6px) calc(100% - 12px),calc(100% - 6px) calc(100% - 6px),calc(100% - 12px) calc(100% - 6px),calc(100% - 12px) 100%,12px 100%,12px calc(100% - 6px),6px calc(100% - 6px),6px calc(100% - 12px),0 calc(100% - 12px));
  padding:clamp(28px,5vw,56px) clamp(18px,4vw,48px);box-shadow:none}
-.kvlead{font:700 var(--fs-500)/2 var(--font-round);text-align:center;margin:0 0 8px}
+.kvlead{font:700 clamp(14.5px,4vw,26px)/2 var(--font-round);text-align:center;margin:0 0 8px}
 .kvlead p{margin:0}
 [data-temp="3"] .kvlead p:nth-child(3n+1),[data-temp="3"] .kvlead p:nth-child(3n+2){color:var(--c-cyan-text)}
 [data-temp="3"] .kvlead p:nth-child(3n){color:var(--c-green-text)}
@@ -88,8 +90,11 @@ a{color:inherit;text-underline-offset:.18em}
 .tint-a,.tint-b{padding:100px var(--gutter) 140px}
 .photo-bg{background-size:cover;background-position:center;padding:100px var(--gutter) 140px}
 .photo-bg .njcard + .njcard{margin-top:var(--sp-7)}
-.tint-a{background:#093D11}
-.tint-b{background:#003B5C}
+.tint-a{background:#28DD34}
+.tint-b{background:#00BEFF}
+/* 帯が画面で一番明るい面になると写真が沈むので、地と同じ18pxのドット網で面の平坦さを崩す */
+.tint-a,.tint-b{background-image:radial-gradient(rgba(0,0,0,.15) 1.6px,transparent 1.7px);background-size:18px 18px}
+.tint-a figure img,.tint-b figure img{filter:saturate(1.18) contrast(1.06) brightness(1.06)}
 .tint-a .njcard + .njcard,.tint-b .njcard + .njcard{margin-top:var(--sp-7)}
 .njcard{display:flow-root;background:#151515;max-width:960px;margin:0 auto;
  clip-path:polygon(0 12px,6px 12px,6px 6px,12px 6px,12px 0,calc(100% - 12px) 0,calc(100% - 12px) 6px,calc(100% - 6px) 6px,calc(100% - 6px) 12px,100% 12px,100% calc(100% - 12px),calc(100% - 6px) calc(100% - 12px),calc(100% - 6px) calc(100% - 6px),calc(100% - 12px) calc(100% - 6px),calc(100% - 12px) 100%,12px 100%,12px calc(100% - 6px),6px calc(100% - 6px),6px calc(100% - 12px),0 calc(100% - 12px));
@@ -171,6 +176,14 @@ figcaption{font-size:11.5px;color:var(--c-ink-3);line-height:1.65;margin-top:7px
 .strip{clear:both;display:grid;grid-auto-flow:column;grid-auto-columns:min(72vw,400px);gap:12px;
  overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px;margin:34px 0}
 .strip figure{scroll-snap-align:center}
+/* スマホでは縦積みに。回転した世界の中の横スクロールはiOSで綴じ切れず
+   （実機で写真とキャプションが列の外へはみ出た）、操作としても斜めの帯を
+   横に引く動きは成立しない */
+@media (max-width:700px){
+ .strip{grid-auto-flow:row;grid-template-columns:minmax(0,1fr);overflow-x:visible;scroll-snap-type:none}
+ .strip figure{min-width:0}
+ .strip img{width:100%;height:auto}
+}
 .strip img{aspect-ratio:4/3;object-fit:cover}
 .inset{float:right;width:min(46%,320px);margin:6px 0 20px 26px}
 .inset img{aspect-ratio:3/4;object-fit:cover}
@@ -183,7 +196,9 @@ figcaption{font-size:11.5px;color:var(--c-ink-3);line-height:1.65;margin-top:7px
 .s1s{color:var(--c-ink-3);font-size:15px;letter-spacing:.2em;margin-top:14px}
 
 /* ピンク帯（背骨・Lv3） */
-.flood{background:var(--c-green);color:var(--c-on-accent);width:100vw;margin:var(--sp-7) 0 var(--sp-7) calc(50% - 50vw);
+/* 帯が#28DD34になったので、スラブは黒で断ち切る（緑文字は黒の上で11.5:1）。
+   旧: width:100vw は親sectionのclip-pathに切られて一度も効いていなかった */
+.flood{background:#000;color:var(--c-green);margin:var(--sp-7) calc(var(--gutter) * -1);
  padding:96px var(--gutter)}
 .flood-copy{font:900 var(--fs-700)/1.8 var(--font-round);text-align:center;margin:0}
 
@@ -215,7 +230,8 @@ figcaption{font-size:11.5px;color:var(--c-ink-3);line-height:1.65;margin-top:7px
 /* 固定DMピル（発光はここだけ） */
 .dm-pill{position:fixed;right:22px;bottom:26px;z-index:8;background:var(--c-green);
  color:var(--c-on-accent);text-decoration:none;font:900 14px/1 var(--font-round);
- padding:16px 20px;border-radius:var(--r-pill);box-shadow:0 0 16px var(--c-glow)}
+ padding:16px 20px;border-radius:var(--r-pill);border:3px solid var(--c-on-accent);
+ box-shadow:0 0 0 3px rgba(13,13,13,.92),0 0 16px var(--c-glow)}
 footer{background:#101010;color:var(--c-ink-2);text-align:center;
  font:700 var(--fs-200)/2 var(--font-round);padding:56px var(--gutter) 72px;margin-top:0}
 .draft{position:fixed;top:0;left:0;right:0;background:#000;color:#fff;
@@ -382,8 +398,8 @@ figure.inset{rotate:-.9deg}
 .alllog time{font-size:12px;color:var(--c-ink-3);line-height:1.9;white-space:nowrap}
 .alllog p{margin:0;font-size:var(--fs-200);line-height:1.85}
 @media (max-width:480px){.alllog li{grid-template-columns:1fr;gap:3px}.alllog time{font-size:11px}}
-.recipe{margin-top:52px;padding:34px 26px 30px;border-radius:14px;background:linear-gradient(180deg,#F2FCF3,#FFFFFF);border:2px solid var(--c-green)}
-.recipe-k{font:700 var(--fs-500)/1.6 var(--font-round);margin:0 0 14px;color:var(--c-green-text)}
+.recipe{margin-top:52px;padding:34px 26px 30px;border-radius:14px;background:#151515;border:2px solid var(--c-green)}
+.recipe-k{font:700 var(--fs-500)/1.6 var(--font-round);margin:0 0 14px;color:var(--c-green)}
 .recipe-lead{font-size:var(--fs-200);line-height:1.95;margin:0 0 22px}
 .recipe .steps{margin:0 0 20px}
 .recipe-note{font-size:var(--fs-200);line-height:1.95;margin:18px 0 0;padding-top:16px;border-top:1px dashed var(--c-line)}
@@ -530,7 +546,7 @@ img,svg{max-width:100%}
 .mq{max-width:100%}
 @media (max-width:480px){
  .kv{padding:64px 16px 74px}
- .kv h1{font-size:clamp(36px,10.2vw,50px);line-height:1.4}
+ .kv h1{font-size:clamp(30px,8.6vw,50px);line-height:1.4}
  .kv .kv-sub{font-size:13.5px}
  .kv-intro{font-size:13.5px}
  .stickers{position:static;display:flex;gap:8px;justify-content:flex-start;margin:0 0 18px}
@@ -547,7 +563,7 @@ img,svg{max-width:100%}
  .njcard{padding:26px 14px 28px;border-radius:12px}
  .photo-bg{padding:56px 10px 72px}
  .flood{padding:56px 18px}
- .flood-copy{font-size:clamp(20px,6.4vw,25px)}
+ .flood-copy{font-size:clamp(18px,5.6vw,25px)}
  .premise-in{font-size:15px}
  .nj-btn{padding:16px 22px;font-size:16px;width:100%;max-width:340px;box-sizing:border-box}
  .nj-sub{width:auto;max-width:none}
@@ -568,8 +584,8 @@ img,svg{max-width:100%}
 
 }
 
-[data-ist="ist0"]{background-image:url(town0.a31fb16b.svg);background-size:440px 2600px}
-[data-ist="ist1"]{background-image:url(town1.710180c9.svg);background-size:440px 3050px}
+[data-ist="ist0"]{background-image:url(town0.dd1f1ba4.svg);background-size:440px 2600px}
+[data-ist="ist1"]{background-image:url(town1.ce0e56b0.svg);background-size:440px 3050px}
 [data-ist="ist2"]{white-space:nowrap}
 [data-ist="ist3"]{background-image:url(img/405-d8efd6f5.jpg)}
 [data-ist="ist4"]{text-align:center}
