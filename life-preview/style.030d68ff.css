@@ -131,16 +131,16 @@ h2 em{font-style:normal;color:var(--accent-eff)}
 
 /* 図 */
 .chart{width:100%;height:auto;display:block}
-.chart .b{fill:#009FD6}.chart .b.s{fill:#CFEFFB}
-.chart .band{fill:#DFF7E2}
+.chart .b{fill:var(--c-cyan)}.chart .b.s{fill:#3AA6CF}
+.chart .band{fill:#16311F}
 .chart .tk{font-size:11px;fill:var(--c-ink-3)}
 .chart .an{font-size:13px;fill:var(--c-hot-text);font-weight:700}
 .chart .gl{stroke:var(--c-line)}
 .herofig figcaption,.calfig figcaption{font-size:11px;color:var(--c-ink-3);margin-top:10px}
 .scrollx{overflow-x:auto}
 .cal{width:100%;min-width:900px;height:auto;display:block}
-.cal .crow{fill:#F5F5F5}.cal .cd{fill:var(--c-ink)}
-.cal .cbox{fill:none;stroke:var(--c-ink);stroke-width:1.5}
+.cal .crow{fill:#232A31}.cal .cd{fill:var(--c-cyan-text)}
+.cal .cbox{fill:none;stroke:var(--c-hot-text);stroke-width:1.5}
 .cal .cy{font-size:11px;fill:var(--c-ink-3)}.cal .cn{font-size:10px;fill:var(--c-ink-2)}
 .calfig{margin:34px 0}
 
