@@ -16,6 +16,10 @@
  --ease:cubic-bezier(.19,1,.22,1);--ease-ui:cubic-bezier(.4,.4,0,1);
  --dur-sm:300ms;--dur-lg:600ms;
  /* NOUJIRU */
+ color-scheme:dark;
+ /* スクロールバーは指定しないと真っ白(#FCFCFC・地に対して18.9:1)になる。
+    縦1本だけでなく .scrollx（カレンダーの下）と .strip（第五章）の横3本にも効く */
+ scrollbar-color:#3A3A3A #0D0D0D;
  --c-bg:#0D0D0D;--c-ink:#E3E8EC;--c-ink-2:#C3CDD4;--c-ink-3:#9BA9B3;
  --c-line:rgba(255,255,255,.14);
  /* ブランド緑はライム1色。面は黒文字前提（白文字は1.83:1で不可）、
@@ -258,6 +262,20 @@ section.ch.closing{clip-path:polygon(0 0,100% var(--cut),100% 100%,0 100%)}
 .js .world>section,.js .world>div:not(.town),
 .js .world>p,.js .world>footer{position:relative;z-index:1}
 @media (max-width:900px){.twl,.twr{display:none}}
+/* 印刷。Chromeは「背景のグラフィック」が既定OFFなので、
+   黒地が落ちて白紙に薄い文字だけが残る（比1.23で読めない）。紙のときは白地に組む */
+@media print{
+ :root{--c-bg:#fff;--c-ink:#111;--c-ink-2:#444;--c-ink-3:#666;--c-line:rgba(0,0,0,.18);
+  --c-cyan-text:#0A6E96;--c-green-text:#177A28;--c-hot-text:#177A28}
+ body{background:#fff;color:#111;background-image:none;padding-top:0}
+ .town,.draft,.mq,.dm-pill,#bkm,.peek,.pgbar,.chlabel,.vp::after{display:none!important}
+ .track,.vp,.world{height:auto!important;transform:none!important;width:auto!important}
+ .njcard,.kvcard,.fbc,.recipe,.howto,.tolearn,.faceout{background:#fff;color:#111}
+ .tint-a,.tint-b{background:#fff;background-image:none}
+ .flood{background:#fff;color:#111}
+ .rv{opacity:1!important;filter:none!important;transform:none!important}
+ section{break-inside:auto}
+}
 @media (prefers-reduced-motion:reduce){.town{display:none}}
 /* ダイジェスト（つづきを読む） */
 .mo{display:none}
@@ -272,7 +290,7 @@ html:not(.js) .morew{display:none}
 /* 章のドット絵（立体） */
 .pxbox{width:clamp(132px,25%,228px);margin:0 0 16px;position:relative}
 .pxa{display:block;height:auto;width:100%;
- filter:drop-shadow(0 3px 0 rgba(0,60,90,.13))}
+ filter:drop-shadow(0 3px 0 rgba(0,0,0,.55))}
 .pxbox canvas{display:block;width:100%;height:auto}
 .pxbox.on .pxa{display:none}
 @media (prefers-reduced-motion: no-preference){
@@ -283,7 +301,7 @@ html:not(.js) .morew{display:none}
 html{overflow-x:clip}
 .js .track{position:relative}
 .js .vp{position:sticky;top:0;height:100svh;overflow:clip;background:var(--c-bg);
- background-image:radial-gradient(rgba(0,60,90,.13) 1px,transparent 1px);background-size:16px 16px}
+ background-image:radial-gradient(rgba(255,255,255,.075) 1px,transparent 1px);background-size:16px 16px}
 .js .world{position:absolute;left:0;top:0;width:var(--cw,1040px);
  transform-origin:0 0;will-change:transform}
 /* 回した世界の中では、画面幅いっぱいを前提にした指定が効かないので直す */
@@ -357,7 +375,7 @@ figure.inset{rotate:-.9deg}
  transition:opacity .3s var(--ease-ui)}
 .chlabel.on{opacity:1}
 /* ライトボックス */
-#lb{border:0;border-radius:12px;padding:0;max-width:min(94vw,1100px);background:#191919}
+#lb{border:0;border-radius:12px;padding:0;max-width:min(94vw,1100px);background:#191919;color:var(--c-ink)}
 .wallgrid img{cursor:zoom-in}
 #lb figure{margin:0;position:relative}
 #lb img{max-width:min(94vw,1100px);max-height:86vh;height:auto;display:block}
@@ -368,7 +386,9 @@ figure.inset{rotate:-.9deg}
  border-radius:50%;width:34px;height:34px;font-size:16px;cursor:pointer}
 /* 沼装置 */
 .cal .cd14{cursor:pointer;outline:none}
-.cal .cd14:hover,.cal .cd14:focus{fill:var(--c-green-text)}
+.cal .cd14:hover{fill:var(--c-green-text)}
+/* キーボードで辿れるマスなので、色だけでなく枠でも分かるようにする */
+.cal .cd14:focus-visible{fill:var(--c-green-text);stroke:#fff;stroke-width:2}
 #fossil{margin-top:16px;border:1px solid var(--c-line);border-left:3px solid var(--c-green);
  background:#191919;padding:22px 24px;font-size:14.5px;line-height:2.0}
 #fossil p{margin:0 0 14px}
@@ -411,7 +431,7 @@ figure.inset{rotate:-.9deg}
 .faces-lead{font-size:var(--fs-200);color:var(--c-ink-2);line-height:1.95;margin:0 0 22px}
 .faces-note{font-size:12px;color:var(--c-ink-3);line-height:1.9;margin:18px 0 0}
 .facegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:6px;margin:0 0 8px}
-.ft{position:relative;width:100%;aspect-ratio:1;border:0;padding:0;cursor:pointer;border-radius:50%;overflow:hidden;background-repeat:no-repeat;background-size:calc(var(--wg)*100%) auto;filter:grayscale(.35);transition:transform .18s var(--ease-ui),filter .18s var(--ease-ui);outline-offset:2px}
+.ft{position:relative;width:100%;aspect-ratio:1;border:0;padding:0;cursor:pointer;background-color:#191919;border-radius:50%;overflow:hidden;background-repeat:no-repeat;background-size:calc(var(--wg)*100%) auto;filter:grayscale(.35);transition:transform .18s var(--ease-ui),filter .18s var(--ease-ui);outline-offset:2px}
 .ft:hover,.ft:focus-visible{transform:scale(1.14);filter:none;z-index:2}
 .ft[aria-pressed="true"]{filter:none;box-shadow:0 0 0 3px var(--c-green)}
 .faceout{margin-top:22px;padding:20px;background:#022134;border-radius:12px}
