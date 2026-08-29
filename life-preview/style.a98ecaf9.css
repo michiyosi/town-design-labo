@@ -253,9 +253,11 @@ section.ch.closing{clip-path:polygon(0 0,100% var(--cut),100% 100%,0 100%)}
 .town canvas{display:block;width:440px;position:absolute;left:0;top:0}
 .twl{right:100%}
 .twr{left:100%}
+.twc{left:0;right:0;width:auto;z-index:2}
+.twc canvas{width:100%}
 .js .world>section,.js .world>div:not(.town),
 .js .world>p,.js .world>footer{position:relative;z-index:1}
-@media (max-width:900px){.town{display:none}}
+@media (max-width:900px){.twl,.twr{display:none}}
 @media (prefers-reduced-motion:reduce){.town{display:none}}
 /* ダイジェスト（つづきを読む） */
 .mo{display:none}
