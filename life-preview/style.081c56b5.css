@@ -1,4 +1,4 @@
-@font-face{font-family:"ZMG";font-weight:700 900;font-display:block;src:url(p4-zmg.1b15ace1.woff2) format("woff2")}@font-face{font-family:"PXM";font-weight:400 500;font-display:block;src:url(p4-pxr.71cc6054.woff2) format("woff2")}@font-face{font-family:"PXM";font-weight:700 900;font-display:block;src:url(p4-pxb.a1ecc004.woff2) format("woff2")}
+@font-face{font-family:"ZMG";font-weight:700 900;font-display:block;src:url(p4-zmg.65636a51.woff2) format("woff2")}@font-face{font-family:"PXM";font-weight:400 500;font-display:block;src:url(p4-pxr.acb79bf5.woff2) format("woff2")}@font-face{font-family:"PXM";font-weight:700 900;font-display:block;src:url(p4-pxb.0d27afd0.woff2) format("woff2")}
 :root{
  --fs-100:clamp(.8125rem,.7866rem + .1105vw,.875rem);
  --fs-200:clamp(.9375rem,.9116rem + .1105vw,1rem);
