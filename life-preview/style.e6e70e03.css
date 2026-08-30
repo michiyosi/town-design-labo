@@ -1,4 +1,4 @@
-@font-face{font-family:"ZMG";font-weight:700 900;font-display:block;src:url(p4-zmg.9ea0a804.woff2) format("woff2")}@font-face{font-family:"PXM";font-weight:400 500;font-display:block;src:url(p4-pxr.48393af4.woff2) format("woff2")}@font-face{font-family:"PXM";font-weight:700 900;font-display:block;src:url(p4-pxb.4ceac101.woff2) format("woff2")}
+@font-face{font-family:"ZMG";font-weight:700 900;font-display:block;src:url(p4-zmg.4a1e9489.woff2) format("woff2")}@font-face{font-family:"PXM";font-weight:400 500;font-display:block;src:url(p4-pxr.f7477bbd.woff2) format("woff2")}@font-face{font-family:"PXM";font-weight:700 900;font-display:block;src:url(p4-pxb.2e520b3c.woff2) format("woff2")}
 :root{
  --fs-100:clamp(.8125rem,.7866rem + .1105vw,.875rem);
  --fs-200:clamp(.9375rem,.9116rem + .1105vw,1rem);
@@ -597,23 +597,12 @@ html:not(.js) .jswarn{display:block;font:700 13px/1.9 var(--font-round);color:#F
  .pop{animation:pop .5s cubic-bezier(.2,1.6,.4,1)}
  @keyframes pop{from{opacity:0;transform:scale(.86) translateY(12px)}}
 }
-/* 年号スライドとカレンダーのワイプ（対応環境のみ） */
-@supports (animation-timeline: view()){
- @media (prefers-reduced-motion: no-preference){
-  .pyear{animation:yslide both;animation-timeline:view();animation-range:entry 0% entry 42%}
-  @keyframes yslide{from{opacity:.15;transform:translateX(-44px)}}
-  .calfig .cal{animation:calwipe both;animation-timeline:view();animation-range:entry 0% entry 65%}
-  @keyframes calwipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 -2% 0 0)}}
- }
-}
-/* グラフ成長（対応環境のみ） */
-@supports (animation-timeline: view()){
- @media (prefers-reduced-motion: no-preference){
-  .chart .b{transform-box:fill-box;transform-origin:50% 100%;
-   animation:grow both;animation-timeline:view();animation-range:entry 0% entry 45%}
-  @keyframes grow{from{transform:scaleY(.001)}}
- }
-}
+/* 年号スライドとカレンダーのワイプは外した。
+   このページは .world をJSのtransformで動かしているため、
+   animation-timeline:view() の進捗が進まず、fill-mode:both で from に凍る。
+   実測で .pyear が opacity .15／44px左ずれのまま固定されていた（年号が暗い件）。
+   出現の演出は、動いている .rv（IntersectionObserver）側に任せる */
+/* グラフの成長も外した。凍ると scaleY(.001) ＝ 棒が高さゼロになる */
 /* ステッカー浮遊 */
 @media (prefers-reduced-motion: no-preference){
  .stk{animation:bob 3.2s ease-in-out infinite alternate}
