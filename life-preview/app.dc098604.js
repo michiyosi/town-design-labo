@@ -1060,9 +1060,9 @@ try{
    if(MVW.length||MVD.length){
     for(var nm4 in secs){
      var s4=secs[nm4];
-     for(var y4=s4.top+170; y4<s4.top+s4.H-170; y4+=330*(0.72+rndM()*0.62)){
+     for(var y4=s4.top+150; y4<s4.top+s4.H-150; y4+=230*(0.7+rndM()*0.66)){
       for(var sd4=0; sd4<2; sd4++){
-       if(rndM()<0.16) continue;                 /* たまに間引いて並びを崩す */
+       if(rndM()<0.09) continue;                 /* たまに間引いて並びを崩す */
        var car=(rndM()<0.30)&&MVD.length;
        var pool4=car?MVD:(MVW.length?MVW:MVD);
        var k4=pool4[(rndM()*pool4.length)|0];
@@ -1156,7 +1156,7 @@ try{
       var zz=zoneOf(secz,slz.pos);
       if(!zz||zz[1]-zz[0]<70) continue;
       var keyz=(secz.getAttribute('data-chname')||'').split('　')[0];
-      var nz=narrow?1:(1+((rndM()<0.5)?1:0));
+      var nz=narrow?(1+((rndM()<0.4)?1:0)):(2+((rndM()<0.5)?1:0));
       for(var iz=0;iz<nz;iz++){
        var carz=(rndM()<0.26)&&MVD.length;
        var poolz=carz?MVD:(MVW.length?MVW:MVD);
