@@ -1,4 +1,4 @@
-@font-face{font-family:"ZMG";font-weight:700 900;font-display:block;src:url(p4-zmg.cf490c8b.woff2) format("woff2")}@font-face{font-family:"PXM";font-weight:400 500;font-display:block;src:url(p4-pxr.1d0e49e8.woff2) format("woff2")}@font-face{font-family:"PXM";font-weight:700 900;font-display:block;src:url(p4-pxb.3f9a9846.woff2) format("woff2")}
+@font-face{font-family:"ZMG";font-weight:700 900;font-display:block;src:url(p4-zmg.ac2665ef.woff2) format("woff2")}@font-face{font-family:"PXM";font-weight:400 500;font-display:block;src:url(p4-pxr.8f626069.woff2) format("woff2")}@font-face{font-family:"PXM";font-weight:700 900;font-display:block;src:url(p4-pxb.86092932.woff2) format("woff2")}
 :root{
  --fs-100:clamp(.8125rem,.7866rem + .1105vw,.875rem);
  --fs-200:clamp(.9375rem,.9116rem + .1105vw,1rem);
@@ -163,8 +163,13 @@ figcaption{font-size:11.5px;color:var(--c-ink-3);line-height:1.65;margin-top:7px
 .face figcaption{font-size:12px;line-height:1.75;color:var(--c-ink-3);margin-top:10px}
 .face figcaption b{display:block;font:700 11px/1.6 var(--font-round);letter-spacing:.06em;color:var(--c-ink-2)}
 @media (max-width:480px){.face img{aspect-ratio:4/3}}
-.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:30px 0;width:min(100%, 1100px)}
-.wrap .gallery{width:calc(100% + var(--gutter)*2);margin-left:calc(var(--gutter)*-1)}
+/* auto-fit は斜めの列幅（--cw）だと1列に潰れることがある。列数を明示する。
+   行の頭を揃えないと、キャプションの行数の違いで縦に大穴が空く */
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;
+ align-items:start;grid-auto-rows:min-content;margin:30px 0;width:100%}
+@media (max-width:900px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.gallery{grid-template-columns:minmax(0,1fr)}}
+.wrap .gallery{width:100%;margin-left:0}
 .gallery figure{margin:0}
 .gallery img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;display:block;cursor:zoom-in}
 .gallery figcaption{font-size:11.5px;color:var(--c-ink-3);line-height:1.7;margin-top:6px}
@@ -634,7 +639,7 @@ img,svg{max-width:100%}
 [data-ist="ist0"]{background-image:url(town0.dd1f1ba4.svg);background-size:440px 2600px}
 [data-ist="ist1"]{background-image:url(town1.ce0e56b0.svg);background-size:440px 3050px}
 [data-ist="ist2"]{white-space:nowrap}
-[data-ist="ist3"]{background-image:url(img/405-d8efd6f5.jpg)}
+[data-ist="ist3"]{background-image:url(img/518-d8efd6f5.jpg)}
 [data-ist="ist4"]{text-align:center}
 [data-ist="ist5"]{text-align:center;margin-top:18px}
 [data-ist="ist6"]{text-align:center;font-size:12px;color:var(--c-ink-3)}
