@@ -1,4 +1,4 @@
-@font-face{font-family:"ZMG";font-weight:700 900;font-display:block;src:url(p4-zmg.086af403.woff2) format("woff2")}@font-face{font-family:"PXM";font-weight:400 500;font-display:block;src:url(p4-pxr.47426b21.woff2) format("woff2")}@font-face{font-family:"PXM";font-weight:700 900;font-display:block;src:url(p4-pxb.f9b30a95.woff2) format("woff2")}
+@font-face{font-family:"ZMG";font-weight:700 900;font-display:block;src:url(p4-zmg.9ea0a804.woff2) format("woff2")}@font-face{font-family:"PXM";font-weight:400 500;font-display:block;src:url(p4-pxr.48393af4.woff2) format("woff2")}@font-face{font-family:"PXM";font-weight:700 900;font-display:block;src:url(p4-pxb.4ceac101.woff2) format("woff2")}
 :root{
  --fs-100:clamp(.8125rem,.7866rem + .1105vw,.875rem);
  --fs-200:clamp(.9375rem,.9116rem + .1105vw,1rem);
@@ -427,6 +427,7 @@ figure.inset{rotate:-.9deg}
 .alllog time{font-size:12px;color:var(--c-ink-3);line-height:1.9;white-space:nowrap}
 .alllog p{margin:0;font-size:var(--fs-200);line-height:1.85}
 @media (max-width:480px){.alllog li{grid-template-columns:1fr;gap:3px}.alllog time{font-size:11px}}
+.tonote{margin:44px 0 0;padding:22px 24px;border-left:3px solid var(--c-cyan);background:#022134;border-radius:0 10px 10px 0;font-size:var(--fs-200);line-height:1.95}
 .evlist{margin:52px 0 0}
 .evlist h3{font:900 var(--fs-500)/1.5 var(--font-round);margin:0 0 12px;color:var(--c-green-text)}
 .evlist>p{margin:0 0 26px;font-size:var(--fs-200);line-height:1.95}
