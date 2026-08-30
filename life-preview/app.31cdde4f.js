@@ -340,15 +340,57 @@ try{
    ready=true;
   }
   var FORCE=null;                     /* 検証用: s を直接与える */
-  function apply(){
-   if(!ready) return;
-   var s=(FORCE===null?scrollY:FORCE)+vh/2, px=cw/2;
+  /* 表示位置は実スクロールへ遅れて追従する（慣性）。
+     スクロールそのものは乗っ取らない＝スクロールバー・キーボード・
+     アンカー移動・ブラウザ標準の慣性を壊さない。見え方だけを遅らせる。 */
+  var EASE=0.12, cur=null, iraf=0, lastT=0, driftT=0, gen=0, itim=0;
+  /* 次の1コマを要求する。rAFが来ない環境（描画が要求されないヘッドレス等）でも
+     止まらないよう、タイマーも併走させ、先に来たほうだけを通す */
+  function nextFrame(fn){
+   var g=++gen;
+   function once(ts){
+    if(g!==gen) return;
+    gen++;                       /* 相方を無効化 */
+    if(itim){ clearTimeout(itim); itim=0; }
+    fn(ts);
+   }
+   iraf=requestAnimationFrame(once);
+   itim=setTimeout(function(){ once(); }, 16);
+  }
+  function targetS(){ return (FORCE===null?scrollY:FORCE)+vh/2; }
+  function draw(s){
+   var px=cw/2;
    var tx=vw/2-(cosA*px-sinA*s), ty=vh/2-(sinA*px+cosA*s);
    world.style.transform='translate3d('+tx.toFixed(1)+'px,'+ty.toFixed(1)+'px,0) rotate('+(A*180/Math.PI).toFixed(2)+'deg)';
+   window.__worldS=s;               /* 街の描画が同じ位置を使えるように */
   }
-  var raf=0;
-  function tick(){ raf=0; apply(); }
-  function onScroll(){ if(!raf) raf=requestAnimationFrame(tick); }
+  function apply(){                  /* 即時（初期化・リサイズ・検証用） */
+   if(!ready) return;
+   cur=targetS(); draw(cur);
+  }
+  function ease(ts){
+   iraf=0;
+   if(!ready) return;
+   var now=(typeof ts==='number')?ts:(performance&&performance.now?performance.now():Date.now());
+   var dt=lastT?Math.min(Math.max(now-lastT,1),200):16.7;   /* フレームが飛んでも破綻させない */
+   lastT=now;
+   var tg=targetS();
+   if(cur===null){ cur=tg; }
+   var d=tg-cur;
+   if(Math.abs(d)<0.05){ cur=tg; draw(cur); lastT=0; driftT=0; return; }
+   /* 経過時間ぶんだけ詰める。60fps換算で1フレームEASE%と同じ速さになる */
+   var k=1-Math.pow(1-EASE, dt/16.7);
+   cur+=d*k;
+   driftT+=dt;
+   if(driftT>600){ cur=tg; }        /* 追従が長引いたら吸着（取り残されない保険） */
+   draw(cur);
+   nextFrame(ease);
+  }
+  function onScroll(){
+   if(rm.matches){ apply(); return; }   /* 動きを減らす設定では即時 */
+   driftT=0;
+   if(!iraf){ lastT=0; nextFrame(ease); }
+  }
 
   /* 検証用: ?wy=<scrollY> でその位置を同期で描く */
   var _wy=new URLSearchParams(location.search).get('wy');
@@ -369,6 +411,31 @@ try{
    ro.observe(world);
   }
   if(rm.addEventListener) rm.addEventListener('change',function(){layout();apply();});
+  /* 見張り: scrollイベントもrAFも来ない環境（ヘッドレス・非表示タブ）でも
+     表示が取り残されないようにする。ずれていたら起こすだけなので、
+     通常のブラウザでは何もしない（負荷ゼロ） */
+  setInterval(function(){
+   if(!ready||rm.matches) return;
+   var tg=targetS();
+   if(cur===null||Math.abs(tg-cur)>0.5){
+    if(!iraf){ lastT=0; nextFrame(ease); }
+   }
+  },250);
+  /* 検証用: 慣性の追従曲線を、スクロールイベントに頼らず直接測る。
+     ヘッドレスでは scroll も rAF も発火しないため、これが無いと実装を確かめられない */
+  window.__easeProbe=function(toY,steps){
+   if(!ready) layout();
+   var save=FORCE, out=[];
+   FORCE=toY; cur=(cur===null)?0+vh/2:cur; lastT=0; driftT=0;
+   for(var i=0;i<steps;i++){
+    var tg=targetS(), d=tg-cur;
+    if(Math.abs(d)<0.05){ cur=tg; out.push(Math.round(cur)); break; }
+    cur+=d*(1-Math.pow(1-EASE,1));
+    out.push(Math.round(cur));
+   }
+   FORCE=save;
+   return out;
+  };
  }catch(e){}
 })();
 
@@ -924,7 +991,7 @@ try{
   function update(){
    raf=0;
    var vh=innerHeight;
-   var s=((fy!==null)?+fy:scrollY)+vh/2;
+   var s=(window.__worldS!==undefined&&fy===null)?window.__worldS:(((fy!==null)?+fy:scrollY)+vh/2);
    /* 回さず、揺らす。増え続けると横顔（輪郭色の面）ばかりになるため */
    var th=(forced!==null)?(+forced):(Math.sin(s/2600)*0.5);
    var need=false;
