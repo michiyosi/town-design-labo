@@ -426,6 +426,14 @@ figure.inset{rotate:-.9deg}
 .alllog li{display:grid;grid-template-columns:9.5em 1fr;gap:14px;padding:13px 2px;border-bottom:1px solid var(--c-line)}
 .alllog time{font-size:12px;color:var(--c-ink-3);line-height:1.9;white-space:nowrap}
 .alllog p{margin:0;font-size:var(--fs-200);line-height:1.85}
+/* 長い1件だけ畳む。details なので JS が無くても開く */
+.alllog details{margin:0}
+.alllog summary{list-style:none;cursor:pointer;font-size:var(--fs-200);line-height:1.85}
+.alllog summary::-webkit-details-marker{display:none}
+.alllog summary i{display:inline-block;margin-left:10px;font-style:normal;font-size:12px;color:var(--c-green-text);border-bottom:1px dotted currentColor;white-space:nowrap}
+.alllog summary i::after{content:'のこり398字'}
+.alllog details[open] summary i::after{content:'たたむ'}
+.alllog details p{margin:8px 0 0}
 @media (max-width:480px){.alllog li{grid-template-columns:1fr;gap:3px}.alllog time{font-size:11px}}
 .tonote{margin:44px 0 0;padding:22px 24px;border-left:3px solid var(--c-cyan);background:#022134;border-radius:0 10px 10px 0;font-size:var(--fs-200);line-height:1.95}
 .evlist{margin:52px 0 0}
