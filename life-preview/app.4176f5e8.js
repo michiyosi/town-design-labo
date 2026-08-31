@@ -872,11 +872,14 @@ try{
   /* 動体1体の、いまの姿と居場所を出す。立体でも2Dでも同じものを使う。
      c = [絵,x,地面y,幅,位相,-,彩度,視差層,フィラー, 動き方,区間左,区間右,速度] */
   /* 進んだ距離。止まる時間が入っていれば、その分だけ距離が伸びない */
+  /* 進んだ距離。**符号つきで返す**。
+     ここで Math.abs を取ると dist が常に増え、どの車も左から右へ動く。
+     一方で向きは速度の符号で決めているので、v が負の車は
+     「左を向いたまま右へ進む」＝バックになる（実測で86体が逆走していた） */
   function travelled(t, v, walk, rest){
-   var sp=Math.abs(v);
-   if(!(rest>0)) return t*sp;
+   if(!(rest>0)) return t*v;
    var P=walk+rest, cyc=Math.floor(t/P), rem=t-cyc*P;
-   return (cyc*walk + Math.min(rem, walk)) * sp;
+   return (cyc*walk + Math.min(rem, walk)) * v;
   }
   function charState(c,t,sc,bandTop){
    var fl=c[7]||1, gy=paraY(c[2],fl,sc);
@@ -1602,6 +1605,19 @@ try{
     }
     /* 企画の絵は「横に動かない」「コマは進む」の両方を実測する */
     var pStay=0, pMove=0, pAnim=0, pStill=0, stills=[];
+    var rev=0, fwd=0;
+    for(var s6=0;s6<sides.length;s6++){
+     var C6=sides[s6].chs;
+     for(var i6=0;i6<C6.length;i6++){
+      var c6=C6[i6];
+      if(!c6[9]) continue;
+      var A6=charState(c6,1.0,sm,bt), B6=charState(c6,1.2,sm,bt);
+      var d6=B6.ox-A6.ox;
+      if(Math.abs(d6)<0.01||Math.abs(d6)>60) continue;
+      var f6=(B6.mi>=MIRK)?-1:1;
+      if(d6*f6>0) fwd++; else rev++;
+     }
+    }
     for(var k1=0;k1<sides.length;k1++){
      var L1=sides[k1].chs;
      for(var i1=0;i1<L1.length;i1++){
@@ -1642,7 +1658,7 @@ try{
       }
      }
     }
-    document.title='重なり='+ov+'組 / MV 動く絵='+nMove+' 実際に動いた='+moved+' 反転='+flipped
+    document.title='向きと進行が一致='+fwd+' 逆走='+rev+' / 重なり='+ov+'組 / MV 動く絵='+nMove+' 実際に動いた='+moved+' 反転='+flipped
       +' ／ 企画の絵='+nProp+' 横に動かない='+pStay+' 動いた='+pMove
       +' コマが進む='+pAnim+' 止まったまま='+pStill+'（絵'+stills.join(',')+'） 浮かぶ='+nFloat;
    },2600);
