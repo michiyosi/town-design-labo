@@ -437,58 +437,75 @@ try{
 })();
 
 
-/* ===== 顔ウォール =====
-   13年分の写真から集めた顔を並べ、クリックするとその人の写真が出る。
+/* ===== 顔ウォール（章ごと） =====
+   13年分の写真から集めた顔を、章ごとに分けて並べる。
+   クリックするとその人の写真が出る。
    顔の照合はしない（アーカイブの顔は中央値66pxで、照合すると他人が出るため）。
-   クリックした顔と写真の対応は確定情報なので、外れることがない。 */
+   クリックした顔と写真の対応は確定情報なので、外れることがない。
+
+   同じ人が2つ以上の章に出ることがある（実測24人）。13年関わり続けた証拠なので
+   まとめない。絵は1枚のスプライトを全章で使い回すので、章を増やしても増えない。 */
 (function(){
  try{
-  var wrap=document.getElementById('facewrap');
-  var grid=document.getElementById('wallgridf');
-  var out=document.getElementById('faceout');
-  if(!wrap||!grid||!out)return;
+  var wraps=[].slice.call(document.querySelectorAll('[data-fw]'));
+  if(!wraps.length) return;
   fetch('wall.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(W){
-   if(!W||!W.people||!W.people.length)return;
-   wrap.hidden=false;
-   grid.style.setProperty('--wg',W.grid);
-   var cur=-1;
-   W.people.forEach(function(pe,i){
-    var b=document.createElement('button');
-    b.type='button';
-    b.className='ft wt-'+i;
-    b.setAttribute('aria-pressed','false');
-    b.setAttribute('aria-label',(pe.y?pe.y+'　':'')+pe.n+'枚の写真に写っている人');
-    b.addEventListener('click',function(){ open_(i,b); });
-    grid.appendChild(b);
-   });
-   function open_(i,btn){
-    grid.querySelectorAll('.ft[aria-pressed="true"]').forEach(function(x){
-     x.setAttribute('aria-pressed','false');});
-    if(cur===i){ cur=-1; out.hidden=true; out.innerHTML=''; return; }
-    cur=i; btn.setAttribute('aria-pressed','true');
-    var pe=W.people[i];
-    var h=document.createElement('div'); h.className='faceout-h';
-    var bb=document.createElement('b'); bb.textContent='この人が写っている写真　'+pe.n+'枚';
-    h.appendChild(bb);
-    if(pe.y){ var yy=pe.y.split('-');
-              var sp=document.createElement('span');
-              sp.textContent=(yy[0]===yy[1]?yy[0]:yy[0]+'〜'+yy[1])+'年';
-              h.appendChild(sp); }
-    var x=document.createElement('button'); x.type='button'; x.className='fo-x';
-    x.setAttribute('aria-label','閉じる'); x.textContent='×';
-    x.addEventListener('click',function(){ open_(i,btn); });
-    h.appendChild(x);
-    var g=document.createElement('div'); g.className='gallery';
-    pe.p.forEach(function(id){
-     var im=document.createElement('img');
-     im.loading='lazy'; im.decoding='async'; im.alt='';
-     im.src='wall/t'+id+'.jpg';
-     im.dataset.full='wall/g'+id+'.jpg';
-     g.appendChild(im);
+   if(!W||!W.people||!W.people.length) return;
+   var chs=W.chapters||[];
+   wraps.forEach(function(wrap){
+    var key=wrap.getAttribute('data-fw'), ch=null;
+    for(var q=0;q<chs.length;q++){ if(chs[q].k===key){ ch=chs[q]; break; } }
+    if(!ch||!ch.t||!ch.t.length) return;   /* 誰も居ない章は器ごと出さない */
+    var grid=wrap.querySelector('.facegrid'), out=wrap.querySelector('.faceout');
+    if(!grid||!out) return;
+    wrap.hidden=false;
+    grid.style.setProperty('--wg',W.grid);
+    var nm=wrap.querySelector('.fw-n');
+    if(nm) nm.textContent='　'+ch.t.length+'人';
+    var cur=-1;
+
+    function open_(i,btn){
+     grid.querySelectorAll('.ft[aria-pressed="true"]').forEach(function(x){
+      x.setAttribute('aria-pressed','false');});
+     if(cur===i){ cur=-1; out.hidden=true; out.innerHTML=''; return; }
+     cur=i; btn.setAttribute('aria-pressed','true');
+     var pe=W.people[i];
+     var h=document.createElement('div'); h.className='faceout-h';
+     var bb=document.createElement('b');
+     bb.textContent='この人が写っている写真　'+pe.n+'枚';
+     h.appendChild(bb);
+     if(pe.y){ var yy=pe.y.split('-');
+               var sp=document.createElement('span');
+               sp.textContent=(yy[0]===yy[1]?yy[0]:yy[0]+'〜'+yy[1])+'年';
+               h.appendChild(sp); }
+     var x=document.createElement('button'); x.type='button'; x.className='fo-x';
+     x.setAttribute('aria-label','閉じる'); x.textContent='×';
+     x.addEventListener('click',function(){ open_(i,btn); });
+     h.appendChild(x);
+     var g=document.createElement('div'); g.className='gallery';
+     pe.p.forEach(function(id){
+      var im=document.createElement('img');
+      im.loading='lazy'; im.decoding='async'; im.alt='';
+      im.src='wall/t'+id+'.jpg';
+      im.dataset.full='wall/g'+id+'.jpg';
+      g.appendChild(im);
+     });
+     out.innerHTML=''; out.appendChild(h); out.appendChild(g); out.hidden=false;
+     out.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }
+
+    ch.t.forEach(function(pi){
+     var pe=W.people[pi];
+     if(!pe) return;
+     var b=document.createElement('button');
+     b.type='button';
+     b.className='ft wt-'+pi;
+     b.setAttribute('aria-pressed','false');
+     b.setAttribute('aria-label',(pe.y?pe.y+'　':'')+pe.n+'枚の写真に写っている人');
+     b.addEventListener('click',function(){ open_(pi,b); });
+     grid.appendChild(b);
     });
-    out.innerHTML=''; out.appendChild(h); out.appendChild(g); out.hidden=false;
-    out.scrollIntoView({behavior:'smooth',block:'nearest'});
-   }
+   });
   }).catch(function(){});
  }catch(e){}
 })();

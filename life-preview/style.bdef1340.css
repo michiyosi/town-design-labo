@@ -488,6 +488,7 @@ figure.inset{rotate:-.9deg}
 @media (max-width:480px){.recipe{padding:24px 16px 22px}}
 .faces{margin-top:52px;padding-top:40px;border-top:1px solid var(--c-line)}
 .faces-k{font:700 var(--fs-500)/1.6 var(--font-round);margin:0 0 14px}
+.fw-n{font:400 var(--fs-200)/1 var(--font-body);color:var(--c-ink-3);margin-left:10px;letter-spacing:.02em}
 .faces-lead{font-size:var(--fs-200);color:var(--c-ink-2);line-height:1.95;margin:0 0 22px}
 .faces-note{font-size:12px;color:var(--c-ink-3);line-height:1.9;margin:18px 0 0}
 .facegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:6px;margin:0 0 8px}
