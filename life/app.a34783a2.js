@@ -422,11 +422,14 @@ try{
 /* ===== 顔ウォール（章ごと） =====
    13年分の写真から集めた顔を、章ごとに分けて並べる。
    クリックするとその人の写真が出る。
-   写真は顔の照合で結びつけている。アーカイブの顔は中央値66pxと小さく、
+   写真は顔の照合で結びつけている。アーカイブの顔は中央値20pxと小さく、
    照合は当てになりにくい。実際、本人から「6枚のうち5枚が別人」の指摘を受けた
    （似方 0.376〜0.473 が全部別人だった）。
-   そこで **代表の顔と 0.65 以上似ていて、かつ顔が64px以上** のものだけを出す。
-   帯ごとに目で確かめて決めた線。329枚 → 105枚まで減るが、合っている分だけを出す。
+   そこで **代表の顔と 0.65 以上似ている** ものだけを出す。
+   候補側の64px制限は外した。無作為2顔の実測で、他人が紛れ込む見込み本数が
+   16px帯1.1本 / 32px帯1.0本 / 64px帯1.0本 と同じで、大きさの関門は
+   他人を減らしていなかったから（本人だけを減らしていた）。
+   そのうえで新しく入る24枚を1枚200pxで全部目視し、11枚だけ採った。
 
    同じ人が2つ以上の章に出ることがある（実測24人）。13年関わり続けた証拠なので
    まとめない。絵は1枚のスプライトを全章で使い回すので、章を増やしても増えない。 */
@@ -477,6 +480,22 @@ try{
      });
      out.innerHTML=''; out.appendChild(h); out.appendChild(g); out.hidden=false;
      out.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }
+
+    /* この時期の集合写真。照合していないので、誰が写っているかは言わない */
+    var gb=wrap.querySelector('.groupbox'), gg=wrap.querySelector('.groupgrid');
+    if(gb&&gg&&ch.g&&ch.g.length){
+     ch.g.forEach(function(id){
+      var f=document.createElement('figure');
+      var im=document.createElement('img');
+      im.loading='lazy'; im.decoding='async'; im.alt='';
+      im.src='wall/t'+id+'.jpg';
+      im.dataset.full='wall/g'+id+'.jpg';
+      f.appendChild(im); gg.appendChild(f);
+     });
+     var gn=wrap.querySelector('.gw-n');
+     if(gn) gn.textContent='　'+ch.g.length+'枚';
+     gb.hidden=false;
     }
 
     ch.t.forEach(function(pi){
