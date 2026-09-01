@@ -234,7 +234,9 @@ figcaption{font-size:11.5px;color:var(--c-ink-3);line-height:1.65;margin-top:7px
 .cta-work{margin:18px 0 0;font-size:var(--fs-200);color:var(--c-ink-3);line-height:1.9}
 .cta-work a{color:var(--c-green-text);font-weight:700}
 /* 章の中に置いた節（財務省の日）。章とは別の話だと分かる程度に区切る */
-.h-in{margin:0 0 6px;font:900 clamp(21px,3.4vw,30px)/1.4 var(--font-round);color:var(--c-ink)}
+.h-in{margin:0 0 6px;font:900 clamp(21px,3.4vw,30px)/1.4 var(--font-round);color:var(--c-ink);text-wrap:balance}
+/* 章の中の節。直前の写真が float していると flow-root が避けて縮むので、下から始める（実測で幅422pxまで潰れていた） */
+.inchap{clear:both}
 .evi{clear:both;font-size:11px;color:var(--c-ink-3);letter-spacing:.04em;margin-top:34px;
  background-image:repeating-linear-gradient(to right,var(--c-line) 0 4px,transparent 4px 8px);
  background-size:100% 2px;background-repeat:no-repeat;background-position:0 0;padding-top:12px;
