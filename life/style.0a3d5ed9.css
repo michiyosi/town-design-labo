@@ -500,10 +500,15 @@ figure.inset{rotate:-.9deg}
 .faces-glead{font-size:var(--fs-200);color:var(--c-ink-2);line-height:1.95;margin:0 0 18px}
 /* カードの左右の余白を打ち消して、写真を端まで広げる。
    60人の集合写真は、大きくしないと自分を探せない */
-.groupgrid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
- margin-inline:calc(var(--faces-pad, 0px) * -1)}
+/* .gallery{width:100%;margin-left:0} が後ろにあり、同じ詳細度だと
+   左の余白だけ打ち消せない（本番で実測: margin-left:0 / margin-right:-72px）。
+   親をつけて詳細度を上げる */
+.wrap.faces .groupgrid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+ width:auto;
+ margin-left:calc(var(--faces-pad, 0px) * -1);
+ margin-right:calc(var(--faces-pad, 0px) * -1)}
 .wrap.faces{--faces-pad:clamp(0px,5vw,72px)}
-@media (max-width:700px){.groupgrid{grid-template-columns:1fr}}
+@media (max-width:700px){.wrap.faces .groupgrid{grid-template-columns:1fr}}
 .facegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:6px;margin:0 0 8px}
 .ft{position:relative;width:100%;aspect-ratio:1;border:0;padding:0;cursor:pointer;background-color:#191919;border-radius:50%;overflow:hidden;background-repeat:no-repeat;background-size:calc(var(--wg)*100%) auto;filter:grayscale(.35);transition:transform .18s var(--ease-ui),filter .18s var(--ease-ui);outline-offset:2px}
 .ft:hover,.ft:focus-visible{transform:scale(1.14);filter:none;z-index:2}
