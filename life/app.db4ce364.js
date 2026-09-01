@@ -222,6 +222,7 @@ document.querySelectorAll('.share a').forEach(function(a){
  var u=encodeURIComponent(location.href),t=encodeURIComponent(document.title);
  if(a.dataset.s==='x')a.href='https://twitter.com/intent/tweet?text='+t+'&url='+u;
  if(a.dataset.s==='line')a.href='https://social-plugins.line.me/lineit/share?url='+u;
+ if(a.dataset.s==='fb')a.href='https://www.facebook.com/sharer/sharer.php?u='+u;
 });
 var btn=document.getElementById('drawbtn'),card=document.getElementById('drawcard');
 if(btn){btn.addEventListener('click',function(){
