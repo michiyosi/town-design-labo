@@ -15,7 +15,8 @@ var L = SCENE.L || 1180;                    // 島の長さ（単位）
 var ZW = 64;                                // 島の半幅（単位）
 var SEA_Y = -4;                             // 海面の高さ
 var CAM0 = 20, CAM1 = L - 60;               // カメラが進む範囲
-var XPAD = SCENE.pad != null ? SCENE.pad : 160; // 道と島を前後に延ばす長さ（単位）。奥で道が途切れて見えないように
+var XPAD = SCENE.pad != null ? SCENE.pad : 160; // 始まりの手前に道と島を延ばす長さ（単位）。最初の画面で道が途切れて見えないように
+var XEND = SCENE.padEnd != null ? SCENE.padEnd : 0; // 終わりの先に延ばす長さ。0 なら、スクロールが終わるところで道も終わる
 
 /* ---------- 固定シードの乱数 ---------- */
 function rng(seed){ var a = seed >>> 0; return function(){ a += 0x6D2B79F5; var t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
@@ -424,7 +425,7 @@ function put(model, x, z, y){
 /* 地面 */
 (function ground(){
  var tx, tz;
- for(tx=-XPAD/8; tx<(L+XPAD)/8; tx++) for(tz=-8; tz<8; tz++){
+ for(tx=-XPAD/8; tx<(L+XEND)/8; tx++) for(tz=-8; tz<8; tz++){
   var x0 = tx*8, z0 = tz*8, c;
   if(tz===-1 || tz===0) c = C.asphalt;
   else if(tz===-2 || tz===1) c = C.gray;
@@ -432,12 +433,12 @@ function put(model, x, z, y){
   if(SCENE.tile){ var cc = SCENE.tile(tx, tz, c); if(cc) c = cc; }
   flat(STATIC, x0, z0, x0+8, z0+8, 0, c);
  }
- for(tx=-XPAD; tx<L+XPAD; tx+=8) flat(STATIC, tx, -0.5, tx+4, 0.5, 0.02, C.line);              // 中央線
- flat(STATIC, -XPAD, -8.5, L+XPAD, -8, 0.02, C.line); flat(STATIC, -XPAD, 8, L+XPAD, 8.5, 0.02, C.line);   // 路側線
- for(tx=-XPAD; tx<L+XPAD; tx+=8){ flat(STATIC, tx, -16, tx+8, -15.5, 0.02, C.sand); flat(STATIC, tx, 15.5, tx+8, 16, 0.02, C.sand); }
+ for(tx=-XPAD; tx<L+XEND; tx+=8) flat(STATIC, tx, -0.5, tx+4, 0.5, 0.02, C.line);              // 中央線
+ flat(STATIC, -XPAD, -8.5, L+XEND, -8, 0.02, C.line); flat(STATIC, -XPAD, 8, L+XEND, 8.5, 0.02, C.line);   // 路側線
+ for(tx=-XPAD; tx<L+XEND; tx+=8){ flat(STATIC, tx, -16, tx+8, -15.5, 0.02, C.sand); flat(STATIC, tx, 15.5, tx+8, 16, 0.02, C.sand); }
  /* 島のふち（土）。見えるのは +x と +z の面 */
  var dirt = hex(C.dirt), sand = hex(C.sand);
- var XE = L + XPAD, XS = -XPAD;
+ var XE = L + XEND, XS = -XPAD;
  quad(STATIC, [XE,SEA_Y,-ZW],[XE,0,-ZW],[XE,0,ZW],[XE,SEA_Y,ZW], dirt, SH_X);
  quad(STATIC, [XS,SEA_Y,ZW],[XE,SEA_Y,ZW],[XE,0,ZW],[XS,0,ZW], dirt, SH_Z);
  quad(STATIC, [XE,-1,-ZW],[XE,0,-ZW],[XE,0,ZW],[XE,-1,ZW], sand, SH_X);
@@ -452,7 +453,7 @@ function put(model, x, z, y){
 
 /* 道ぞいの街灯とベンチ */
 (function street(){
- for(var x=40-XPAD; x<L+XPAD-20; x+=48){ put(M.lamp(), x, -14); put(M.lamp(), x+24, 13); }
+ for(var x=40-XPAD; x<L+XEND-20; x+=48){ put(M.lamp(), x, -14); put(M.lamp(), x+24, 13); }
  for(var i=0;i<12;i++){ put(M.bench(), 70 + i*96, 14); }
 })();
 /* 奥の木々（章の場面とかぶらない帯に置く） */
@@ -463,9 +464,9 @@ function put(model, x, z, y){
   put(k<0.5 ? M.tree(k<0.25 ? C.g3 : C.dg) : (k<0.85 ? M.pine() : M.sakura()), x, z);
  }
  for(var j=0;j<40;j++) put(M.bush(), Math.floor(R()*L), (20 + Math.floor(R()*28)) * (R()<0.5 ? 1 : -1));
- /* 延ばした分の道ぞいにも木を置く（手前と奥） */
- for(var e=0;e<Math.floor(XPAD/6);e++){
-  var ex = (e % 2 ? L + 10 : -10) + (e % 2 ? 1 : -1) * Math.floor(R()*(XPAD-16)), ez = (24 + Math.floor(R()*36)) * (R()<0.5 ? 1 : -1), ek = R();
+ /* 延ばした分の道ぞいにも木を置く */
+ for(var e=0;e<Math.floor((XPAD+XEND)/6);e++){
+  var toEnd = XEND > 0 && (e % 2), ex = toEnd ? L + 10 + Math.floor(R()*(XEND-16)) : -10 - Math.floor(R()*(XPAD-16)), ez = (24 + Math.floor(R()*36)) * (R()<0.5 ? 1 : -1), ek = R();
   put(ek<0.5 ? M.tree(ek<0.25 ? C.g3 : C.dg) : (ek<0.85 ? M.pine() : M.bush()), ex, ez);
  }
 })();
