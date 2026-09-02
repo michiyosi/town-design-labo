@@ -1,0 +1,130 @@
+/* 動く建築の街を、歩く。
+   y-n10.com の作りを踏襲: すべて4pxの倍数、角は丸めない、影はぼかさない */
+@font-face{font-family:"ZMG";font-weight:700 900;font-display:block;src:url(../life/p4-zmg.11e02df7.woff2) format("woff2")}
+@font-face{font-family:"PXM";font-weight:400 500;font-display:block;src:url(../life/p4-pxr.31f57d1b.woff2) format("woff2")}
+@font-face{font-family:"PXM";font-weight:700 900;font-display:block;src:url(../life/p4-pxb.e9d51473.woff2) format("woff2")}
+
+:root{
+ --ink:#1B2430;
+ --paper:#FFFFFF;
+ --sea:#79CDEB;
+ --lime:#28DD34;
+ --yel:#FFD93D;
+ --f-head:"ZMG","PXM","Hiragino Maru Gothic ProN","Yu Gothic",sans-serif;
+ --f-body:"PXM","Hiragino Kaku Gothic ProN","Yu Gothic Medium","Yu Gothic",Meiryo,system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{background:var(--sea);-webkit-text-size-adjust:100%;scrollbar-color:var(--ink) var(--sea)}
+body{margin:0;color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:32px;
+ letter-spacing:0;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-feature-settings:"palt" 1}
+a{color:inherit}
+:where(a,button):focus-visible{outline:4px solid var(--yel);outline-offset:4px}
+
+/* ===== 街 ===== */
+#stage{position:fixed;inset:0;z-index:0;background:var(--sea)}
+#gl{position:absolute;inset:0;width:100%;height:100%;display:block}
+#track{position:relative;height:100vh}
+
+/* ===== 文章（街と一緒に動く） ===== */
+#cards{position:fixed;inset:0;z-index:2;pointer-events:none}
+.card{position:absolute;left:0;top:0;width:448px;pointer-events:auto;will-change:transform}
+.card .in{background:var(--paper);border:4px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:28px 32px 20px;
+ opacity:0;transform:translateY(16px);transition:opacity .4s steps(6),transform .4s steps(6)}
+.card.on .in{opacity:1;transform:none}
+.card h2{font:900 32px/40px var(--f-head);margin:0 0 16px;letter-spacing:.02em}
+.card p{margin:0 0 12px}
+.card p:last-child{margin-bottom:0}
+.no{display:inline-block;font:700 16px/24px var(--f-body);background:var(--ink);color:#fff;padding:0 8px;margin:0 0 12px}
+.big{margin:4px 0 12px!important}
+.big b{display:block;font:900 48px/56px var(--f-head);letter-spacing:.02em}
+.big b i{font:900 24px/32px var(--f-head);font-style:normal;margin-left:4px}
+.big small{display:block;font-size:16px;line-height:24px;color:#4A5568}
+.price{margin:0 0 12px;display:grid;grid-template-columns:1fr auto;gap:0 16px}
+.price dt{margin:0}
+.price dd{margin:0;font-weight:700;text-align:right;white-space:nowrap}
+.note{font-size:12px;line-height:20px;color:#4A5568}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 16px!important}
+.btn{display:inline-block;font:700 16px/24px var(--f-body);text-decoration:none;padding:8px 16px;border:4px solid var(--ink);
+ background:#fff;box-shadow:4px 4px 0 var(--ink)}
+.btn:hover{background:var(--yel)}
+.btn:active{transform:translate(4px,4px);box-shadow:none}
+.btn-go{background:var(--lime)}
+.btn-go:hover{background:var(--lime)}
+
+/* 冒頭の見出しは板に入れない。白い縁取りで街の上に置く */
+.card.title{width:640px}
+.card.title .in{background:none;border:0;box-shadow:none;padding:0}
+.card.title h1{font:900 64px/80px var(--f-head);margin:0 0 20px;letter-spacing:.02em;
+ text-shadow:4px 0 0 #fff,-4px 0 0 #fff,0 4px 0 #fff,0 -4px 0 #fff,4px 4px 0 #fff,-4px -4px 0 #fff,4px -4px 0 #fff,-4px 4px 0 #fff}
+.card.title p{font-weight:700;font-size:16px;line-height:28px;
+ text-shadow:2px 0 0 #fff,-2px 0 0 #fff,0 2px 0 #fff,0 -2px 0 #fff,2px 2px 0 #fff,-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff}
+
+/* ===== 固定UI ===== */
+.hud{position:fixed;z-index:4;font:700 16px/24px var(--f-body)}
+.hud-tl{left:16px;top:16px}
+.hud-tr{right:16px;top:16px}
+.hud-bl{left:16px;bottom:16px;background:var(--ink);color:#fff;padding:4px 12px}
+.hud-br{right:16px;bottom:16px;color:var(--ink);text-shadow:2px 0 0 #fff,-2px 0 0 #fff,0 2px 0 #fff,0 -2px 0 #fff;transition:opacity .3s}
+.hud-br.off{opacity:0}
+.hud-br .arrow{display:inline-block;margin-left:8px;animation:hop .8s steps(2) infinite}
+@keyframes hop{50%{transform:translateY(4px)}}
+.logo{display:inline-block;text-decoration:none;background:var(--ink);color:#fff;padding:4px 12px}
+.logo:hover{background:var(--yel);color:var(--ink)}
+.snd{font:inherit;cursor:pointer;background:#fff;color:var(--ink);border:4px solid var(--ink);padding:0 12px;box-shadow:4px 4px 0 var(--ink)}
+.snd b{display:inline-block;min-width:36px;text-align:center}
+.snd[aria-pressed="true"]{background:var(--lime)}
+.snd[aria-pressed="true"] b::after{content:""}
+.snd:active{transform:translate(4px,4px);box-shadow:none}
+.st-k{opacity:.7;margin-right:8px}
+.st-sep{margin:0 4px}
+.st-name{margin-left:12px;font-weight:400}
+
+/* ===== 入口 ===== */
+#gate{position:fixed;inset:0;z-index:10;background:var(--ink);color:#fff;display:grid;place-items:center;padding:24px}
+#gate.out{display:none}
+.gate-in{text-align:center;max-width:640px}
+.gate-k{font:700 16px/24px var(--f-body);letter-spacing:.1em;margin:0 0 24px;color:var(--lime)}
+.gate-t{font:900 56px/72px var(--f-head);margin:0 0 24px;letter-spacing:.02em}
+.gate-s{font-size:16px;line-height:28px;margin:0 0 40px;opacity:.9}
+.bar{width:256px;height:16px;border:4px solid #fff;margin:0 auto 12px;padding:0;background:var(--ink)}
+.bar i{display:block;height:8px;width:0;background:var(--lime)}
+.gate-load{font:700 16px/24px var(--f-body);margin:0;letter-spacing:.1em}
+.gate-btns{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:4px}
+.gate-btns[hidden]{display:none}
+.enter{font:900 24px/32px var(--f-head);cursor:pointer;background:#fff;color:var(--ink);border:4px solid #fff;padding:12px 40px;
+ box-shadow:8px 8px 0 var(--lime);animation:blink 1s steps(2) infinite;letter-spacing:.06em}
+.enter:hover{animation:none;background:var(--lime);border-color:var(--lime);box-shadow:8px 8px 0 #fff}
+.enter:active{transform:translate(8px,8px);box-shadow:none}
+@keyframes blink{50%{box-shadow:8px 8px 0 #fff}}
+.enter-quiet{font:inherit;cursor:pointer;background:none;color:#fff;border:0;text-decoration:underline;text-underline-offset:4px;opacity:.85;padding:4px 8px}
+.enter-quiet:hover{opacity:1}
+#wipe{position:fixed;inset:0;z-index:9;width:100%;height:100%;pointer-events:none;display:none}
+
+/* ===== WebGLが使えないとき: 板を縦に並べる ===== */
+.nogl #stage,.nogl #gate,.nogl #wipe,.nogl .hud-tr,.nogl .hud-bl,.nogl .hud-br{display:none}
+.nogl #track{display:none}
+.nogl #cards{position:static;pointer-events:auto;max-width:544px;margin:0 auto;padding:96px 16px 64px}
+.nogl .card{position:static;width:auto;margin:0 0 48px}
+.nogl .card .in{opacity:1;transform:none}
+.nogl .card.title .in{padding:0 0 16px}
+
+/* ===== 狭い画面 ===== */
+@media (max-width:640px){
+ .card{width:calc(100vw - 32px)}
+ .card .in{padding:20px 20px 16px;box-shadow:6px 6px 0 var(--ink)}
+ .card h2{font-size:24px;line-height:32px}
+ .card.title{width:calc(100vw - 32px)}
+ .card.title h1{font-size:40px;line-height:52px}
+ .big b{font-size:40px;line-height:48px}
+ .gate-t{font-size:36px;line-height:48px}
+ .hud-bl{top:56px;bottom:auto;left:16px;font-size:12px;line-height:20px}
+ .st-name{display:none}
+ .hud-br{display:none}
+ .price{grid-template-columns:1fr}
+ .price dd{text-align:left;margin-bottom:8px}
+}
+
+@media (prefers-reduced-motion:reduce){
+ .card .in{transition:none}
+ .enter,.hud-br .arrow{animation:none}
+}
