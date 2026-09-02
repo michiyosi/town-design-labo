@@ -533,7 +533,7 @@ var cards = [].slice.call(document.querySelectorAll('#cards .card')).map(functio
  var side = el.dataset.side;
  return {el:el, x:+el.dataset.x, z: el.dataset.z !== undefined ? +el.dataset.z : (side === 'r' ? -16 : (side === 'l' ? 16 : 0)), side:side, name:el.dataset.name || '', on:false, sign:el.classList.contains('sign') || el.classList.contains('photo'), photo:el.classList.contains('photo')};
 });
-var stations = cards.filter(function(c){ return !c.sign; });
+var stations = cards.filter(function(c){ return !c.sign && (c.el.dataset.name !== undefined || c.el.classList.contains('title')); });
 var sttotal = document.getElementById('sttotal'); if(sttotal) sttotal.textContent = (stations.length-1 < 10 ? '0' : '') + (stations.length-1);
 /* 幅の足りない画面では、板・写真・標識を道の順に縦一列に流す（指の動きと1:1）。
    それぞれの「流れの上での位置」fy を、重ならないように一度だけ決める */
@@ -686,20 +686,30 @@ function buildWin(){
 }
 var winMode = 'frame', popEls = [].slice.call(document.querySelectorAll('[data-pop]')), winHtml = null;
 /* 標識など、HTMLをそのまま窓に出す */
-function openPop(i){
+function showHtml(title, html){
  if(!winEl) buildWin();
- var el = popEls[i]; if(!el) return;
- winIdx = i; winMode = 'pop';
+ winMode = 'pop';
  winHtml = winHtml || document.getElementById('win-html');
- winTitle.textContent = el.getAttribute('data-pop-title') || '';
+ winTitle.textContent = title || '';
  winNo.textContent = ''; winNo.hidden = true;
- winFrame.src = 'about:blank'; winFrame.hidden = true; winHtml.hidden = false; winHtml.innerHTML = el.getAttribute('data-pop'); winHtml.scrollTop = 0;
+ winFrame.src = 'about:blank'; winFrame.hidden = true; winHtml.hidden = false; winHtml.innerHTML = html; winHtml.scrollTop = 0;
  winOpenLink.hidden = true;
- winPrev.disabled = i <= 0; winNext.disabled = i >= popEls.length - 1;
- winPrev.textContent = '◀ 前の企画'; winNext.textContent = '次の企画 ▶';
  winEl.hidden = false; document.documentElement.classList.add('win-open');
  document.getElementById('win-x').focus();
 }
+function openPop(i){
+ var el = popEls[i]; if(!el) return;
+ winIdx = i;
+ showHtml(el.getAttribute('data-pop-title') || '', el.getAttribute('data-pop'));
+ winPrev.disabled = i <= 0; winNext.disabled = i >= popEls.length - 1;
+ winPrev.textContent = '◀ 前の企画'; winNext.textContent = '次の企画 ▶';
+}
+/* 場面側から使う口。窓に HTML を出す／板の高さが変わったあとに流れを組み直す */
+window.Road = {
+ openHtml: function(title, html){ winIdx = -1; showHtml(title, html); winPrev.disabled = true; winNext.disabled = true; winPrev.textContent = '◀'; winNext.textContent = '▶'; },
+ closeWin: function(){ closeWin(); },
+ relayout: function(){ layout(); if(cur !== null) draw(snap(cur), 16.7, performance.now()); }
+};
 popEls.forEach(function(el, i){
  el.addEventListener('click', function(){ winFrom = el; openPop(i); });
  el.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); winFrom = el; openPop(i); } });

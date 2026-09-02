@@ -78,15 +78,97 @@ var POSTS = [];   /* 街に立てる支柱の位置 */
    var el = document.createElement('figure');
    el.className = 'card photo' + (ph.g ? ' group' : ''); el.dataset.x = x; el.dataset.z = z; el.dataset.side = 'p'; el.dataset.ch = ch;
    el.innerHTML = '<div class="in"><img data-src="' + ph.src + '" alt=""><figcaption>' + ph.cap + '</figcaption></div>';
-   el.addEventListener('click', function(e){ var b = document.querySelector('a[data-win="index.html?ch=' + (+this.dataset.ch + 1) + '"]'); if(b){ e.preventDefault(); b.click(); } });
+   el.addEventListener('click', function(e){ var b = document.querySelector('a[data-win="story.html?ch=' + (+this.dataset.ch + 1) + '"]'); if(b){ e.preventDefault(); b.click(); } });
    wrap.appendChild(el);
    POSTS.push([x, z]);
   }
  }
 })();
 
+
+/* ===== 顔ウォール・集合写真・おまけ・呼びかけ（/life/ の機能をこの道に移したもの） ===== */
+(function extras(){
+ var wrap = document.getElementById('cards'); if(!wrap) return;
+ function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+ /* 章の板 → 顔ウォールの板の置き場（板の40単位先、反対側） */
+ var FW = {'はじまり':[220,'l'],'第一章':[440,'l'],'第二章':[560,'r'],'第三章':[680,'l'],'第四章':[800,'r'],'第五章':[940,'l'],'結び':[1080,'r']};
+ var cards = {};
+ for(var k in FW){
+  var st = FW[k], el = document.createElement('div');
+  el.className = 'card aux faces'; el.dataset.x = st[0] + 40; el.dataset.side = st[1] === 'l' ? 'r' : 'l'; el.dataset.z = st[1] === 'l' ? -24 : 24; el.dataset.fw = k; el.hidden = true;
+  el.innerHTML = '<div class="in"><span class="kick">この中に、あなたがいるかもしれません</span><b class="fw-n"></b>'
+   + '<p class="lead">顔を押すと、その人が写っている写真が出てきます。この章の期間に撮った写真から、顔を集めました。</p>'
+   + '<div class="facegrid"></div><p class="btns"><button type="button" class="btn" data-group hidden></button></p></div>';
+  wrap.appendChild(el); cards[k] = el;
+ }
+ function asset(q){ return (window.PREVIEW_ASSETS && window.PREVIEW_ASSETS[q]) || q; }   /* プレビュー用に画像を差し替える口 */
+ function gal(ids, title){
+  var h = '<div class="pop-big" hidden><img alt=""></div><div class="pop-gal">';
+  for(var i=0;i<ids.length;i++) h += '<img src="' + asset('wall/t' + ids[i] + '.jpg') + '" data-full="' + asset('wall/g' + ids[i] + '.jpg') + '" alt="" loading="lazy">';
+  h += '</div><p class="pop-src">写真は当時Facebookに公開したもの。押すと大きくなります。</p>';
+  window.Road.openHtml(title, h);
+  var box = document.querySelector('#win-html .pop-gal'), big = document.querySelector('#win-html .pop-big');
+  if(box) box.addEventListener('click', function(e){ var im = e.target.closest('img'); if(!im) return; big.hidden = false; big.querySelector('img').src = im.getAttribute('data-full'); document.getElementById('win-html').scrollTop = 0; });
+ }
+ function fill(W){
+  var chs = W.chapters || [], people = W.people || [], any = false;
+  for(var k in cards){
+   var el = cards[k], ch = null;
+   for(var q=0;q<chs.length;q++){ if(chs[q].k === k){ ch = chs[q]; break; } }
+   if(!ch || !ch.t || !ch.t.length){ el.parentNode.removeChild(el); delete cards[k]; continue; }
+   el.hidden = false; any = true;
+   el.querySelector('.fw-n').textContent = '　' + ch.t.length + '人';
+   var grid = el.querySelector('.facegrid'); grid.style.setProperty('--wg', W.grid || 12);
+   ch.t.forEach(function(pi){
+    var pe = people[pi]; if(!pe) return;
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'ft wt-' + pi;
+    b.setAttribute('aria-label', (pe.y ? pe.y + '　' : '') + pe.n + '枚の写真に写っている人');
+    b.addEventListener('click', function(){
+     var yy = pe.y ? pe.y.split('-') : null, yl = yy ? (yy[0] === yy[1] ? yy[0] : yy[0] + '〜' + yy[1]) + '年' : '';
+     gal(pe.p, 'この人が写っている写真　' + pe.n + '枚' + (yl ? '（' + yl + '）' : ''));
+    });
+    grid.appendChild(b);
+   });
+   var gb = el.querySelector('[data-group]');
+   if(ch.g && ch.g.length){
+    gb.hidden = false; gb.textContent = 'この時期の集合写真　' + ch.g.length + '枚';
+    (function(ids){ gb.addEventListener('click', function(){ gal(ids, 'この時期の集合写真　' + ids.length + '枚。誰が写っているかは書いていません。探してみてください。'); }); })(ch.g);
+   }
+  }
+  if(window.Road) window.Road.relayout();
+ }
+ if(window.WALL_DATA){ setTimeout(function(){ fill(window.WALL_DATA); }, 0); }
+ else { try{ fetch('wall.json', {cache:'no-store'}).then(function(r){ return r.json(); }).then(fill).catch(function(){ for(var k in cards) cards[k].parentNode.removeChild(cards[k]); if(window.Road) window.Road.relayout(); }); }catch(e){} }
+
+ /* おまけ: 13年から1枚引く／きょうと同じ日付 */
+ function fbcard(p, label){
+  return '<div class="pop-fb"><div class="pop-fbh"><b>ヤスムラ ミチヨシ</b><time>' + p[0] + '年' + p[1] + '月' + p[2] + '日</time><span>' + label + '</span></div><p>' + esc(p[3]) + '</p></div>';
+ }
+ var db = document.getElementById('drawbtn'), tb = document.getElementById('tdbtn');
+ if(db) db.addEventListener('click', function(){
+  var RP = window.RP || []; if(!RP.length) return;
+  var p = RP[Math.floor(Math.random()*RP.length)];
+  window.Road.openHtml('13年から無作為に1枚', fbcard(p, '当時の投稿') + '<p class="btns"><button type="button" class="btn" id="draw-again">もう1枚引く</button></p>');
+  var again = document.getElementById('draw-again'); if(again) again.addEventListener('click', function(){ db.click(); });
+ });
+ if(tb) tb.addEventListener('click', function(){
+  var RP = window.RP || [], DC = window.DAYCNT || {}, n = new Date(), m = n.getMonth()+1, d = n.getDate();
+  var key = ('0'+m).slice(-2) + ('0'+d).slice(-2), cnt = DC[key] || '00000000000000', cells = '';
+  for(var i=0;i<14;i++){ var y = 2011+i; if(y===2011 && m<7) continue; if(y===2024 && m>1) continue; var c = +cnt.charAt(i); cells += '<li class="' + (c ? 'on' : '') + '"><b>' + y + '</b>' + (c ? c + '件' : '—') + '</li>'; }
+  var exact = RP.filter(function(q){ return q[1]===m && q[2]===d; }), pick = null, note = '';
+  if(exact.length){ pick = exact[Math.floor(Math.random()*exact.length)]; note = 'きょうと同じ日付に書いたものです。'; }
+  else { var best = null, bd = 1e9; RP.forEach(function(q){ var A = new Date(2001,m-1,d), B = new Date(2001,q[1]-1,q[2]); var diff = Math.abs(A-B)/86400000; diff = Math.min(diff, 365-diff); if(diff<bd){ bd = diff; best = q; } }); pick = best; if(pick) note = m + '月' + d + '日ちょうどの記録は、ここに入れている分にはありませんでした。いちばん近い' + pick[1] + '月' + pick[2] + '日を出します。'; }
+  var h = '<p class="pop-t">きょうは' + m + '月' + d + '日。13年分の' + m + '月' + d + '日は、こうでした。</p><ul class="daystrip">' + cells + '</ul><p class="pop-src">数えているのは1,992件ぜんぶです。</p>';
+  if(pick) h += '<p class="pop-meta">' + esc(note) + '</p>' + fbcard(pick, 'その日の記録');
+  window.Road.openHtml('きょうと同じ日付の僕', h);
+ });
+
+ /* 呼びかけ先。cta.json に投稿URLがあれば、コメント欄への導線に変わる */
+ try{ fetch('cta.json', {cache:'no-store'}).then(function(r){ return r.json(); }).then(function(c){ if(!c || !c.url) return; var a = document.getElementById('ctalink'); if(a) a.href = c.url; var p = document.getElementById('pill'); if(p) p.href = c.url; }).catch(function(){}); }catch(e){}
+})();
+
 window.ROAD_SCENE = {
- L: 1220,
+ L: 1340,
  hero: null,
  /* 空白の章（2013.9〜2015.4）の地面だけ色が抜ける */
  tile: function(tx, tz, c){
@@ -230,8 +312,8 @@ window.ROAD_SCENE = {
   put(M.cake(), 1060, 24);
   put(M.person(C.lime, C.ink, C.brown, 0), 1048, 20); put(M.person(C.pink, C.ink, null, 0), 1052, 20); put(M.person(C.blue, C.ink, null, 0), 1056, 20); put(M.person(C.yellow, C.brown, null, 0), 1044, 22);
   put(M.sakura(), 1090, 30); put(M.sakura(), 1100, 48);
-  put(M.arch(C.yellow), 1140, 0);
-  movers.push(anim([M.goalflag(0), M.goalflag(1)], 1150, 0, -12, 3));
+  put(M.arch(C.yellow), 1290, 0);
+  movers.push(anim([M.goalflag(0), M.goalflag(1)], 1300, 0, -12, 3));
  }
 };
 })();

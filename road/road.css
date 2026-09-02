@@ -53,6 +53,7 @@ a{color:inherit}
 
 /* 冒頭の見出しは板に入れない。白い縁取りで街の上に置く */
 .card.title{width:640px}
+.card.wide{width:640px}
 .card.title .in{background:none;border:0;box-shadow:none;padding:0}
 .card.title h1{font:900 64px/80px var(--f-head);margin:0 0 20px;letter-spacing:.02em;
  text-shadow:4px 0 0 #fff,-4px 0 0 #fff,0 4px 0 #fff,0 -4px 0 #fff,4px 4px 0 #fff,-4px -4px 0 #fff,4px -4px 0 #fff,-4px 4px 0 #fff}
@@ -141,6 +142,36 @@ html.win-open{overflow:hidden}
  .win-foot .btn{padding:8px 12px;font-size:14px}
 }
 
+/* 月別のグラフ */
+.herofig{margin:0}
+.herofig svg{display:block;width:100%;height:auto;background:#0D0D0D;border:4px solid var(--ink)}
+.chart .b{fill:#00BEFF}.chart .b.s{fill:#3AA6CF}.chart .band{fill:#16311F}
+.chart .tk{font-size:22px;fill:#9BA9B3}.chart .an{font-size:26px;fill:#28DD34;font-weight:700}.chart .gl{stroke:rgba(255,255,255,.25)}
+.herofig figcaption{font-size:12px;line-height:20px;color:#4A5568;margin-top:8px}
+/* 顔ウォール（章ごと） */
+.card.faces .lead{font-size:14px;line-height:24px;margin:0 0 12px}
+.facegrid{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin:0 0 12px}
+.ft{display:block;width:100%;aspect-ratio:1;padding:0;border:4px solid var(--ink);background-color:#DDE3EA;background-size:calc(var(--wg,12)*100%) auto;background-repeat:no-repeat;cursor:pointer;image-rendering:auto}
+.ft:hover,.ft[aria-pressed="true"]{outline:4px solid var(--lime);outline-offset:-4px}
+.pop-gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin:0 0 16px}
+.pop-gal img{display:block;width:100%;aspect-ratio:1;object-fit:cover;border:4px solid var(--ink);background:#DDE3EA;cursor:pointer}
+.pop-big{margin:0 0 16px}
+.daystrip{list-style:none;margin:0 0 12px;padding:0;display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:12px;line-height:20px;text-align:center}
+.daystrip li{border:4px solid #DDE3EA;padding:4px 0;color:#4A5568}
+.daystrip li.on{border-color:var(--ink);background:var(--yel);color:var(--ink)}
+.daystrip b{display:block;font:900 14px/20px var(--f-head)}
+.pop-big img{display:block;width:100%;height:auto;border:4px solid var(--ink);background:#DDE3EA}
+/* 一覧の内訳・シェア */
+.evsum{list-style:none;margin:0 0 12px;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:0 16px;font-size:12px;line-height:24px}
+.evsum b{display:inline-block;min-width:32px;font:900 16px/24px var(--f-head);color:var(--ink)}
+.share span{font-weight:700;line-height:40px}
+.card .btns .btn{margin:0}
+/* 固定の呼びかけ */
+.hud-pill{right:16px;bottom:16px;background:var(--lime);color:var(--ink);text-decoration:none;padding:8px 16px;border:4px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.hud-pill:active{transform:translate(4px,4px);box-shadow:none}
+.hud-br{bottom:72px}
+.hud .alt{display:inline-block;margin-left:8px;font-size:12px;text-decoration:underline;text-underline-offset:4px;color:var(--ink);text-shadow:2px 0 0 #fff,-2px 0 0 #fff,0 2px 0 #fff,0 -2px 0 #fff}
+
 /* ===== 固定UI ===== */
 .hud{position:fixed;z-index:4;font:700 16px/24px var(--f-body)}
 .hud-tl{left:16px;top:16px}
@@ -197,8 +228,10 @@ html.win-open{overflow:hidden}
  .card.sign .in{padding:8px 12px;box-shadow:4px 4px 0 var(--ink)}
  .card:not(.sign) .in{padding:20px 20px 16px;box-shadow:6px 6px 0 var(--ink)}
  .card h2{font-size:24px;line-height:32px}
- .card.title{width:calc(100vw - 32px)}
+ .card.title,.card.wide{width:calc(100vw - 32px)}
  .card.title h1{font-size:40px;line-height:52px}
+ .facegrid{grid-template-columns:repeat(5,1fr)}
+ .hud-pill{right:12px;bottom:12px;font-size:14px;padding:6px 12px}
  .big b{font-size:40px;line-height:48px}
  .gate-t{font-size:36px;line-height:48px}
  .hud-bl{top:56px;bottom:auto;left:16px;font-size:12px;line-height:20px}
