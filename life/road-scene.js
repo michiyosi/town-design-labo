@@ -44,6 +44,45 @@ function yearX(y){
  }
 })();
 
+var PHOTOS = [{"ch": 0, "src": "img/001-c45656f9.jpg", "cap": "一年ぶりの動物園。久しぶりのキリンに、子供たちがびびっていた"}, {"ch": 0, "src": "img/005-2d00680a.jpg", "cap": "宮島の水族館。この日の投稿を最後に、記録が20か月止まる"}, {"ch": 0, "src": "img/007-421b837c.jpg", "cap": "宮島町。この日はプラレールからの宮島だった"}, {"ch": 1, "src": "img/038-7c30a223.jpg", "cap": "家族と。"}, {"ch": 2, "src": "img/040-a32daad8.jpg", "cap": "アルパークのすぐ近く、WOODPROさんの横。使われていない施設の一角が、市場になりました。"}, {"ch": 2, "src": "img/044-5a91ad4e.jpg", "cap": "出店者と、来てくれた人。"}, {"ch": 2, "src": "img/050-2c1a5da6.jpg", "cap": "まず一枚のチラシから。作り手が集まる日を、自分で決めた。"}, {"ch": 2, "src": "wall/g0108-a1457003.jpg", "cap": "この時期の集合写真", "g": 1}, {"ch": 3, "src": "img/116-c1b8771d.jpg", "cap": "設営スタートの日。会場の岩倉キャンプ場は、ほんとうに何もない原っぱだった。"}, {"ch": 3, "src": "img/120-50eb62da.jpg", "cap": "WOODPROの足場板でランウェイを通し、キャンドルを並べた。"}, {"ch": 3, "src": "img/122-fc9c50ea.jpg", "cap": "2016年8月27日、本番の夜。原っぱが、この姿になった。"}, {"ch": 3, "src": "wall/g0112-f63a72f3.jpg", "cap": "この時期の集合写真", "g": 1}, {"ch": 4, "src": "img/295-49d8cde9.jpg", "cap": "材はここから来る。山を下りた木が、次の役目を待っている。"}, {"ch": 4, "src": "img/301-f1c6fd9c.jpg", "cap": "積まれていた板が、床になる。使い道は、こちらで決める。"}, {"ch": 4, "src": "img/303-c1de47ad.jpg", "cap": "一軒ずつ直すより早い方法。空き家の直し方を、人に渡す。"}, {"ch": 4, "src": "wall/g0124-720ad9ed.jpg", "cap": "この時期の集合写真", "g": 1}, {"ch": 5, "src": "img/400-7178f3f0.jpg", "cap": "水を提げて、階段を上る。給水所へ行けない人の家まで、一軒ずつ。"}, {"ch": 5, "src": "img/402-e723ab37.jpg", "cap": "軽トラックに生活用水。毎日1000リットル近くを配った。"}, {"ch": 5, "src": "img/408-30f7e545.jpg", "cap": "配ったのは支援ではなく、ふつうに旨い一皿だった"}, {"ch": 5, "src": "wall/g0136-670493b9.jpg", "cap": "この時期の集合写真", "g": 1}, {"ch": 6, "src": "img/607-46c62a0c.jpg", "cap": "制作の現場で見た一台。キッチンカーの概念を覆す作品ばかりだった"}, {"ch": 6, "src": "img/613-660810e7.jpg", "cap": "屋根からバスケットゴールが飛び出す一台。こういうものが並んでいた"}, {"ch": 6, "src": "img/605-48b1fd54.jpg", "cap": "屋根の下で一台ずつ組み上げる。ここが製造の現場。"}, {"ch": 6, "src": "wall/g0148-cc5a096b.jpg", "cap": "この時期の集合写真", "g": 1}, {"ch": 7, "src": "img/749-5c329c1a.jpg", "cap": "僕です。まちの困りごとに、つくることで向き合っています。"}];
+/* 章の停留所（埋め込みの章番号 → 道の位置と板の側） */
+var STN = [[220,'l'],[330,'r'],[440,'l'],[560,'r'],[680,'l'],[800,'r'],[940,'l'],[1080,'r']];
+/* 写真の看板の置き場。板の周りの画面上の3か所（左上・真上・右）を決めて、道の座標に逆算する。
+   画面 dx = (x - z)*8, dy = (x + z)*4 なので x = (dx/8 + dy/4)/2, z = (dy/4 - dx/8)/2 */
+var SCR = [[-400,-380],[40,-520],[720,-120]];
+var POSTS = [];   /* 街に立てる支柱の位置 */
+(function posters(){
+ var wrap = document.getElementById('cards'); if(!wrap) return;
+ var byCh = {}, i;
+ for(i=0;i<PHOTOS.length;i++){ (byCh[PHOTOS[i].ch] = byCh[PHOTOS[i].ch] || []).push(PHOTOS[i]); }
+ for(var ch in byCh){
+  var list = byCh[ch], st = STN[+ch], g = null, ms = [];
+  for(i=0;i<list.length;i++){ if(list[i].g) g = list[i]; else ms.push(list[i]); }
+  var pick = [ms[0], ms[1], g || ms[2]];
+  for(i=0;i<3;i++){
+   var ph = pick[i]; if(!ph) continue;
+   var dx = SCR[i][0] * (st[1] === 'l' ? -1 : 1), dy = SCR[i][1] + 190;
+   var x = st[0] + Math.round((dx/8 + dy/4)/2), z = (st[1] === 'r' ? -16 : 16) + Math.round((dy/4 - dx/8)/2);
+   z = Math.max(-60, Math.min(60, z));
+   var el = document.createElement('figure');
+   el.className = 'card photo' + (ph.g ? ' group' : ''); el.dataset.x = x; el.dataset.z = z; el.dataset.side = 'p'; el.dataset.ch = ch;
+   el.innerHTML = '<div class="in"><img data-src="' + ph.src + '" alt=""><figcaption>' + ph.cap + '</figcaption></div>';
+   el.addEventListener('click', function(e){ var b = document.querySelector('a[data-win="index.html?ch=' + (+this.dataset.ch + 1) + '"]'); if(b){ e.preventDefault(); b.click(); } });
+   wrap.appendChild(el);
+   POSTS.push([x, z]);
+  }
+  /* 狭い画面では看板が板の裏に隠れるので、板の中に同じ写真の帯を入れる（CSSで幅により出し分け） */
+  var btn = wrap.querySelector('a[data-win="index.html?ch=' + (+ch + 1) + '"]'), card = btn && btn.closest('.card');
+  if(card){
+   var strip = document.createElement('div'); strip.className = 'strip';
+   for(i=0;i<3;i++){ if(pick[i]) strip.innerHTML += '<img data-src="' + pick[i].src + '" alt="' + pick[i].cap.replace(/"/g,'&quot;') + '">'; }
+   var after = card.querySelector('.stats') || card.querySelector('.period') || card.querySelector('h2');
+   after.parentNode.insertBefore(strip, after.nextSibling);
+   strip.addEventListener('click', function(){ btn.click(); });
+  }
+ }
+})();
+
 window.ROAD_SCENE = {
  L: 1220,
  hero: null,
@@ -119,6 +158,15 @@ window.ROAD_SCENE = {
    for(var r=0;r<g.length;r++) for(var c=0;c<g[r].length;c++) if(g[r][c]==='#') m.box(c*2-5, (g.length-1-r)*2, -1, 2, 2, 2, col);
    return m;
   };
+  /* 写真の看板の支柱。板そのものは HTML で、この上に乗る */
+  M.billboard = function(){
+   var m = new Model();
+   m.box(-13,0,0,2,10,1,C.brown).box(11,0,0,2,10,1,C.brown);
+   m.box(-13,4,0,26,1,1,C.brown);
+   m.box(-14,0,-1,4,1,3,C.dgray).box(10,0,-1,4,1,3,C.dgray);
+   return m;
+  };
+  for(var pi=0; pi<POSTS.length; pi++) put(M.billboard(), POSTS[pi][0], POSTS[pi][1]);
 
   /* 出発点。海に鳥居、START */
   put(M.arch(C.lime), 60, 0);

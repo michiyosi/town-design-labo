@@ -531,7 +531,7 @@ var W = 0, H = 0, dpr = 1;
 var track = document.getElementById('track');
 var cards = [].slice.call(document.querySelectorAll('#cards .card')).map(function(el){
  var side = el.dataset.side;
- return {el:el, x:+el.dataset.x, z: el.dataset.z !== undefined ? +el.dataset.z : (side === 'r' ? -16 : (side === 'l' ? 16 : 0)), side:side, name:el.dataset.name || '', on:false, sign:el.classList.contains('sign')};
+ return {el:el, x:+el.dataset.x, z: el.dataset.z !== undefined ? +el.dataset.z : (side === 'r' ? -16 : (side === 'l' ? 16 : 0)), side:side, name:el.dataset.name || '', on:false, sign:el.classList.contains('sign') || el.classList.contains('photo'), photo:el.classList.contains('photo')};
 });
 var stations = cards.filter(function(c){ return !c.sign; });
 var sttotal = document.getElementById('sttotal'); if(sttotal) sttotal.textContent = (stations.length-1 < 10 ? '0' : '') + (stations.length-1);
@@ -556,11 +556,16 @@ function placeCards(cx, cy){
   var c = cards[i], el = c.el, w = el.offsetWidth, h = el.offsetHeight;
   var pt = project(c.x, 0, c.z, cx, cy), px, py = pt[1] - h/2;
   if(c.side === 'r') px = pt[0]; else if(c.side === 'l') px = pt[0] - w; else px = pt[0] - w/2;
+  if(c.photo){ py = pt[1] - 76 - h; }                 /* 支柱（10段=80px）の上に乗せる */
   if(narrow) px = c.sign ? (W - w - 16) : Math.max(16, Math.min(W - w - 16, px));
   px = Math.round(px/4)*4; py = Math.round(py/4)*4;
   el.style.transform = 'translate3d(' + px + 'px,' + py + 'px,0)';
   var vis = py < H - 80 && py + h > 80 && px < W - 40 && px + w > 40;
-  if(vis && !c.on){ c.on = true; el.classList.add('on'); }
+  if(vis && !c.on){
+   c.on = true; el.classList.add('on');
+   var im = el.querySelectorAll('img[data-src]');
+   for(var q=0;q<im.length;q++){ im[q].src = im[q].getAttribute('data-src'); im[q].removeAttribute('data-src'); }
+  }
  }
 }
 var stno = document.getElementById('stno'), stname = document.getElementById('stname'), hint = document.getElementById('hint');
