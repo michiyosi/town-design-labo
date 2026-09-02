@@ -116,6 +116,7 @@ a{color:inherit}
  .card.photo.group img{height:auto}
  .card.photo figcaption{max-height:none}
  .card.sign{width:min(448px,100vw - 32px)}
+ .card.sign.year{width:160px}
 }
 
 /* ===== 窓（立ち止まって読む） ===== */
@@ -245,3 +246,21 @@ html.win-open{overflow:hidden}
  .card .in{transition:none}
  .enter,.hud-br .arrow{animation:none}
 }
+
+/* 年の道標と、年ごとの企画一覧の窓 */
+.card.sign.year{width:112px}
+.card.sign.year .in{background:#FFF3B0;padding:6px 8px 8px}
+.card.sign.year .in::before{display:none}
+.card.sign.year:hover .in{background:var(--yel)}
+.card.sign.year .yr{display:block;font-size:20px;line-height:24px;margin:0}
+.card.sign.year .nm{font-size:12px;line-height:16px;margin:0}
+.card.sign.year .meta{font-size:10px;line-height:12px}
+.pop-cat{display:inline-block;font:900 14px/20px var(--f-head);margin:16px 0 8px;padding:2px 8px;background:var(--ink);color:#fff}
+.evl{list-style:none;margin:0 0 8px;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(224px,1fr));gap:8px}
+.evl li{display:grid;grid-template-columns:72px 1fr;gap:8px;align-items:start;padding:6px;border:2px solid var(--ink);background:#fff;cursor:pointer;font-size:12px;line-height:16px}
+.evl li:hover,.evl li:focus{background:var(--yel);outline:none}
+.evl img,.evl .evi-no{display:block;width:72px;height:54px;object-fit:cover;background:#DDE3EA}
+.evl b{display:block;font-size:12px;line-height:16px}
+.evl small{display:block;color:#4A5568;font-size:11px;line-height:14px;margin-top:2px}
+.btns.yrs{gap:4px}
+.btn.sm{padding:2px 8px;font-size:12px;line-height:20px;border-width:2px}

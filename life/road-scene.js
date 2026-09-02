@@ -1,6 +1,6 @@
 /* 場面: 13年の道（/life/ の内容を歩く）。../road/engine.js より先に読む
    ・章の板は road.html にある。ここでは街と、道ぞいの標識（年表）を組む
-   ・年 → 道の位置 の対応表で、企画364件から拾った32件を道ぞいに立てる */
+   ・年 → 道の位置 の対応表で、企画364件から拾った32件を道ぞいに立てる。年ごとの標識からは、その年の全件が写真つきで見られる */
 (function(){
 'use strict';
 
@@ -23,24 +23,17 @@ function yearX(y){
   return (best && best.side === 'l') ? 'r' : 'l';
  }
  function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
- var ev = EVENTS.slice().sort(function(a,b){ return parseInt(a.y,10) - parseInt(b.y,10); });
- var last = -1e9, i, e;
- for(i=0;i<ev.length;i++){
-  e = ev[i]; var year = parseInt(e.y, 10);
-  var x = Math.max(Math.round(yearX(year) - 8), last + 22); last = x;
-  var side = oppositeOf(x), zz = 40 + 12 * (i % 2);
-  var el = document.createElement('div');
-  el.className = 'card sign' + (e.im && e.im.length ? ' has-photo' : ''); el.dataset.x = x; el.dataset.side = side; el.dataset.z = side === 'r' ? -zz : zz;
-  var h = '<div class="in">';
-  if(e.im && e.im.length) h += '<img data-src="' + e.im[0] + '" alt="">';
-  h += '<span class="yr">' + esc(e.y) + '</span><b class="nm">' + esc(e.n) + '</b>';
-  if(e.d) h += '<small class="meta">' + esc(e.d) + (e.p ? '<br>' + esc(e.p) : '') + '</small>';
-  h += '</div>';
-  el.innerHTML = h;
-  /* 窓に出す中身 */
+ function asset(q){ return (window.PREVIEW_ASSETS && window.PREVIEW_ASSETS[q]) || q; }
+ /* 企画一覧PDFの全364件（data-ev.js）。年ごとにまとめて、年の標識から一覧の窓を開く */
+ var ALL = window.EVALL || [], CATS = window.EVCATS || [], byY = {};
+ function imgs(e){ return (e.im || []).map(function(v){ return typeof v === 'number' ? 'ev/' + v + '.jpg' : v; }); }
+ for(var a=0;a<ALL.length;a++){ (byY[ALL[a].y] = byY[ALL[a].y] || []).push(a); }
+ /* 窓に出す中身（標識と、年の一覧から開いた企画で共通） */
+ function popOf(e, extra){
   var pop = '<p class="pop-meta">' + esc(e.y) + (e.d ? '　' + esc(e.d) : '') + (e.p ? '<br>' + esc(e.p) : '') + '</p>';
   if(e.t) pop += '<p class="pop-t">' + esc(e.t) + '</p>';
-  if(e.im && e.im.length){ pop += '<div class="pop-ph">'; for(var q=0;q<e.im.length;q++) pop += '<img src="' + e.im[q] + '" alt="">'; pop += '</div>'; }
+  var im = imgs(e);
+  if(im.length){ pop += '<div class="pop-ph">'; for(var q=0;q<im.length;q++) pop += '<img src="' + asset(im[q]) + '" alt="">'; pop += '</div>'; }
   else pop += '<p class="pop-none">この企画の写真は、投稿に残っていません。</p>';
   if(e.po && e.po.length){
    for(var r=0;r<e.po.length;r++){
@@ -49,10 +42,78 @@ function yearX(y){
    }
   }
   if(e.ev) pop += '<p class="pop-ev">根拠の投稿：' + esc(e.ev) + '</p>';
+  pop += extra || '';
   pop += '<p class="pop-src">出典：企画一覧PDF（13年の記録 詳細レポート）。写真は当時Facebookに公開したもの。</p>';
-  el.setAttribute('data-pop', pop); el.setAttribute('data-pop-title', e.n); el.setAttribute('role','button'); el.tabIndex = 0;
+  return pop;
+ }
+ function yearBtn(y){ var n = (byY[y] || []).length; return n ? '<p class="btns"><button type="button" class="btn" data-year="' + y + '">' + y + '年にやったこと ' + n + '件を見る</button></p>' : ''; }
+ var ev = EVENTS.slice().sort(function(a,b){ return parseInt(a.y,10) - parseInt(b.y,10); });
+ var last = -1e9, i, e, placed = [];
+ for(i=0;i<ev.length;i++){
+  e = ev[i]; var year = parseInt(e.y, 10);
+  var x = Math.max(Math.round(yearX(year) - 8), last + 22); last = x; placed.push(x);
+  var side = oppositeOf(x), zz = 40 + 12 * (i % 2);
+  var el = document.createElement('div');
+  el.className = 'card sign' + (e.im && e.im.length ? ' has-photo' : ''); el.dataset.x = x; el.dataset.side = side; el.dataset.z = side === 'r' ? -zz : zz;
+  var h = '<div class="in">';
+  if(e.im && e.im.length) h += '<img data-src="' + asset(e.im[0]) + '" alt="">';
+  h += '<span class="yr">' + esc(e.y) + '</span><b class="nm">' + esc(e.n) + '</b>';
+  if(e.d) h += '<small class="meta">' + esc(e.d) + (e.p ? '<br>' + esc(e.p) : '') + '</small>';
+  h += '</div>';
+  el.innerHTML = h;
+  el.setAttribute('data-pop', popOf(e, yearBtn(year))); el.setAttribute('data-pop-title', e.n); el.setAttribute('role','button'); el.tabIndex = 0;
   wrap.appendChild(el);
  }
+ /* 年の道標。標識の列より外側（z=±76）に小さく立てる。engine の置き方（画面 x=(x-z)*8, y=(x+z)*4、板は側に寄せて縦は中央）で
+    画面上の枠を出し、標識と重ならない位置まで年の位置から前後にずらす */
+ function rectOf(x, z, side, w, h){ var sx = (x - z) * 8, sy = (x + z) * 4; return [side === 'r' ? sx : side === 'l' ? sx - w : sx - w/2, sy - h/2, w, h]; }
+ function hit(a, b, m){ return a[0] < b[0] + b[2] + m && b[0] < a[0] + a[2] + m && a[1] < b[1] + b[3] + m && b[1] < a[1] + a[3] + m; }
+ var rects = [].slice.call(wrap.querySelectorAll('.card.sign')).map(function(el){ return rectOf(+el.dataset.x, +el.dataset.z, el.dataset.side, el.offsetWidth, el.offsetHeight); });
+ var years = Object.keys(byY).map(Number).sort();
+ for(i=0;i<years.length;i++){
+  var yy = years[i], x0 = Math.round(yearX(yy)) - 8, me = document.createElement('div');
+  me.className = 'card sign year';
+  me.innerHTML = '<div class="in"><span class="yr">' + yy + '</span><b class="nm">' + byY[yy].length + '件 ▶</b><small class="meta">この年にやったこと</small></div>';
+  me.setAttribute('data-year', yy); me.setAttribute('role','button'); me.tabIndex = 0; me.setAttribute('aria-label', yy + '年にやったこと ' + byY[yy].length + '件');
+  wrap.appendChild(me);
+  var mw = me.offsetWidth || 112, mh = me.offsetHeight || 86, xy = x0, sd = oppositeOf(x0), best = null;
+  for(var d=0; d<=60 && best === null; d+=2){
+   var cand = d ? [x0 + d, x0 - d] : [x0];
+   for(var c=0;c<cand.length;c++){
+    var cs = oppositeOf(cand[c]), r = rectOf(cand[c], cs === 'r' ? -76 : 76, cs, mw, mh), clash = false;
+    for(var k=0;k<rects.length;k++){ if(hit(r, rects[k], 8)){ clash = true; break; } }
+    if(!clash){ best = r; xy = cand[c]; sd = cs; break; }
+   }
+  }
+  me.dataset.x = xy; me.dataset.side = sd; me.dataset.z = sd === 'r' ? -76 : 76;
+  rects.push(best || rectOf(xy, sd === 'r' ? -76 : 76, sd, mw, mh));
+ }
+ /* 年の一覧の窓。分類ごとに並べ、押すとその企画の写真と説明に切り替わる */
+ function openYear(y){
+  var list = byY[y] || [], h = '<p class="pop-meta">' + y + '年　' + list.length + '件</p>';
+  for(var c=1;c<=8;c++){
+   var ks = list.filter(function(k){ return ALL[k].c === c; }); if(!ks.length) continue;
+   h += '<h4 class="pop-cat">' + esc(CATS[c-1] || '') + '　' + ks.length + '件</h4><ul class="evl">';
+   ks.forEach(function(k){
+    var e = ALL[k], im = imgs(e);
+    h += '<li data-ei="' + k + '" role="button" tabindex="0">' + (im.length ? '<img src="' + asset(im[0]) + '" loading="lazy" alt="">' : '<span class="evi-no"></span>') + '<span><b>' + esc(e.n) + '</b><small>' + esc(e.d) + (e.p ? '<br>' + esc(e.p) : '') + '</small></span></li>';
+   });
+   h += '</ul>';
+  }
+  h += '<p class="pop-src">出典：企画一覧PDF（13年の記録 詳細レポート）。押すと、その企画の写真と説明が出ます。</p>';
+  window.Road.openHtml(y + '年にやったこと', h);
+ }
+ function openEvent(k){
+  var e = ALL[k]; if(!e) return;
+  window.Road.openHtml(e.n, '<p class="btns"><button type="button" class="btn" data-year="' + e.y + '">◀ ' + e.y + '年の一覧に戻る</button></p>' + popOf(e, ''));
+ }
+ function act(t){
+  var b = t.closest('[data-year]'); if(b){ openYear(+b.getAttribute('data-year')); return true; }
+  var li = t.closest('[data-ei]'); if(li){ openEvent(+li.getAttribute('data-ei')); return true; }
+  return false;
+ }
+ document.addEventListener('click', function(ev){ if(act(ev.target)) ev.preventDefault(); });
+ document.addEventListener('keydown', function(ev){ if(ev.key === 'Enter' && (ev.target.matches('[data-year],[data-ei]'))){ if(act(ev.target)) ev.preventDefault(); } });
 })();
 
 var PHOTOS = [{"ch": 0, "src": "img/001-c45656f9.jpg", "cap": "一年ぶりの動物園。久しぶりのキリンに、子供たちがびびっていた"}, {"ch": 0, "src": "img/005-2d00680a.jpg", "cap": "宮島の水族館。この日の投稿を最後に、記録が20か月止まる"}, {"ch": 0, "src": "img/007-421b837c.jpg", "cap": "宮島町。この日はプラレールからの宮島だった"}, {"ch": 1, "src": "img/038-7c30a223.jpg", "cap": "家族と。"}, {"ch": 2, "src": "img/040-a32daad8.jpg", "cap": "アルパークのすぐ近く、WOODPROさんの横。使われていない施設の一角が、市場になりました。"}, {"ch": 2, "src": "img/044-5a91ad4e.jpg", "cap": "出店者と、来てくれた人。"}, {"ch": 2, "src": "img/050-2c1a5da6.jpg", "cap": "まず一枚のチラシから。作り手が集まる日を、自分で決めた。"}, {"ch": 2, "src": "wall/g0108-a1457003.jpg", "cap": "この時期の集合写真", "g": 1}, {"ch": 3, "src": "img/116-c1b8771d.jpg", "cap": "設営スタートの日。会場の岩倉キャンプ場は、ほんとうに何もない原っぱだった。"}, {"ch": 3, "src": "img/120-50eb62da.jpg", "cap": "WOODPROの足場板でランウェイを通し、キャンドルを並べた。"}, {"ch": 3, "src": "img/122-fc9c50ea.jpg", "cap": "2016年8月27日、本番の夜。原っぱが、この姿になった。"}, {"ch": 3, "src": "wall/g0112-f63a72f3.jpg", "cap": "この時期の集合写真", "g": 1}, {"ch": 4, "src": "img/295-49d8cde9.jpg", "cap": "材はここから来る。山を下りた木が、次の役目を待っている。"}, {"ch": 4, "src": "img/301-f1c6fd9c.jpg", "cap": "積まれていた板が、床になる。使い道は、こちらで決める。"}, {"ch": 4, "src": "img/303-c1de47ad.jpg", "cap": "一軒ずつ直すより早い方法。空き家の直し方を、人に渡す。"}, {"ch": 4, "src": "wall/g0124-720ad9ed.jpg", "cap": "この時期の集合写真", "g": 1}, {"ch": 5, "src": "img/400-7178f3f0.jpg", "cap": "水を提げて、階段を上る。給水所へ行けない人の家まで、一軒ずつ。"}, {"ch": 5, "src": "img/402-e723ab37.jpg", "cap": "軽トラックに生活用水。毎日1000リットル近くを配った。"}, {"ch": 5, "src": "img/408-30f7e545.jpg", "cap": "配ったのは支援ではなく、ふつうに旨い一皿だった"}, {"ch": 5, "src": "wall/g0136-670493b9.jpg", "cap": "この時期の集合写真", "g": 1}, {"ch": 6, "src": "img/607-46c62a0c.jpg", "cap": "制作の現場で見た一台。キッチンカーの概念を覆す作品ばかりだった"}, {"ch": 6, "src": "img/613-660810e7.jpg", "cap": "屋根からバスケットゴールが飛び出す一台。こういうものが並んでいた"}, {"ch": 6, "src": "img/605-48b1fd54.jpg", "cap": "屋根の下で一台ずつ組み上げる。ここが製造の現場。"}, {"ch": 6, "src": "wall/g0148-cc5a096b.jpg", "cap": "この時期の集合写真", "g": 1}, {"ch": 7, "src": "img/749-5c329c1a.jpg", "cap": "僕です。まちの困りごとに、つくることで向き合っています。"}];
