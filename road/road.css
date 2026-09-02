@@ -14,7 +14,7 @@
  --f-body:"PXM","Hiragino Kaku Gothic ProN","Yu Gothic Medium","Yu Gothic",Meiryo,system-ui,sans-serif;
 }
 *{box-sizing:border-box}
-html{background:var(--sea);-webkit-text-size-adjust:100%;scrollbar-color:var(--ink) var(--sea)}
+html{background:var(--sea);color-scheme:light;-webkit-text-size-adjust:100%;scrollbar-color:var(--ink) var(--sea)}
 body{margin:0;color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:32px;
  letter-spacing:0;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-feature-settings:"palt" 1}
 a{color:inherit}
@@ -45,7 +45,7 @@ a{color:inherit}
 .note{font-size:12px;line-height:20px;color:#4A5568}
 .btns{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 16px!important}
 .btn{display:inline-block;font:700 16px/24px var(--f-body);text-decoration:none;padding:8px 16px;border:4px solid var(--ink);
- background:#fff;box-shadow:4px 4px 0 var(--ink)}
+ background:#fff;color:var(--ink);box-shadow:4px 4px 0 var(--ink);cursor:pointer}
 .btn:hover{background:var(--yel)}
 .btn:active{transform:translate(4px,4px);box-shadow:none}
 .btn-go{background:var(--lime)}
@@ -89,6 +89,12 @@ a{color:inherit}
 .pop-ph{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:0 0 16px}
 .pop-ph img{display:block;width:100%;height:auto;border:4px solid var(--ink);background:#DDE3EA}
 .pop-ev,.pop-src{font-size:12px;line-height:20px;color:#4A5568;margin:0 0 4px}
+.pop-none{font-size:14px;line-height:24px;color:#4A5568;background:#F1F4F7;border:4px solid #DDE3EA;padding:8px 12px;margin:0 0 16px}
+.pop-fb{border:4px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:12px 16px;margin:0 0 20px;background:#fff}
+.pop-fbh{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 12px;font-size:12px;line-height:20px;color:#4A5568;margin:0 0 4px}
+.pop-fbh b{font-size:14px;color:var(--ink)}
+.pop-fbh span{margin-left:auto;background:var(--ink);color:#fff;padding:0 8px}
+.pop-fb p{margin:0;font-size:14px;line-height:26px}
 @media (max-width:640px){ .win-html{padding:16px} }
 
 /* 写真の看板。実物の写真を、支柱の上のピクセルの額に入れる */
@@ -119,7 +125,7 @@ a{color:inherit}
 .win-head .no{margin:0}
 .win-t{font:900 20px/28px var(--f-head);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .win-ext{font:700 12px/20px var(--f-body);text-decoration:underline;text-underline-offset:4px;white-space:nowrap}
-.win-x{font:900 24px/32px var(--f-head);width:40px;height:40px;cursor:pointer;background:#fff;border:4px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:0}
+.win-x{font:900 24px/32px var(--f-head);width:40px;height:40px;cursor:pointer;background:#fff;color:var(--ink);border:4px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:0}
 .win-x:active{transform:translate(4px,4px);box-shadow:none}
 .win-body{background:#0D0D0D;min-height:0;display:grid;grid-template-rows:1fr}
 .win-body iframe{display:block;width:100%;height:100%;border:0;background:#0D0D0D;grid-area:1/1}
