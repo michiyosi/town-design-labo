@@ -670,7 +670,7 @@ function buildWin(){
   + '<div class="win-head"><span class="no" id="win-no"></span><b class="win-t" id="win-t"></b>'
   + '<a class="win-ext" id="win-ext" target="_blank" rel="noopener">新しいタブで開く ↗</a>'
   + '<button type="button" class="win-x" id="win-x" aria-label="閉じる">×</button></div>'
-  + '<div class="win-body"><iframe id="win-frame" title="本文" loading="eager"></iframe></div>'
+  + '<div class="win-body"><iframe id="win-frame" title="本文" loading="eager"></iframe><div class="win-html" id="win-html" hidden></div></div>'
   + '<div class="win-foot"><button type="button" class="btn" id="win-prev">◀ 前の章</button>'
   + '<button type="button" class="btn" id="win-close">道にもどる</button>'
   + '<button type="button" class="btn btn-go" id="win-next">次の章 ▶</button></div></div>';
@@ -679,15 +679,37 @@ function buildWin(){
  winOpenLink = document.getElementById('win-ext'); winPrev = document.getElementById('win-prev'); winNext = document.getElementById('win-next');
  document.getElementById('win-x').addEventListener('click', closeWin);
  document.getElementById('win-close').addEventListener('click', closeWin);
- winPrev.addEventListener('click', function(){ if(winIdx > 0) openWin(winIdx - 1); });
- winNext.addEventListener('click', function(){ if(winIdx < winBtns.length - 1) openWin(winIdx + 1); });
+ winPrev.addEventListener('click', function(){ if(winMode === 'pop'){ if(winIdx > 0) openPop(winIdx - 1); } else if(winIdx > 0) openWin(winIdx - 1); });
+ winNext.addEventListener('click', function(){ if(winMode === 'pop'){ if(winIdx < popEls.length - 1) openPop(winIdx + 1); } else if(winIdx < winBtns.length - 1) openWin(winIdx + 1); });
  winEl.addEventListener('click', function(e){ if(e.target === winEl) closeWin(); });
  addEventListener('keydown', function(e){ if(e.key === 'Escape' && winEl && !winEl.hidden) closeWin(); });
 }
+var winMode = 'frame', popEls = [].slice.call(document.querySelectorAll('[data-pop]')), winHtml = null;
+/* 標識など、HTMLをそのまま窓に出す */
+function openPop(i){
+ if(!winEl) buildWin();
+ var el = popEls[i]; if(!el) return;
+ winIdx = i; winMode = 'pop';
+ winHtml = winHtml || document.getElementById('win-html');
+ winTitle.textContent = el.getAttribute('data-pop-title') || '';
+ winNo.textContent = ''; winNo.hidden = true;
+ winFrame.src = 'about:blank'; winFrame.hidden = true; winHtml.hidden = false; winHtml.innerHTML = el.getAttribute('data-pop'); winHtml.scrollTop = 0;
+ winOpenLink.hidden = true;
+ winPrev.disabled = i <= 0; winNext.disabled = i >= popEls.length - 1;
+ winPrev.textContent = '◀ 前の企画'; winNext.textContent = '次の企画 ▶';
+ winEl.hidden = false; document.documentElement.classList.add('win-open');
+ document.getElementById('win-x').focus();
+}
+popEls.forEach(function(el, i){
+ el.addEventListener('click', function(){ winFrom = el; openPop(i); });
+ el.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); winFrom = el; openPop(i); } });
+});
 function openWin(i){
  if(!winEl) buildWin();
  var b = winBtns[i]; if(!b) return;
- winIdx = i;
+ winIdx = i; winMode = 'frame';
+ winHtml = winHtml || document.getElementById('win-html'); winHtml.hidden = true; winFrame.hidden = false; winOpenLink.hidden = false;
+ winPrev.textContent = '◀ 前の章'; winNext.textContent = '次の章 ▶';
  var card = b.closest('.card'), h = card ? card.querySelector('h1,h2') : null, no = card ? card.querySelector('.no') : null;
  winTitle.textContent = b.dataset.winTitle || (h ? h.textContent : '');
  winNo.textContent = no ? no.textContent : ''; winNo.hidden = !no;
