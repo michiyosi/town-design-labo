@@ -97,7 +97,7 @@ var POSTS = [];   /* 街に立てる支柱の位置 */
   var st = FW[k], el = document.createElement('div');
   el.className = 'card aux faces'; el.dataset.x = st[0] + 40; el.dataset.side = st[1] === 'l' ? 'r' : 'l'; el.dataset.z = st[1] === 'l' ? -24 : 24; el.dataset.fw = k; el.hidden = true;
   el.innerHTML = '<div class="in"><span class="kick">この中に、あなたがいるかもしれません</span><b class="fw-n"></b>'
-   + '<p class="lead">顔を押すと、その人が写っている写真が出てきます。この章の期間に撮った写真から、顔を集めました。</p>'
+   + '<p class="lead">この13年を一緒に過ごしてくれた人たちです。顔を押すと、その人が写っている写真が出てきます。この章の期間に撮った写真から、顔を集めました。</p>'
    + '<div class="facegrid"></div><p class="btns"><button type="button" class="btn" data-group hidden></button></p></div>';
   wrap.appendChild(el); cards[k] = el;
  }
