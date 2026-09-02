@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>13年を、歩く。｜ヤスムラ ミチヨシ</title>
+<meta name="description" content="投稿1,992件・写真8,633枚。13年分のFacebookを全部AIに読ませてつくった記録を、ドット絵の街として歩くページ。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="13年を、歩く。｜ヤスムラ ミチヨシ">
+<meta property="og:description" content="投稿1,992件・写真8,633枚。13年分のFacebookを全部AIに読ませてつくった記録を、ドット絵の街として歩くページ。">
+<meta property="og:url" content="https://towndesignlabo.jp/life/road.html">
+<meta property="og:image" content="https://towndesignlabo.jp/life/img/ogp.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="tabicon-32.png" type="image/png"><link rel="apple-touch-icon" href="tabicon-180.png">
+<link rel="preload" href="p4-zmg.11e02df7.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="p4-pxb.e9d51473.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="p4-pxr.31f57d1b.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../road/road.css">
+</head>
+<body>
+
+<!-- 入口（タイトル画面） -->
+<div id="gate" role="dialog" aria-label="入口">
+ <div class="gate-in">
+  <p class="gate-k">ヤスムラ ミチヨシ</p>
+  <h1 class="gate-t">Facebookに、<br>13年分の自分がいました。</h1>
+  <p class="gate-s">投稿1,992件・写真8,633枚。13年分の記録を全部AIに読ませてつくったページを、<br>ドット絵の街にしました。スクロールで13年を歩きます。</p>
+  <div class="bar" aria-hidden="true"><i id="barfill"></i></div>
+  <p class="gate-load" id="gateload">LOADING <span id="pct">0</span>%</p>
+  <div class="gate-btns" id="gatebtns" hidden>
+   <button type="button" class="enter" id="enter">ENTER ▶</button>
+   <button type="button" class="enter-quiet" id="enterq">音を出さずに入る</button>
+  </div>
+ </div>
+</div>
+<canvas id="wipe" aria-hidden="true"></canvas>
+
+<!-- 街（固定） -->
+<div id="stage" aria-hidden="true"><canvas id="gl"></canvas></div>
+
+<!-- 画面に固定するUI -->
+<header class="hud hud-tl">
+ <a class="logo" href="./">13年の記録</a>
+</header>
+<div class="hud hud-tr">
+ <button type="button" class="snd" id="snd" aria-pressed="false">SOUND <b>OFF</b></button>
+</div>
+<div class="hud hud-bl" id="stagehud">
+ <span class="st-k">STAGE</span> <b id="stno">00</b><span class="st-sep">/</span><span id="sttotal">09</span>
+ <span class="st-name" id="stname">はじまり</span>
+</div>
+<div class="hud hud-br" id="hint">SCROLL<span class="arrow">▼</span></div>
+
+<div id="track"></div>
+
+<!-- 停留所。道に沿って置かれ、街と一緒に動く。「くわしく読む」で /life/ の章がそのまま開く -->
+<div id="cards">
+
+ <div class="card title" data-x="20" data-side="c" data-z="-32">
+  <div class="in">
+   <p><span class="stk"><b>1,992</b>投稿</span><span class="stk"><b>8,633</b>枚</span></p>
+   <h1>Facebookに、<br>13年分の自分が<br>いました。</h1>
+   <p>肩書きは、ヤスムラミチヨシ。安村通芳｜広島県廿日市市で、13年。<br>スクロールすると、道を進みます。</p>
+   <p class="btns"><a class="btn" href="index.html?ch=kv" data-win="index.html?ch=kv" data-win-title="月別の投稿数と、前書き">グラフを見る</a></p>
+  </div>
+ </div>
+
+ <article class="card" data-x="120" data-side="r" data-name="このページについて">
+  <div class="in">
+   <span class="no">00</span><span class="kick">このページについて</span>
+   <h2>AIに、全部読ませました</h2>
+   <ul class="stats"><li><b>13</b>年分</li><li><b>1,992</b>投稿</li><li><b>8,633</b>写真</li></ul>
+   <p>42歳になる前に、13年分のFacebookを全部ダウンロードしました。読み切れる量ではなかったので、数えるところと探すところはAIにまかせました。確かめたかったのはひとつ。記憶の日付と、記録の日付が合っているか。結論は、だいぶズレていました。覚えていない年も、まるごとありました。</p>
+   <p class="btns"><a class="btn btn-go" href="index.html?ch=0" data-win="index.html?ch=0">くわしく読む</a></p>
+  </div>
+ </article>
+
+ <article class="card" data-x="220" data-side="l" data-name="ふつうの父親でした">
+  <div class="in">
+   <span class="no">01</span><span class="kick">はじまり</span>
+   <h2>ふつうの父親でした</h2>
+   <p class="period">2011年7月〜2013年8月</p>
+   <ul class="stats"><li><b>11</b>投稿</li><li><b>17</b>写真</li><li><b>11</b>書いた日</li></ul>
+   <p>仕事の話は一件も出てきません。休みの日に子どもを動物園と水族館へ連れて行く父親がいるだけです。広島に帰ってきた日は45字。書いた817字の半分以上は、ミシュランの店で大将から仕事の話を聞いた1投稿でした。</p>
+   <p class="btns"><a class="btn btn-go" href="index.html?ch=1" data-win="index.html?ch=1">くわしく読む</a></p>
+  </div>
+ </article>
+
+ <article class="card" data-x="330" data-side="r" data-name="空白">
+  <div class="in">
+   <span class="no">02</span><span class="kick">序章</span>
+   <h2>空白</h2>
+   <p class="period">2013年9月〜2015年4月</p>
+   <ul class="stats"><li><b>2</b>投稿</li><li><b>0</b>写真</li><li><b>20</b>か月</li></ul>
+   <p>13年でいちばん長い沈黙が、いちばん人生が動いた時期と重なっていました。会社を辞め、知り合いが1人もいない廿日市で、古着のオンラインショップ「Kazari」を始めていました。書かなかったのではなく、書く余力がありませんでした。</p>
+   <p class="btns"><a class="btn btn-go" href="index.html?ch=2" data-win="index.html?ch=2">くわしく読む</a></p>
+  </div>
+ </article>
+
+ <article class="card" data-x="440" data-side="l" data-name="再起動">
+  <div class="in">
+   <span class="no">03</span><span class="kick">第一章</span>
+   <h2>再起動</h2>
+   <p class="period">2015年</p>
+   <ul class="stats"><li><b>65</b>投稿</li><li><b>148</b>写真</li><li><b>55</b>書いた日</li></ul>
+   <p>WOODPROの中本社長に声をかけられて、ONE DAY MARKETを企画。8月に初めて自分で企画したポートマルシェ。9月、廿日市が消滅可能性都市だと知って「自分にできることで貢献しよう」と書きました。ここが出発点です。「人生が変わった」と書いた月と、投稿が増えはじめた月が一致していました。</p>
+   <p class="btns"><a class="btn btn-go" href="index.html?ch=3" data-win="index.html?ch=3">くわしく読む</a></p>
+  </div>
+ </article>
+
+ <article class="card" data-x="560" data-side="r" data-name="場をつくる">
+  <div class="in">
+   <span class="no">04</span><span class="kick">第二章</span>
+   <h2>場をつくる</h2>
+   <p class="period">2016〜2017年</p>
+   <ul class="stats"><li><b>494</b>投稿</li><li><b>1,592</b>写真</li><li><b>316</b>書いた日</li></ul>
+   <p>広島初のグランピングを1年がかりで成立させ、そして根付きませんでした。2017年、空き倉庫を一般参加のワークショップで改装してレインボー倉庫広島に。単年344件、13年で最多の年です。「使われていない場所＋人の輪＝新しい市場」。仕事のかたちは、ここで出来上がりました。</p>
+   <p class="btns"><a class="btn btn-go" href="index.html?ch=4" data-win="index.html?ch=4">くわしく読む</a></p>
+  </div>
+ </article>
+
+ <article class="card" data-x="680" data-side="l" data-name="捨てられるものを、もう一度">
+  <div class="in">
+   <span class="no">05</span><span class="kick">第三章</span>
+   <h2>捨てられるものを、もう一度</h2>
+   <p class="period">2017〜2018年</p>
+   <ul class="stats"><li><b>594</b>投稿</li><li><b>2,321</b>写真</li><li><b>392</b>書いた日</li></ul>
+   <p>服、廃材、空き家。対象が変わっただけで、やっていることは同じでした。空家をおもしろく利用する会、廃材の森、空き家の学校。2018年5月17日、株式会社TOWN DESIGN LABOを設立。現場に追われて、公表は3か月遅れました。空き家は負債じゃなくて資産。課題の根っこは、持ち主の家庭のもっと手前にありました。</p>
+   <p class="btns"><a class="btn btn-go" href="index.html?ch=5" data-win="index.html?ch=5">くわしく読む</a></p>
+  </div>
+ </article>
+
+ <article class="card" data-x="800" data-side="r" data-name="制度の外にいる人へ">
+  <div class="in">
+   <span class="no">06</span><span class="kick">第四章</span>
+   <h2>制度の外にいる人へ</h2>
+   <p class="period">2018〜2020年</p>
+   <ul class="stats"><li><b>777</b>投稿</li><li><b>3,602</b>写真</li><li><b>553</b>書いた日</li></ul>
+   <p>西日本豪雨。給水所へ行けない人の家を一軒ずつ回って、井戸の水を1日1,000リットル、約1か月。コロナでは、休業要請の外にいたキッチンカーを住宅地へ走らせて、初日130客。収入がほぼゼロの月でした。2019年9月、財務省から講師の依頼。9人の講師で民間は僕だけでした。</p>
+   <p class="btns"><a class="btn btn-go" href="index.html?ch=6" data-win="index.html?ch=6">くわしく読む</a></p>
+  </div>
+ </article>
+
+ <article class="card" data-x="940" data-side="l" data-name="つくる側へ">
+  <div class="in">
+   <span class="no">07</span><span class="kick">第五章</span>
+   <h2>つくる側へ</h2>
+   <p class="period">2021〜2024年</p>
+   <ul class="stats"><li><b>614</b>投稿</li><li><b>3,274</b>写真</li><li><b>484</b>書いた日</li></ul>
+   <p>事業再構築補助金で、オール広島のキッチンカー初号機（2022年8月）。1日最安4,500円で貸して、設備投資ができない人でも飲食を始められるように。手伝った41事業者の4分の3が採択。2023年、レインボー倉庫にカフェを開き、10月に倉庫の運営を引き継ぎました。次は、トレーラーハウスです。</p>
+   <p class="btns"><a class="btn btn-go" href="index.html?ch=7" data-win="index.html?ch=7">くわしく読む</a></p>
+  </div>
+ </article>
+
+ <article class="card" data-x="1080" data-side="r" data-name="いま">
+  <div class="in">
+   <span class="no">08</span><span class="kick">結び</span>
+   <h2>いま</h2>
+   <p class="period">2024年〜</p>
+   <p>2024年1月2日「今、僕ができることをやります」。9年前の投稿と同じでした。服、廃材、空き家、補償から漏れたキッチンカー、制度が届かない人。13年、ずっと同じことをしています。9月6日で42歳。お願いはひとつだけ。コメントに、いまどこで何をしているか、一行だけ。</p>
+   <p class="btns">
+    <a class="btn btn-go" href="index.html?ch=8" data-win="index.html?ch=8">くわしく読む</a>
+    <a class="btn" href="https://m.me/100002571327549" target="_blank" rel="noopener">コメントする</a>
+    <a class="btn" href="./">もとのページ</a>
+   </p>
+  </div>
+ </article>
+
+</div>
+
+<script src="road-scene.js" defer></script>
+<script src="../road/engine.js" defer></script>
+</body>
+</html>

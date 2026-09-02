@@ -1,5 +1,5 @@
-/* 動く建築の街を、歩く。
-   y-n10.com の作りを踏襲した等角ボクセルの街。
+/* 道の街のエンジン（y-n10.com の作りを踏襲した等角ボクセルの街）
+   場面（何をどこに置くか・章の板）は window.ROAD_SCENE で先に渡す。
    ・画面は4pxグリッド。立方体は 8px を最小単位に 16・32・64px を使う
    ・WebGL の直交投影（横2:縦1）。頂点は必ず整数ピクセルに乗る
    ・スクロールは乗っ取らない。見え方だけを遅らせて慣性をつける
@@ -10,7 +10,8 @@
 var RM = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : {matches:false};
 var U = 8;                                  // 立方体1個 = 8px
 var UPX = Math.sqrt(8*8 + 4*4);             // 道を1単位進むと画面が動く距離 = 8.944px
-var L = 1180;                               // 島の長さ（単位）
+var SCENE = window.ROAD_SCENE || {};
+var L = SCENE.L || 1180;                    // 島の長さ（単位）
 var ZW = 64;                                // 島の半幅（単位）
 var SEA_Y = -4;                             // 海面の高さ
 var CAM0 = 20, CAM1 = L - 60;               // カメラが進む範囲
@@ -427,6 +428,7 @@ function put(model, x, z, y){
   if(tz===-1 || tz===0) c = C.asphalt;
   else if(tz===-2 || tz===1) c = C.gray;
   else c = ((tx+tz)&1) ? C.g1 : C.g2;
+  if(SCENE.tile){ var cc = SCENE.tile(tx, tz, c); if(cc) c = cc; }
   flat(STATIC, x0, z0, x0+8, z0+8, 0, c);
  }
  for(tx=0; tx<L; tx+=8) flat(STATIC, tx, -0.5, tx+4, 0.5, 0.02, C.line);              // 中央線
@@ -460,46 +462,6 @@ function put(model, x, z, y){
  }
  for(var j=0;j<40;j++) put(M.bush(), Math.floor(R()*L), (20 + Math.floor(R()*28)) * (R()<0.5 ? 1 : -1));
 })();
-
-/* 章ごとの場面。板と反対側に置く（偶数章は左、奇数章は右） */
-/* 00 出発点。海に鳥居、START のアーチ */
-put(M.arch(C.lime), 60, 0);
-put(M.torii(), 4, -80, SEA_Y);
-put(M.sakura(), 40, 24); put(M.sakura(), 4, 30); put(M.tree(C.g3), 92, -30);
-put(M.house(C.cream, C.roof, 10, 8, 6), 8, 46); put(M.house(C.wht, C.slate, 12, 8, 6), 44, 44);
-/* 01 はじまり。廿日市の町並み */
-put(M.house(C.cream, C.roof, 10, 8, 6), 110, 30); put(M.shop(C.wht, C.red, 12, 8, 6), 132, 46);
-put(M.house(C.wht, C.slate, 10, 8, 7), 158, 30); put(M.vending(C.red), 122, 20); put(M.postbox(), 148, 20);
-put(M.person(C.blue, C.ink, null, 0), 140, 26); put(M.person(C.yellow, C.brown, null, 0), 112, 22);
-/* 02 動く建築。トレーラーハウスとキッチンカー */
-put(M.trailer(), 262, -42); put(M.kei(C.wood, C.red), 236, -24); put(M.tree(C.g3), 296, -30);
-put(M.person(C.lime, C.ink, C.brown, 0), 250, -22); put(M.flower(C.yellow), 260, -22);
-/* 03 法規。検問所と標識 */
-put(M.gate(), 390, 0);
-put(M.sign(C.blue), 372, 18); put(M.sign(C.red), 408, -14); put(M.cone(), 380, 6); put(M.cone(), 400, -6);
-put(M.house(C.wht, C.slate, 8, 6, 5), 372, 30); put(M.person(C.wht, C.navy, C.navy, 0), 396, 22);
-/* 04 つくってきたもの。3台とマルシェ */
-put(M.caravan(), 496, -34); put(M.foodtruck(C.orange), 536, -46); put(M.kei(C.brown, C.lime), 560, -24);
-put(M.stall(C.red), 510, -58); put(M.stall(C.blue), 528, -60);
-put(M.person(C.red, C.ink, null, 0), 500, -22); put(M.person(C.cyan, C.brown, null, 0), 520, -20); put(M.person(C.pink, C.ink, null, 0), 546, -20);
-/* 05 KAZARI KITCHEN。貸し出す軽トラと並ぶ人 */
-put(M.kei(C.wood, C.red), 640, 26); put(M.kei(C.cream, C.blue), 668, 42);
-put(M.person(C.yellow, C.ink, null, 0), 650, 20); put(M.person(C.purple, C.brown, null, 0), 656, 20); put(M.person(C.wht, C.navy, null, 0), 662, 20);
-movers.push(anim([M.flagpole(0, C.yellow), M.flagpole(1, C.yellow)], 632, 0, 20, 3));
-movers.push(anim([M.flagpole(0, C.red), M.flagpole(1, C.red)], 680, 0, 22, 3));
-/* 06 つくる仲間。倉庫と運搬 */
-put(M.warehouse(), 782, -46); put(M.carrier(), 812, -22); put(M.crate(), 756, -24); put(M.crate(), 762, -28); put(M.crate(), 760, -20);
-put(M.truck(C.wht), 750, -40); put(M.person(C.blue, C.ink, C.yellow, 0), 770, -20);
-/* 07 参考価格。キャンプ場 */
-put(M.dome(), 898, 30); put(M.dome(), 924, 48); put(M.sauna(), 946, 28); put(M.tent(C.orange), 892, 50); put(M.tent(C.blue), 908, 60);
-put(M.pine(), 880, 34); put(M.pine(), 936, 54); put(M.bench(), 912, 40);
-movers.push(anim([M.campfire(0), M.campfire(1)], 916, 0, 40, 6));
-movers.push(smoke(949, 10, 27));
-/* 08 ここから。TDL の文字、ゴール */
-put(M.letter('T', C.lime), 1024, -40); put(M.letter('D', C.cyan), 1040, -40); put(M.letter('L', C.orange), 1056, -40);
-put(M.postbox(), 1030, -20); put(M.bench(), 1050, -20); put(M.tree(C.g3), 1076, -32);
-put(M.arch(C.yellow), 1112, 0);
-movers.push(anim([M.goalflag(0), M.goalflag(1)], 1122, 0, -12, 3));
 
 /* 海の上。船と白波 */
 (function seaside(){
@@ -550,22 +512,29 @@ function smoke(x, y, z){
  return {smoke:true, fr:fr, x:x, y:y, z:z, puffs:puffs, vx:0};
 }
 
+/* 場面。板の位置と同じファイルで、何をどこに置くかを決める */
+var api = {M:M, C:C, R:R, Model:Model, put:put, anim:anim, drift:drift, walker:walker, smoke:smoke, movers:movers, L:L, ZW:ZW, SEA_Y:SEA_Y};
+if(SCENE.build) SCENE.build(api);
+
 var staticMesh = upload(STATIC); STATIC = null;
 var chunkList = [];
 for(var ck in chunks){ var ch = chunks[ck]; ch.mesh = upload(ch.arr); ch.arr = null; chunkList.push(ch); }
 function easeOut(t){ return 1 - Math.pow(1 - t, 3); }
 
 /* 主人公。画面の中心に立ち、進むときだけ歩く */
-var heroR = frames([M.person(C.lime, C.ink, C.brown, 0), M.person(C.lime, C.ink, C.brown, 1), M.person(C.lime, C.ink, C.brown, 2)]);
-var heroL = frames([M.person(C.lime, C.ink, C.brown, 0).mirror(), M.person(C.lime, C.ink, C.brown, 1).mirror(), M.person(C.lime, C.ink, C.brown, 2).mirror()]);
+var HR = SCENE.hero || {shirt:C.lime, pants:C.ink, hat:C.brown};
+var heroR = frames([M.person(HR.shirt, HR.pants, HR.hat, 0), M.person(HR.shirt, HR.pants, HR.hat, 1), M.person(HR.shirt, HR.pants, HR.hat, 2)]);
+var heroL = frames([M.person(HR.shirt, HR.pants, HR.hat, 0).mirror(), M.person(HR.shirt, HR.pants, HR.hat, 1).mirror(), M.person(HR.shirt, HR.pants, HR.hat, 2).mirror()]);
 
 /* ---------- カメラとスクロール ---------- */
 var W = 0, H = 0, dpr = 1;
 var track = document.getElementById('track');
 var cards = [].slice.call(document.querySelectorAll('#cards .card')).map(function(el){
  var side = el.dataset.side;
- return {el:el, x:+el.dataset.x, z: el.dataset.z !== undefined ? +el.dataset.z : (side === 'r' ? -16 : (side === 'l' ? 16 : 0)), side:side, name:el.dataset.name || '', on:false};
+ return {el:el, x:+el.dataset.x, z: el.dataset.z !== undefined ? +el.dataset.z : (side === 'r' ? -16 : (side === 'l' ? 16 : 0)), side:side, name:el.dataset.name || '', on:false, sign:el.classList.contains('sign')};
 });
+var stations = cards.filter(function(c){ return !c.sign; });
+var sttotal = document.getElementById('sttotal'); if(sttotal) sttotal.textContent = (stations.length-1 < 10 ? '0' : '') + (stations.length-1);
 function layout(){
  W = innerWidth; H = innerHeight; dpr = Math.min(devicePixelRatio || 1, 2);
  cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
@@ -587,7 +556,7 @@ function placeCards(cx, cy){
   var c = cards[i], el = c.el, w = el.offsetWidth, h = el.offsetHeight;
   var pt = project(c.x, 0, c.z, cx, cy), px, py = pt[1] - h/2;
   if(c.side === 'r') px = pt[0]; else if(c.side === 'l') px = pt[0] - w; else px = pt[0] - w/2;
-  if(narrow) px = Math.max(16, Math.min(W - w - 16, px));
+  if(narrow) px = c.sign ? (W - w - 16) : Math.max(16, Math.min(W - w - 16, px));
   px = Math.round(px/4)*4; py = Math.round(py/4)*4;
   el.style.transform = 'translate3d(' + px + 'px,' + py + 'px,0)';
   var vis = py < H - 80 && py + h > 80 && px < W - 40 && px + w > 40;
@@ -598,7 +567,7 @@ var stno = document.getElementById('stno'), stname = document.getElementById('st
 var lastStage = -1;
 function hud(cam){
  var n = 0, name = 'はじまり';
- for(var i=1;i<cards.length;i++){ if(cam + 20 >= cards[i].x){ n = i; name = cards[i].name; } }
+ for(var i=1;i<stations.length;i++){ if(cam + 20 >= stations[i].x){ n = i; name = stations[i].name; } }
  if(n !== lastStage){ lastStage = n; stno.textContent = (n<10?'0':'') + n; stname.textContent = n ? name : 'はじまり'; }
  hint.classList.toggle('off', cam > CAM0 + 6);
 }
@@ -667,6 +636,51 @@ function frame(ts){
 layout();
 addEventListener('resize', function(){ layout(); if(cur !== null) draw(snap(cur), 16.7, performance.now()); }, {passive:true});
 requestAnimationFrame(frame);
+
+
+/* ---------- 窓（立ち止まって読む） ----------
+   板の「くわしく読む」で開く。中身は data-win の URL を埋め込む */
+var winEl = null, winFrame = null, winTitle = null, winNo = null, winOpenLink = null, winPrev = null, winNext = null, winIdx = -1, winFrom = null;
+var winBtns = [].slice.call(document.querySelectorAll('[data-win]'));
+function buildWin(){
+ winEl = document.createElement('div'); winEl.id = 'win'; winEl.setAttribute('role','dialog'); winEl.setAttribute('aria-modal','true'); winEl.hidden = true;
+ winEl.innerHTML = '<div class="win-in">'
+  + '<div class="win-head"><span class="no" id="win-no"></span><b class="win-t" id="win-t"></b>'
+  + '<a class="win-ext" id="win-ext" target="_blank" rel="noopener">新しいタブで開く ↗</a>'
+  + '<button type="button" class="win-x" id="win-x" aria-label="閉じる">×</button></div>'
+  + '<div class="win-body"><iframe id="win-frame" title="本文" loading="eager"></iframe></div>'
+  + '<div class="win-foot"><button type="button" class="btn" id="win-prev">◀ 前の章</button>'
+  + '<button type="button" class="btn" id="win-close">道にもどる</button>'
+  + '<button type="button" class="btn btn-go" id="win-next">次の章 ▶</button></div></div>';
+ document.body.appendChild(winEl);
+ winFrame = document.getElementById('win-frame'); winTitle = document.getElementById('win-t'); winNo = document.getElementById('win-no');
+ winOpenLink = document.getElementById('win-ext'); winPrev = document.getElementById('win-prev'); winNext = document.getElementById('win-next');
+ document.getElementById('win-x').addEventListener('click', closeWin);
+ document.getElementById('win-close').addEventListener('click', closeWin);
+ winPrev.addEventListener('click', function(){ if(winIdx > 0) openWin(winIdx - 1); });
+ winNext.addEventListener('click', function(){ if(winIdx < winBtns.length - 1) openWin(winIdx + 1); });
+ winEl.addEventListener('click', function(e){ if(e.target === winEl) closeWin(); });
+ addEventListener('keydown', function(e){ if(e.key === 'Escape' && winEl && !winEl.hidden) closeWin(); });
+}
+function openWin(i){
+ if(!winEl) buildWin();
+ var b = winBtns[i]; if(!b) return;
+ winIdx = i;
+ var card = b.closest('.card'), h = card ? card.querySelector('h1,h2') : null, no = card ? card.querySelector('.no') : null;
+ winTitle.textContent = b.dataset.winTitle || (h ? h.textContent : '');
+ winNo.textContent = no ? no.textContent : ''; winNo.hidden = !no;
+ winFrame.src = b.dataset.win; winOpenLink.href = b.dataset.win;
+ winPrev.disabled = i <= 0; winNext.disabled = i >= winBtns.length - 1;
+ winEl.hidden = false; document.documentElement.classList.add('win-open');
+ document.getElementById('win-x').focus();
+}
+function closeWin(){
+ if(!winEl || winEl.hidden) return;
+ winEl.hidden = true; document.documentElement.classList.remove('win-open');
+ winFrame.src = 'about:blank';
+ if(winFrom && winFrom.focus) winFrom.focus();
+}
+winBtns.forEach(function(b, i){ b.addEventListener('click', function(e){ e.preventDefault(); winFrom = b; openWin(i); }); });
 
 /* ---------- 音（チップチューン。ファイルなし） ---------- */
 var Chip = (function(){
