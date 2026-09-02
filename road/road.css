@@ -85,17 +85,15 @@ a{color:inherit}
 .card.photo.group img{height:140px}
 .card.photo:hover .in{background:var(--yel)}
 @media (max-width:640px){
- .card.photo{width:176px}
- .card.photo img{width:160px;height:120px}
- .card.photo figcaption{max-height:18px}
 }
 
-/* 板の中の写真の帯。幅の足りない画面（板を横に留めるとき）だけ出す */
-.strip{display:none;gap:8px;margin:0 0 12px;cursor:pointer}
-.strip img{flex:1 1 0;min-width:0;height:88px;object-fit:cover;border:4px solid var(--ink);background:#DDE3EA;display:block}
+/* 幅の足りない画面では、写真も板と同じ幅で流れに並ぶ */
 @media (max-width:1099px){
- .strip{display:flex}
- .card.photo{display:none}
+ .card.photo{width:min(448px,100vw - 32px)}
+ .card.photo img{width:100%;height:auto;aspect-ratio:4/3}
+ .card.photo.group img{height:auto}
+ .card.photo figcaption{max-height:none}
+ .card.sign{width:min(448px,100vw - 32px)}
 }
 
 /* ===== 窓（立ち止まって読む） ===== */

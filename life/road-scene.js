@@ -71,15 +71,6 @@ var POSTS = [];   /* 街に立てる支柱の位置 */
    wrap.appendChild(el);
    POSTS.push([x, z]);
   }
-  /* 狭い画面では看板が板の裏に隠れるので、板の中に同じ写真の帯を入れる（CSSで幅により出し分け） */
-  var btn = wrap.querySelector('a[data-win="index.html?ch=' + (+ch + 1) + '"]'), card = btn && btn.closest('.card');
-  if(card){
-   var strip = document.createElement('div'); strip.className = 'strip';
-   for(i=0;i<3;i++){ if(pick[i]) strip.innerHTML += '<img data-src="' + pick[i].src + '" alt="' + pick[i].cap.replace(/"/g,'&quot;') + '">'; }
-   var after = card.querySelector('.stats') || card.querySelector('.period') || card.querySelector('h2');
-   after.parentNode.insertBefore(strip, after.nextSibling);
-   strip.addEventListener('click', function(){ btn.click(); });
-  }
  }
 })();
 
