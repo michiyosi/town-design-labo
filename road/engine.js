@@ -10,6 +10,7 @@
 var RM = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : {matches:false};
 var U = 8;                                  // 立方体1個 = 8px
 var UPX = Math.sqrt(8*8 + 4*4);             // 道を1単位進むと画面が動く距離 = 8.944px
+var SPX = UPX;                              // スクロール1pxあたりの進み（縦一列の画面では板の高さに合わせて緩める）
 var SCENE = window.ROAD_SCENE || {};
 var L = SCENE.L || 1180;                    // 島の長さ（単位）
 var ZW = 64;                                // 島の半幅（単位）
@@ -546,10 +547,10 @@ var sttotal = document.getElementById('sttotal'); if(sttotal) sttotal.textConten
 /* 幅の足りない画面では、板・写真・標識を道の順に縦一列に流す（指の動きと1:1）。
    それぞれの「流れの上での位置」fy を、重ならないように一度だけ決める */
 var flow = false;
-function buildFlow(){
+function buildFlow(spx){
  var list = cards.slice().sort(function(a,b){ return a.x - b.x; }), bottom = -1e9, last = 0;
  for(var i=0;i<list.length;i++){
-  var c = list[i], h = c.el.offsetHeight, sPx = (c.x - CAM0) * UPX;
+  var c = list[i], h = c.el.offsetHeight, sPx = (c.x - CAM0) * spx;
   c.fy = Math.max(sPx - h/2, bottom + 24); bottom = c.fy + h; last = bottom;
  }
  return last;
@@ -559,13 +560,21 @@ function layout(){
  cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
  gl.viewport(0, 0, cv.width, cv.height);
  gl.uniform2f(uHalf, W/2, H/2);
- var th = (CAM1 - CAM0) * UPX + H;
- flow = W < 1100;
- if(flow){ th = Math.max(th, buildFlow() + H/2 + 32); }
+ flow = W < 1100; SPX = UPX;
+ if(flow){
+  /* 板を縦に積むと道の長さより長くなる。その分スクロールの進みを緩めて、
+     スクロールの終わりと道の終わり（主人公の歩き）がぴったり揃うようにする */
+  for(var it=0; it<6; it++){
+   var need = buildFlow(SPX) + H/2 + 32, want = Math.max(UPX, (need - H) / (CAM1 - CAM0));
+   if(Math.abs(want - SPX) < 0.01) break;
+   SPX = want;
+  }
+ }
+ var th = (CAM1 - CAM0) * SPX + H;
  track.style.height = Math.round(th) + 'px';
 }
 var EASE = 0.12, cur = null, lastT = 0, prevCur = 0, heroT = 0, heroDir = 1;
-function targetCam(){ return Math.min(CAM1, CAM0 + (scrollY || 0) / UPX); }
+function targetCam(){ return Math.min(CAM1, CAM0 + (scrollY || 0) / SPX); }
 function snap(v){ return Math.round(v*4)/4; }   /* 0.25単位 → 画面では横2px・縦1px */
 
 function project(x, y, z, cx, cy){ return [(x - z)*8 + cx, (x + z)*4 - y*8 + cy]; }
