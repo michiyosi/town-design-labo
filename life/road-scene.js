@@ -17,28 +17,29 @@ var EVENTS = [
  [2024,'災害対応型モビリティ（能登の教訓）']
 ];
 /* 年 → 道の位置（単位）。章の板の位置に合わせてある */
-var YX = [[2011.5,200],[2013.7,300],[2015,420],[2016,540],[2017.5,660],[2018.5,760],[2020,880],[2021,930],[2024,1060],[2026,1140]];
+var YX = [[2011.5,200],[2013.7,300],[2015,400],[2016,520],[2017.5,650],[2018.5,760],[2020,860],[2021,910],[2024,1060],[2026,1150]];
 function yearX(y){
  for(var i=1;i<YX.length;i++){ if(y <= YX[i][0]){ var a = YX[i-1], b = YX[i]; return a[1] + (b[1]-a[1]) * (y - a[0]) / (b[0]-a[0]); } }
  return YX[YX.length-1][1];
 }
-/* 標識を #cards に足す。同じ年のものは 16単位ずつずらし、2列に互い違いに置く */
+/* 標識を #cards に足す。年順に並べ、前の標識から18単位は離す。2列に互い違いで、章の板の反対側に立てる */
 (function signs(){
  var wrap = document.getElementById('cards'); if(!wrap) return;
- /* 章の板と反対側の、道から離れた帯に立てる */
  var st = [].slice.call(wrap.querySelectorAll('.card:not(.sign)')).map(function(el){ return {x:+el.dataset.x, side:el.dataset.side}; });
  function oppositeOf(x){
   var best = null, d = 1e9;
   for(var k=0;k<st.length;k++){ var dd = Math.abs(st[k].x - x); if(dd < d){ d = dd; best = st[k]; } }
   return (best && best.side === 'l') ? 'r' : 'l';
  }
- var byYear = {}, i, e;
- for(i=0;i<EVENTS.length;i++){
-  e = EVENTS[i]; var y = e[0]; byYear[y] = (byYear[y]||0) + 1;
-  var k = byYear[y]-1, x = Math.round(yearX(y) + k * 16 - 8), side = oppositeOf(x), zz = 40 + 12 * (k % 2);   /* 同じ年は2列に互い違い */
+ var ev = EVENTS.slice().sort(function(a,b){ return a[0]-b[0]; });
+ var last = -1e9, i, e;
+ for(i=0;i<ev.length;i++){
+  e = ev[i];
+  var x = Math.max(Math.round(yearX(e[0]) - 8), last + 18); last = x;
+  var side = oppositeOf(x), zz = 40 + 12 * (i % 2);
   var el = document.createElement('div');
   el.className = 'card sign'; el.dataset.x = x; el.dataset.side = side; el.dataset.z = side === 'r' ? -zz : zz;
-  el.innerHTML = '<div class="in"><span class="yr">' + y + (e[2] ? '–' + String(e[2]).slice(2) : '') + '</span>' + e[1] + '</div>';
+  el.innerHTML = '<div class="in"><span class="yr">' + e[0] + (e[2] ? '–' + String(e[2]).slice(2) : '') + '</span>' + e[1] + '</div>';
   wrap.appendChild(el);
  }
 })();
