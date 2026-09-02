@@ -264,3 +264,12 @@ html.win-open{overflow:hidden}
 .evl small{display:block;color:#4A5568;font-size:11px;line-height:14px;margin-top:2px}
 .btns.yrs{gap:4px}
 .btn.sm{padding:2px 8px;font-size:12px;line-height:20px;border-width:2px}
+
+/* 指で押す前提の大きさを確保する。見た目は変えず、当たり判定だけを44pxまで広げる
+   （HUDの小さな文字リンクや、道の上に重なるボタンで効く） */
+@media (pointer:coarse){
+ .hud a,.hud button,.win a,.win button,.btn,.card a,.card button{position:relative}
+ .hud a::after,.hud button::after,.win a::after,.win button::after,.btn::after,.card a::after,.card button::after{
+  content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:max(100%,44px);height:max(100%,44px)}
+}

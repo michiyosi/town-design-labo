@@ -722,11 +722,11 @@ function openPop(i){
  winPrev.textContent = '◀ 前の企画'; winNext.textContent = '次の企画 ▶';
 }
 /* 場面側から使う口。窓に HTML を出す／板の高さが変わったあとに流れを組み直す */
-window.Road = {
+window.Road = Object.assign(window.Road || {}, {
  openHtml: function(title, html){ winIdx = -1; showHtml(title, html); winPrev.disabled = true; winNext.disabled = true; winPrev.textContent = '◀'; winNext.textContent = '▶'; },
  closeWin: function(){ closeWin(); },
  relayout: function(){ layout(); if(cur !== null) draw(snap(cur), 16.7, performance.now()); }
-};
+});
 popEls.forEach(function(el, i){
  el.addEventListener('click', function(){ winFrom = el; openPop(i); });
  el.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); winFrom = el; openPop(i); } });
@@ -845,17 +845,26 @@ function doWipe(done){
  }
  tick();
 }
+var entered = false;
 function enter(withSound){
  gate.classList.add('out');
  running = true; lastT = 0; cur = targetCam(); prevCur = cur;
  draw(snap(cur), 16.7, performance.now());
  if(withSound) setSound(true);
  doWipe(function(){});
+ signalEnter();
 }
+/* 入場の合図。顔ウォールの顔画像（329KB）など、道に入ってから要るものはこれを待つ */
+function signalEnter(){
+ if(entered) return; entered = true;
+ dispatchEvent(new Event('road:enter'));
+}
+window.Road = window.Road || {};
+window.Road.onEnter = function(fn){ if(entered) fn(); else addEventListener('road:enter', fn, {once:true}); };
 document.getElementById('enter').addEventListener('click', function(){ enter(true); });
 document.getElementById('enterq').addEventListener('click', function(){ enter(false); });
 /* 検証用: ?go=1 で入口を飛ばす、?wy=<scrollY> でその位置に立つ */
 var q = new URLSearchParams(location.search);
-if(q.get('go')){ gate.classList.add('out'); running = true; }
+if(q.get('go')){ gate.classList.add('out'); running = true; signalEnter(); }
 if(q.get('wy') !== null){ scrollTo(0, +q.get('wy')); }
 })();
