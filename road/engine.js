@@ -727,6 +727,16 @@ window.Road = Object.assign(window.Road || {}, {
  closeWin: function(){ closeWin(); },
  relayout: function(){ layout(); if(cur !== null) draw(snap(cur), 16.7, performance.now()); }
 });
+/* 章の本文の写真を押したら大きく見せる。窓は最初に開くときに組み立てるので、
+   要素そのものではなく文書に付ける。窓の中の一覧（.pop-gal）とは別扱い */
+document.addEventListener('click', function(e){
+ var im = e.target && e.target.closest ? e.target.closest('#win-html .story img[data-full]') : null;
+ if(!im) return;
+ var host = document.getElementById('win-html'); if(!host) return;
+ var big = host.querySelector('.win-big');
+ if(!big){ big = document.createElement('div'); big.className = 'win-big'; big.innerHTML = '<img alt="拡大した写真">'; host.insertBefore(big, host.firstChild); }
+ big.hidden = false; big.querySelector('img').src = im.getAttribute('data-full'); host.scrollTop = 0;
+});
 popEls.forEach(function(el, i){
  el.addEventListener('click', function(){ winFrom = el; openPop(i); });
  el.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); winFrom = el; openPop(i); } });
@@ -770,11 +780,21 @@ function openWin(i){
  var card = b.closest('.card'), h = card ? card.querySelector('h1,h2') : null, no = card ? card.querySelector('.no') : null;
  winTitle.textContent = b.dataset.winTitle || (h ? h.textContent : '');
  winNo.textContent = no ? no.textContent : ''; winNo.hidden = !no;
- openFrame(b.dataset.win);
  winOpenLink.href = b.dataset.win;
  winPrev.disabled = i <= 0; winNext.disabled = i >= winBtns.length - 1;
  winEl.hidden = false; document.documentElement.classList.add('win-open');
  document.getElementById('win-x').focus();
+ /* 場面が本文を持っているなら、枠を使わずそのまま窓に入れる。
+    枠は拡張機能に止められることがあるので、持っていない場面だけの受け皿にする */
+ if(SCENE.chapterHtml){
+  winFrame.hidden = true; winHtml.hidden = false;
+  winHtml.innerHTML = '<p class="win-load">読み込んでいます…</p>';
+  SCENE.chapterHtml(b.dataset.win, function(html){
+   if(winIdx !== i || winMode !== 'frame') return;   /* 別の章に切り替わっていたら捨てる */
+   if(html){ winHtml.innerHTML = html; winHtml.scrollTop = 0; }
+   else frameFailed(b.dataset.win);
+  });
+ } else openFrame(b.dataset.win);
 }
 function closeWin(){
  if(!winEl || winEl.hidden) return;
