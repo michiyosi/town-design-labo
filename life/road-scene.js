@@ -241,9 +241,44 @@ var POSTS = [];   /* 街に立てる支柱の位置 */
  }).catch(function(){}); }catch(e){}
 })();
 
+/* 章の本文。枠（iframe）は拡張機能に止められることがあるので、
+   切り出しておいた本文（chapters.*.js）を必要になってから読んで、窓に直接入れる */
+var chapState = 0, chapWaiting = [];   /* 0=まだ 1=読み込み中 2=読めた 3=だめだった */
+function withChapters(cb){
+ if(chapState === 2) return cb(true);
+ if(chapState === 3) return cb(false);
+ chapWaiting.push(cb);
+ if(chapState === 1) return;
+ chapState = 1;
+ function finish(ok){ chapState = ok ? 2 : 3; var w = chapWaiting.splice(0); for(var i=0;i<w.length;i++) w[i](ok); }
+ var m = document.querySelector('meta[name="chapters-src"]');
+ if(!m || !m.content) return finish(false);
+ var sc = document.createElement('script');
+ sc.src = m.content;
+ sc.onload = function(){
+  if(!window.CHAPTERS) return finish(false);
+  if(!window.CHAPTERS_CSS) return finish(true);
+  var l = document.createElement('link');
+  l.rel = 'stylesheet'; l.href = window.CHAPTERS_CSS;
+  l.onload = function(){ finish(true); };
+  l.onerror = function(){ finish(true); };   /* 見た目が来なくても本文は読める */
+  document.head.appendChild(l);
+ };
+ sc.onerror = function(){ finish(false); };
+ document.head.appendChild(sc);
+}
+
 window.ROAD_SCENE = {
  L: 1340,
  hero: null,
+ /* 窓に出す章の本文を engine に渡す。url は "story.html?ch=3" のような形 */
+ chapterHtml: function(url, cb){
+  var k = String(url).split('ch=')[1]; k = k ? k.split('&')[0] : '';
+  withChapters(function(ok){
+   var c = ok && window.CHAPTERS ? window.CHAPTERS[k] : null;
+   cb(c ? c[1] : null);
+  });
+ },
  /* 空白の章（2013.9〜2015.4）の地面だけ色が抜ける */
  tile: function(tx, tz, c){
   if(tx >= 37 && tx <= 48 && Math.abs(tz) >= 2) return ((tx+tz)&1) ? '#CBD2C3' : '#BFC7B7';
