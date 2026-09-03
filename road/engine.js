@@ -746,15 +746,20 @@ function openFrame(url){
  clearTimeout(frameTimer);
  var done = false;
  winFrame.onload = function(){
+  /* 枠を差し込んだ直後、中身を入れる前の空ページでも load は起きる。
+     それを「読めなかった」と取り違えないよう、行き先が合っているときだけ調べる */
+  var d = null, here = '';
+  try{ d = winFrame.contentDocument; here = (d && d.location) ? d.location.href : ''; }catch(e){ }
+  if(here === 'about:blank' || here === '') return;
   done = true; clearTimeout(frameTimer);
   var ok = false;
-  try{ var d = winFrame.contentDocument; ok = !!(d && d.body && d.body.children.length); }
+  try{ ok = !!(d && d.body && d.body.children.length); }
   catch(e){ ok = true; }   /* 別オリジンで中を見られない＝読めている */
   if(!ok) frameFailed(url);
  };
  winFrame.onerror = function(){ done = true; clearTimeout(frameTimer); frameFailed(url); };
  winFrame.src = url;
- frameTimer = setTimeout(function(){ if(!done) frameFailed(url); }, 8000);
+ frameTimer = setTimeout(function(){ if(!done) frameFailed(url); }, 6000);
 }
 function openWin(i){
  if(!winEl) buildWin();
