@@ -273,3 +273,8 @@ html.win-open{overflow:hidden}
   content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
   width:max(100%,44px);height:max(100%,44px)}
 }
+
+/* 章の窓が読めなかったときの受け皿 */
+.win-fb{padding:32px 24px;max-width:520px}
+.win-fb-t{font:900 20px/28px var(--f-head);margin:0 0 12px}
+.win-fb p{margin:0 0 16px;line-height:24px}

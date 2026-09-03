@@ -731,6 +731,31 @@ popEls.forEach(function(el, i){
  el.addEventListener('click', function(){ winFrom = el; openPop(i); });
  el.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); winFrom = el; openPop(i); } });
 });
+/* 章の本文は別ページを枠の中に読み込んでいる。拡張機能や通信の都合で枠が読めない
+   ことがあるので、読めなかったら行き止まりにせず、新しいタブで開く道を出す */
+var frameTimer = null;
+function frameFailed(url){
+ winHtml = winHtml || document.getElementById('win-html');
+ winHtml.innerHTML = '<div class="win-fb"><p class="win-fb-t">この章を、枠の中に表示できませんでした。</p>'
+  + '<p>広告ブロックなどの拡張機能が、枠の読み込みを止めていることがあります。'
+  + '新しいタブなら、そのまま読めます。</p>'
+  + '<p class="btns"><a class="btn btn-go" href="' + url + '" target="_blank" rel="noopener">新しいタブで開く</a></p></div>';
+ winHtml.hidden = false; winFrame.hidden = true;
+}
+function openFrame(url){
+ clearTimeout(frameTimer);
+ var done = false;
+ winFrame.onload = function(){
+  done = true; clearTimeout(frameTimer);
+  var ok = false;
+  try{ var d = winFrame.contentDocument; ok = !!(d && d.body && d.body.children.length); }
+  catch(e){ ok = true; }   /* 別オリジンで中を見られない＝読めている */
+  if(!ok) frameFailed(url);
+ };
+ winFrame.onerror = function(){ done = true; clearTimeout(frameTimer); frameFailed(url); };
+ winFrame.src = url;
+ frameTimer = setTimeout(function(){ if(!done) frameFailed(url); }, 8000);
+}
 function openWin(i){
  if(!winEl) buildWin();
  var b = winBtns[i]; if(!b) return;
@@ -740,13 +765,15 @@ function openWin(i){
  var card = b.closest('.card'), h = card ? card.querySelector('h1,h2') : null, no = card ? card.querySelector('.no') : null;
  winTitle.textContent = b.dataset.winTitle || (h ? h.textContent : '');
  winNo.textContent = no ? no.textContent : ''; winNo.hidden = !no;
- winFrame.src = b.dataset.win; winOpenLink.href = b.dataset.win;
+ openFrame(b.dataset.win);
+ winOpenLink.href = b.dataset.win;
  winPrev.disabled = i <= 0; winNext.disabled = i >= winBtns.length - 1;
  winEl.hidden = false; document.documentElement.classList.add('win-open');
  document.getElementById('win-x').focus();
 }
 function closeWin(){
  if(!winEl || winEl.hidden) return;
+ clearTimeout(frameTimer);
  winEl.hidden = true; document.documentElement.classList.remove('win-open');
  winFrame.src = 'about:blank';
  if(winFrom && winFrom.focus) winFrom.focus();
