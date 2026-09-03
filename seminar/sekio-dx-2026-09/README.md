@@ -15,7 +15,8 @@
 | `deck/deck.js` | 部品集（cover / card / profile / caseSlide / centerStatement / body / numberedPink / checklist / chip / labelBar / pinkPanel / twoColumn / bigLine / chipFlowGrid / flowRow / pinkTable / summary / worksheet / redBox） |
 | `deck/references/patterns.md` | 元デッキ30枚の型と座標 |
 | `deck/assets/photos/` | 写真の差し替え場所（中の README 参照） |
-| `deck/tools/make-ai-avatar.js` | 代表者写真から「AIヤスムラ」ホログラム画像を生成する（スライド8で使用） |
+| `deck/tools/fit-ai-character.js` | キャラクターイラストをスライド8の写真枠（4:3）に切れずに収める |
+| `deck/tools/make-ai-avatar.js` | 代表者写真からホログラム風の画像を作る（いまは未使用。差し替え候補） |
 | `AIヤスムラ_画像生成プロンプト.md` | 上のスクリプトの使い方と、画像生成AIに描かせるときのプロンプト |
 
 前半のスライドのサムネイル（福原氏のもの）と、主催向け概要ワード・当日の実務マニュアルは、このリポジトリには入れていない（別の場所で管理）。
@@ -68,7 +69,7 @@ node build-kouhan-full.js        # → ../DXマーケティング後半編.pptx
 | 2, 5 | `kazari-b-01.jpg`（KAZARI KITCHEN Type B） | 自社で設計・保有 |
 | 2, 6 | `CaGqL7fv3mc_01.jpg`（THE NOMAD 八ヶ岳） | **製造パートナー撮影**。セミナーで使ってよいか判断を |
 | 2, 7 | `life/img/317-febd7827.jpg`（空家の学校の会場） | 740px と小さめ。高解像度があれば `akiya.jpg` で差し替え |
-| 8 | `deck/assets/photos/ai.jpg` | `director-sm.jpg` から生成したホログラム風の「AIヤスムラ」。ピンク版 `ai-pink.jpg` もあり |
+| 8 | `deck/assets/photos/ai.jpg` | キャラクターイラスト（元は `ai-character.png`）。4:3に収めて使用 |
 | 3 | `director-sm.jpg` | チラシの208px版より良い |
 
 ## 未完了（本人の入力待ち）

@@ -2,10 +2,20 @@
 
 ドラマに出てくるような「画面に浮かぶ半透明のAIアバター」を、自分の顔でつくるための材料。
 
-## A. いまリポジトリに入っているもの（写真加工版）
+## いま使っているもの（キャラクターイラスト）
 
-`deck/tools/make-ai-avatar.js` が、サイトの代表者写真 `director-sm.jpg` からホログラム風の画像を生成する。
-生成物：`deck/assets/photos/ai.jpg`（青）と `ai-pink.jpg`（前半デッキと同じピンク）。スライド8で使用中。
+`deck/assets/photos/ai-character.png` が元のイラスト（正方形）。
+スライド8の写真枠は4:3なので、そのまま入れると上下が切れる。`deck/tools/fit-ai-character.js` が
+左右の余白を同じ絵のぼかしで埋めて `ai.jpg`（1600×1200）を書き出す。
+
+```bash
+cd seminar/sekio-dx-2026-09/deck
+NODE_PATH=$(npm root -g) node tools/fit-ai-character.js
+```
+
+イラストを差し替えるときは `ai-character.png` を置き換えて、上を実行し直す。
+
+## A. 写真からホログラム風にする（差し替え候補・いまは未使用）
 
 ```bash
 cd seminar/sekio-dx-2026-09/deck
