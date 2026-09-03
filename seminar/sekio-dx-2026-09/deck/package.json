@@ -1,0 +1,11 @@
+{
+  "name": "sekio-dx-seminar-kouhan-deck",
+  "private": true,
+  "description": "石央商工会 DXマーケティングセミナー 後半スライド（36枚）を pptxgenjs で生成する",
+  "scripts": {
+    "build": "node build-kouhan-full.js"
+  },
+  "dependencies": {
+    "pptxgenjs": "3.12.0"
+  }
+}
