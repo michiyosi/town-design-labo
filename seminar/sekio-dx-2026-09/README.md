@@ -10,7 +10,7 @@
 | ファイル | 用途 |
 |---|---|
 | `DXマーケティング後半編.pptx` | 後半スライド本番版・36枚（`deck/build-kouhan-full.js` から生成） |
-| `DXマーケティング後半編_preview.pdf` | 上のPDF版。スマホで確認する用（この環境には游ゴシックが無いので字形・字幅は目安） |
+| `DXマーケティング後半編.pdf` | 上のPDF版。**当日はこちらで投影してよい**（フォント埋め込み済み。PowerPointが無い端末でも同じ見た目） |
 | `deck/build-kouhan-full.js` | 36枚の文言と構成。**文言を直すときはここを直して再生成する** |
 | `deck/deck.js` | 部品集（cover / card / profile / caseSlide / centerStatement / body / numberedPink / checklist / chip / labelBar / pinkPanel / twoColumn / bigLine / chipFlowGrid / flowRow / pinkTable / summary / worksheet / redBox） |
 | `deck/references/patterns.md` | 元デッキ30枚の型と座標 |
@@ -27,6 +27,13 @@
 cd seminar/sekio-dx-2026-09/deck
 npm install                      # 初回だけ（pptxgenjs）
 node build-kouhan-full.js        # → ../DXマーケティング後半編.pptx
+```
+
+PDFも作り直すとき（LibreOffice が要る。游ゴシックが無い環境では Noto Sans CJK JP に置き換わる）：
+
+```bash
+cd seminar/sekio-dx-2026-09
+soffice --headless --convert-to pdf DXマーケティング後半編.pptx
 ```
 
 写真は `deck/assets/photos/` に `kitchencar.jpg` `trailer.jpg` `akiya.jpg` `ai.jpg` `yasumura.jpg` を置くと優先して使う。置かないときはサイト本体の写真（下記）が自動で入る。
