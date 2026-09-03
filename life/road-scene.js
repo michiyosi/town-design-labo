@@ -109,7 +109,9 @@ function yearX(y){
   var e = ALL[k]; if(!e) return;
   window.Road.openHtml(e.n, '<p class="btns"><button type="button" class="btn" data-year="' + e.y + '">◀ ' + e.y + '年の一覧に戻る</button></p>' + popOf(e, ''));
  }
+ function canWin(){ return !!(window.Road && window.Road.openHtml); }   /* WebGLが無い端末では窓が組まれない */
  function act(t){
+  if(!canWin()) return false;
   var b = t.closest('[data-year]'); if(b){ openYear(+b.getAttribute('data-year')); return true; }
   var li = t.closest('[data-ei]'); if(li){ openEvent(+li.getAttribute('data-ei')); return true; }
   return false;
@@ -167,6 +169,7 @@ var POSTS = [];   /* 街に立てる支柱の位置 */
  }
  function asset(q){ return (window.PREVIEW_ASSETS && window.PREVIEW_ASSETS[q]) || q; }   /* プレビュー用に画像を差し替える口 */
  function gal(ids, title){
+  if(!window.Road || !window.Road.openHtml) return;
   var h = '<div class="pop-big" hidden><img alt="拡大した写真"></div><div class="pop-gal">';
   for(var i=0;i<ids.length;i++) h += '<img src="' + asset('wall/t' + ids[i] + '.jpg') + '" data-full="' + asset('wall/g' + ids[i] + '.jpg') + '" alt="当時の写真 ' + (i+1) + '枚目" loading="lazy">';
   h += '</div><p class="pop-src">写真は当時Facebookに公開したもの。押すと大きくなります。</p>';
@@ -201,12 +204,16 @@ var POSTS = [];   /* 街に立てる支柱の位置 */
   }
   if(window.Road) window.Road.relayout();
  }
- /* 顔の板は入口では要らない。顔の画像は329KBあるので、道に入ってから読む */
+ /* 顔の板は入口では要らない。顔の画像は329KBあるので、道に入ってから読む。
+    ただしWebGLが使えない端末では道に入る合図が来ないので、そのときは読み込みまで待って出す */
+ var wallStarted = false;
  function loadWall(){
+  if(wallStarted) return; wallStarted = true;
   if(window.WALL_DATA){ setTimeout(function(){ fill(window.WALL_DATA); }, 0); return; }
   try{ fetch('wall.json', {cache:'no-store'}).then(function(r){ return r.json(); }).then(fill).catch(function(){ for(var k in cards) cards[k].parentNode.removeChild(cards[k]); if(window.Road) window.Road.relayout(); }); }catch(e){}
  }
  addEventListener('road:enter', loadWall, {once:true});
+ addEventListener('load', function(){ if(document.documentElement.classList.contains('nogl')) loadWall(); });
 
  /* おまけ: 13年から1枚引く／きょうと同じ日付 */
  function fbcard(p, label){
@@ -214,12 +221,13 @@ var POSTS = [];   /* 街に立てる支柱の位置 */
  }
  var db = document.getElementById('drawbtn'), tb = document.getElementById('tdbtn');
  if(db) db.addEventListener('click', function(){
-  var RP = window.RP || []; if(!RP.length) return;
+  var RP = window.RP || []; if(!RP.length || !window.Road || !window.Road.openHtml) return;
   var p = RP[Math.floor(Math.random()*RP.length)];
   window.Road.openHtml('13年から無作為に1枚', fbcard(p, '当時の投稿') + '<p class="btns"><button type="button" class="btn" id="draw-again">もう1枚引く</button></p>');
   var again = document.getElementById('draw-again'); if(again) again.addEventListener('click', function(){ db.click(); });
  });
  if(tb) tb.addEventListener('click', function(){
+  if(!window.Road || !window.Road.openHtml) return;
   var RP = window.RP || [], DC = window.DAYCNT || {}, n = new Date(), m = n.getMonth()+1, d = n.getDate();
   var key = ('0'+m).slice(-2) + ('0'+d).slice(-2), cnt = DC[key] || '00000000000000', cells = '';
   for(var i=0;i<14;i++){ var y = 2011+i; if(y===2011 && m<7) continue; if(y===2024 && m>1) continue; var c = +cnt.charAt(i); cells += '<li class="' + (c ? 'on' : '') + '"><b>' + y + '</b>' + (c ? c + '件' : '—') + '</li>'; }
