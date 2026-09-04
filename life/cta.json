@@ -1,4 +1,4 @@
 {
- "url": "https://www.facebook.com/share/1PEENLVUL1/",
- "_memo": "Facebook投稿のURLをurlに貼ると、ページのCTAがコメント欄への導線に変わります。空にすると、メッセージ（m.me）に戻ります"
+ "url": "",
+ "_memo": "Facebook投稿のURLをurlに貼ると、ページのCTAがコメント欄への導線に変わります。空にすると、メッセージ（m.me）に戻ります。貼るURLは投稿の『…』→『リンクをコピー』で取れる単独ページのURL（permalink.php?story_fbid=… か /posts/pfbid… の形）にすること。/share/XXXX/ という短縮リンクは、共有した本人以外の環境で開けないことがある"
 }
