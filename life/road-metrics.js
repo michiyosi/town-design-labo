@@ -67,10 +67,16 @@
 
   if((el = t.closest('.share a'))) return ev('share', {method: el.getAttribute('data-s') || trim(el.textContent)});
 
-  if((el = t.closest('a[href*="m.me/"], a[href*="facebook.com/profile"], a[href*="permalink"]'))){
+  /* 呼びかけのボタン。行き先は cta.json で差し替わる（メッセージ／投稿のコメント欄）ので、
+     URLではなく id と、Facebook宛てかどうかで拾う */
+  if((el = t.closest('#pill, #ctalink, a[href*="m.me/"], a[href*="facebook.com/"]'))){
    if(/外して/.test(el.textContent)) return ev('removal_request');
-   return ev('click_cta', {label: trim(el.textContent)});
+   var h = el.getAttribute('href') || '';
+   return ev('click_cta', {label: trim(el.textContent), cta_to: /m\.me\//.test(h) ? 'message' : 'comment'});
   }
+
+  /* 道のページ（/street/）へ出ていった */
+  if((el = t.closest('a[href*="/street/"]'))) return ev('open_street', {label: trim(el.textContent)});
 
   if(t.closest('#drawbtn')) return ev('draw_random_post');
   if(t.closest('#tdbtn')) return ev('draw_today');
