@@ -551,8 +551,12 @@ var W = 0, H = 0, dpr = 1;
 var track = document.getElementById('track');
 var cards = [].slice.call(document.querySelectorAll('#cards .card')).map(function(el){
  var side = el.dataset.side;
- var mv = el.classList.contains('sign') || el.classList.contains('photo') || el.classList.contains('faces');
- return {el:el, op:1, movable:mv, x0:+el.dataset.x, x:+el.dataset.x, z: el.dataset.z !== undefined ? +el.dataset.z : (side === 'r' ? -16 : (side === 'l' ? 16 : 0)), side:side, name:el.dataset.name || '', on:false, sign:el.classList.contains('sign') || el.classList.contains('photo'), photo:el.classList.contains('photo')};
+ /* 動かしてよい板＝道ぞいの飾りと付録。数字の付いた章の板と表紙は動かさない。
+    z（道からの離れ）を動かしてよいのは、小さい標識と写真の看板だけ */
+ var zf = el.classList.contains('sign') || el.classList.contains('photo');
+ var mv = zf || el.classList.contains('faces') || el.classList.contains('aux');
+ var zz = el.dataset.z !== undefined ? +el.dataset.z : (side === 'r' ? -16 : (side === 'l' ? 16 : 0));
+ return {el:el, op:1, movable:mv, zfree:zf, x0:+el.dataset.x, x:+el.dataset.x, z0:zz, z:zz, side:side, name:el.dataset.name || '', on:false, sign:el.classList.contains('sign') || el.classList.contains('photo'), photo:el.classList.contains('photo')};
 });
 var stations = cards.filter(function(c){ return !c.sign && (c.el.dataset.name !== undefined || c.el.classList.contains('title')); });
 var sttotal = document.getElementById('sttotal'); if(sttotal) sttotal.textContent = (stations.length-1 < 10 ? '0' : '') + (stations.length-1);
@@ -578,7 +582,7 @@ function cardRect(c, w, h){
 function rectHit(a, b, m){ return a[0] < b[0]+b[2]+m && b[0] < a[0]+a[2]+m && a[1] < b[1]+b[3]+m && b[1] < a[1]+a[3]+m; }
 function unstack(){
  var i, k, q, taken = [], list = cards.slice().sort(function(a,b){ return a.x0 - b.x0; });
- for(i=0;i<list.length;i++) list[i].x = list[i].x0;
+ for(i=0;i<list.length;i++){ list[i].x = list[i].x0; list[i].z = list[i].z0; }
  for(i=0;i<list.length;i++){                                   /* 動かさない板の場所を先に押さえる */
   var f = list[i]; if(f.movable) continue;
   taken.push(cardRect(f, f.el.offsetWidth, f.el.offsetHeight));
@@ -588,20 +592,29 @@ function unstack(){
  mv.sort(function(a,b){ return (b.el.offsetWidth*b.el.offsetHeight) - (a.el.offsetWidth*a.el.offsetHeight); });
  for(i=0;i<mv.length;i++){
   var c = mv[i];
-  var w = c.el.offsetWidth, h = c.el.offsetHeight, put = null;
-  for(k=0; k<=24 && !put; k++){
-   for(var sgn=0; sgn<2 && !put; sgn++){
-    if(k === 0 && sgn) continue;
-    c.x = c.x0 + (sgn ? -k : k) * 4;                           /* 前後に4単位ずつ、最大±96 */
-    var r = cardRect(c, w, h), ok = true;
-    for(q=0;q<taken.length;q++) if(rectHit(r, taken[q], 8)){ ok = false; break; }
-    if(ok) put = r;
-   }
+  var w = c.el.offsetWidth, h = c.el.offsetHeight, put = null, cand = OFFS;
+  for(k=0; k<cand.length && !put; k++){
+   c.x = c.x0 + cand[k][0];
+   c.z = c.zfree ? c.z0 + (c.z0 < 0 ? -cand[k][1] : cand[k][1]) : c.z0;   /* z は道から離す向きを＋とする */
+   var r = cardRect(c, w, h), ok = true;
+   for(q=0;q<taken.length;q++) if(rectHit(r, taken[q], 8)){ ok = false; break; }
+   if(ok) put = r;
   }
-  if(!put){ c.x = c.x0; put = cardRect(c, w, h); }
+  if(!put){ c.x = c.x0; c.z = c.z0; put = cardRect(c, w, h); }
   taken.push(put);
  }
 }
+/* ずらし方の候補。道に沿って（4単位ずつ最大±100）と、道から離れる向き（8単位ずつ
+   最大±32）の組み合わせを、元の位置に近い順に並べたもの。
+   道に沿ってだけでは、大きい板（顔ウォールは高さ700px近い）を避けきれない */
+var OFFS = (function(){
+ var a = [], dx, dz;
+ for(dx = 0; dx <= 100; dx += 4) for(dz = 0; dz <= 32; dz += 8){
+  a.push([dx, dz]); if(dx) a.push([-dx, dz]); if(dz) a.push([dx, -dz]); if(dx && dz) a.push([-dx, -dz]);
+ }
+ a.sort(function(p, q){ return (Math.abs(p[0]) + Math.abs(p[1]) * 3) - (Math.abs(q[0]) + Math.abs(q[1]) * 3); });
+ return a;
+})();
 function layout(){
  W = innerWidth; H = innerHeight; dpr = Math.min(devicePixelRatio || 1, 2);
  cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
@@ -619,7 +632,7 @@ function layout(){
  }
  var th = (CAM1 - CAM0) * SPX + H;
  track.style.height = Math.round(th) + 'px';
- if(flow){ for(var ci=0;ci<cards.length;ci++) cards[ci].x = cards[ci].x0; }
+ if(flow){ for(var ci=0;ci<cards.length;ci++){ cards[ci].x = cards[ci].x0; cards[ci].z = cards[ci].z0; } }
  else unstack();
 }
 var EASE = 0.12, cur = null, lastT = 0, prevCur = 0, heroT = 0, heroDir = 1;
