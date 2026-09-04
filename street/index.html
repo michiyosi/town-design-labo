@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>道を、引き直す。｜TOWN DESIGN LABO</title>
+<meta name="description" content="車道と歩道の線を引き直すと、まちはどう変わるか。ある通りの検討でつくられた3Dデータを読み解いて、ドット絵の道に組み直しました。3つの断面を歩いて見比べられます。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="道を、引き直す。｜TOWN DESIGN LABO">
+<meta property="og:description" content="車道と歩道の線を引き直すと、まちはどう変わるか。3つの断面を、ドット絵の道を歩いて見比べます。">
+<meta property="og:url" content="https://towndesignlabo.jp/street/">
+<link rel="icon" href="../favicon.ico">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="preload" href="../life/p4-zmg.11e02df7.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../life/p4-pxb.e9d51473.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../life/p4-pxr.31f57d1b.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../road/road.css?v=cf41a029">
+<style>
+/* このページだけの足し。標識の中身は、ふだんは窓で読む。
+   WebGL が使えない端末では道が出ないので、板の中にそのまま開いておく */
+.sign-body{display:none}
+.nogl .sign-body[hidden]{display:block;margin-top:12px;border-top:4px solid #DDE3EA;padding-top:8px;font-size:14px;line-height:26px}
+.nogl .sign-body p{margin:0 0 8px}
+.nogl .card.sign{width:auto;cursor:default}
+.nogl .card.sign .in::before{display:none}
+#win-html .nk{margin:0 0 16px;padding:0 0 0 20px}
+#win-html .nk li{margin:0 0 4px}
+.secmark{display:inline-block;font:900 12px/20px var(--f-head);letter-spacing:.08em;background:var(--ink);color:#fff;padding:0 8px;margin:0 0 4px 8px}
+</style>
+</head>
+<body>
+
+<!-- 入口（タイトル画面） -->
+<div id="gate" role="dialog" aria-label="入口">
+ <div class="gate-in">
+  <p class="gate-k">道の断面を、歩いて比べる</p>
+  <h1 class="gate-t">道を、<br>引き直す。</h1>
+  <p class="gate-s">車道と歩道の線を引き直すと、まちはどう変わるか。<br>ある通りの検討データを読み解いて、ドット絵の道にしました。</p>
+  <div class="bar" aria-hidden="true"><i id="barfill"></i></div>
+  <p class="gate-load" id="gateload">LOADING <span id="pct">0</span>%</p>
+  <div class="gate-btns" id="gatebtns" hidden>
+   <button type="button" class="enter" id="enter">ENTER ▶</button>
+   <button type="button" class="enter-quiet" id="enterq">音を出さずに入る</button>
+  </div>
+ </div>
+</div>
+<canvas id="wipe" aria-hidden="true"></canvas>
+
+<!-- 道（固定） -->
+<div id="stage" aria-hidden="true"><canvas id="gl"></canvas></div>
+
+<!-- 画面に固定するUI -->
+<header class="hud hud-tl">
+ <a class="logo" href="../">TOWN DESIGN LABO</a>
+</header>
+<div class="hud hud-tr">
+ <button type="button" class="snd" id="snd" aria-pressed="false">SOUND <b>OFF</b></button>
+</div>
+<div class="hud hud-bl" id="stagehud">
+ <span class="st-k">STAGE</span> <b id="stno">00</b><span class="st-sep">/</span><span id="sttotal">08</span>
+ <span class="st-name" id="stname">はじまり</span>
+</div>
+<div class="hud hud-br" id="hint">SCROLL<span class="arrow">▼</span></div>
+
+<div id="track"></div>
+
+<div id="cards">
+
+ <div class="card title" data-x="20" data-side="c" data-z="-32">
+  <div class="in">
+   <p><span class="stk"><b>3</b>つの断面</span><span class="stk"><b>11</b>の道具</span></p>
+   <h1>道を、<br>引き直す。</h1>
+   <p>車道と歩道の線を引き直すと、まちはどう変わるか。ある通りの検討でつくられた3Dデータを読み解いて、ドット絵の道に組み直しました。<br>スクロールすると、道を進みます。</p>
+  </div>
+ </div>
+
+ <article class="card" data-x="130" data-side="r" data-name="はじめに">
+  <div class="in">
+   <span class="no">01</span><span class="kick">はじめに</span>
+   <h2>3Dデータから、道を起こす</h2>
+   <p>ある通りを、これからどう使うか。その検討のためにつくられた3Dデータにふれる機会がありました。中を開くと、道の形だけでなく、路面の種類、置かれる家具、そして案ごとの切り替え設定まで、ひととおり入っていました。</p>
+   <p>このページは、そこから読み取れた「道の組み立て方」だけを、ドット絵に置き換えたものです。場所も、案の名前も出していません。</p>
+   <p class="btns"><button type="button" class="btn btn-go" data-body="b-data" data-t="読み取ったもの">読み取ったものを見る</button></p>
+   <div class="sign-body" id="b-data" hidden>
+    <p class="pop-meta">シーンから読み取れたこと</p>
+    <ul class="nk">
+     <li>道の中心線は、まっすぐではなく少しだけ振れている</li>
+     <li>端から端でゆるやかな高低差がある</li>
+     <li>置かれる道具は11種類。キッチンカー、パラソル、屋台、ベンチ、テーブル、パークレット、ボラード、高木、中木、低木、街灯</li>
+     <li>木は3段階（高木・中木・低木）。高木には2通りの並べ方が用意されている</li>
+     <li>植樹桝の形は9種類</li>
+     <li>パークレットは4基</li>
+     <li>舗装は、パターン3通り × 色3通り × 荷さばきスペースの有無</li>
+     <li>ボラードと歩道の境界線は、案とは別に、それだけを切り替えられる</li>
+     <li>人の目の高さから見た視点が4つ保存されている</li>
+    </ul>
+    <p class="pop-meta">3つの断面</p>
+    <p>いまの断面／車道を絞って歩道に足した断面／車を通さない断面。実際にはどれも同じ1本の道に重ねて用意されていて、切り替えて見比べるためのデータでした。このページでは歩きながら比べられるように、南から北へ3つに分けて並べています。</p>
+   </div>
+  </div>
+ </article>
+
+ <div class="card sign" data-x="230" data-side="l" data-body="b-lamp" data-t="街灯">
+  <div class="in"><span class="yr">道具</span><span class="nm">街灯</span><span class="meta">高さが名前に入っていた</span></div>
+  <div class="sign-body" id="b-lamp" hidden>
+   <p class="pop-meta">道具 ／ 街灯</p>
+   <p>置かれる道具のデータには、高さを名前に持つ街灯がひとつだけ入っていました。並木の枝の下をくぐらせるか、枝の上に出すかで、夜の道の見え方は変わります。</p>
+   <p>このページでは、木との高さの関係だけを写しています。</p>
+  </div>
+ </div>
+
+ <article class="card" data-x="330" data-side="l" data-name="いまの断面">
+  <div class="in">
+   <span class="no">02</span><span class="secmark">A ｜ いまの断面</span>
+   <h2>いまの断面</h2>
+   <p>まん中に車道、その両側に歩道。歩道の幅は、人が並んで歩くとすれ違いに気を使うくらいです。荷さばきの車が停まると、歩ける場所はさらに細くなります。</p>
+   <p>データの中では、この状態が「現況」という名前で保存されていました。ここから先の3つの区間は、同じ1本の道の、3つの断面です。</p>
+  </div>
+ </article>
+
+ <div class="card sign" data-x="430" data-side="r" data-body="b-tree" data-t="高木・中木・低木">
+  <div class="in"><span class="yr">道具</span><span class="nm">高木・中木・低木</span><span class="meta">木は3段階に分けてある</span></div>
+  <div class="sign-body" id="b-tree" hidden>
+   <p class="pop-meta">道具 ／ 高木・中木・低木</p>
+   <p>木は3段階に分けて登録されていました。いちばん背の高いものはプラタナス（スズカケノキ）。その下に中木と低木。</p>
+   <p>高木には「A」「B」という2通りの並べ方が用意されていて、切り替えて見比べられるようになっていました。植樹桝の形は9種類。</p>
+  </div>
+ </div>
+
+ <article class="card" data-x="530" data-side="r" data-name="並木">
+  <div class="in">
+   <span class="no">03</span><span class="kick">並木</span>
+   <h2>木は、動かさない</h2>
+   <p>並んでいるのはプラタナス（スズカケノキ）。幹がまだらにはがれる木です。1本ずつ独立した植樹桝に立っていて、桝の形は9種類ありました。</p>
+   <p>どの断面でも、木の位置は変わりません。動くのは、木と車と人のあいだにある線のほうです。</p>
+  </div>
+ </article>
+
+ <div class="card sign" data-x="630" data-side="l" data-body="b-pave" data-t="舗装の選び方">
+  <div class="in"><span class="yr">切替</span><span class="nm">舗装</span><span class="meta">パターン3 × 色3 × 荷さばきの有無</span></div>
+  <div class="sign-body" id="b-pave" hidden>
+   <p class="pop-meta">表示の切り替え ／ 舗装</p>
+   <p>舗装は、パターン3通り × 色3通り × 荷さばきスペースの有無、という組み合わせで持たれていました。</p>
+   <p>つまり、路面の見た目だけを取り替えて比べられる、ということです。北の区間で足元がレンガ色に変わるのは、その色の選択肢のひとつです。</p>
+  </div>
+ </div>
+
+ <article class="card" data-x="730" data-side="l" data-name="引き直した断面">
+  <div class="in">
+   <span class="no">04</span><span class="secmark">B ｜ 引き直した断面</span>
+   <h2>線を、引き直す</h2>
+   <p>車道を細くして、減らしたぶんを歩道に足す。ここから先の路面は、その断面です。歩道は建物のきわまで広がり、車道は両側から寄せられています。</p>
+   <p>足すのではなく、置き換える。道の幅は変わらないので、どちらかを広げれば、どちらかは必ず狭くなります。</p>
+  </div>
+ </article>
+
+ <div class="card sign" data-x="830" data-side="r" data-body="b-parklet" data-t="パークレット">
+  <div class="in"><span class="yr">道具</span><span class="nm">パークレット</span><span class="meta">4基入っていた</span></div>
+  <div class="sign-body" id="b-parklet" hidden>
+   <p class="pop-meta">道具 ／ パークレット</p>
+   <p>車道の端に木のデッキを張り出して、ベンチと植栽を置いたもの。データには4基入っていました。</p>
+   <p>車1台ぶんの場所を、座れる場所に置き換える。増やすのではなく置き換えるところが、この道具の性格です。</p>
+  </div>
+ </div>
+
+ <article class="card" data-x="930" data-side="r" data-name="11の道具">
+  <div class="in">
+   <span class="no">05</span><span class="kick">道具</span>
+   <h2>車1台ぶんの、居場所</h2>
+   <p>データに入っていた道具は11種類。キッチンカー、パラソル、屋台、ベンチ、テーブル、パークレット、ボラード、高木、中木、低木、街灯。</p>
+   <p>名前を並べるだけで、この道でどんな時間を過ごしてほしかったのかが、だいたい見えてきます。</p>
+  </div>
+ </article>
+
+ <div class="card sign" data-x="1030" data-side="l" data-body="b-furniture" data-t="ベンチ・テーブル・パラソル">
+  <div class="in"><span class="yr">道具</span><span class="nm">ベンチ・テーブル・パラソル</span><span class="meta">1〜9のうち、7だけが欠番</span></div>
+  <div class="sign-body" id="b-furniture" hidden>
+   <p class="pop-meta">道具 ／ ベンチ・テーブル・パラソル</p>
+   <p>座るもの、置くもの、日をよけるもの。3つそろって、はじめて「立ち止まる」ではなく「とどまる」になります。</p>
+   <p>道具には番号がふってあり、1がキッチンカー、2がパラソル、3が屋台、4〜6が木、8がベンチ、9がテーブル。1〜9のうち7だけが欠番でした。途中で入れ替わった道具がありそうです。</p>
+  </div>
+ </div>
+
+ <article class="card" data-x="1130" data-side="l" data-name="境界">
+  <div class="in">
+   <span class="no">06</span><span class="kick">境界</span>
+   <h2>人と車の、あいだ</h2>
+   <p>ボラードと「歩道の境界線」は、案とは別に、それだけを出したり消したりできるようになっていました。「人と車」という名前の切り替えも、別に用意されています。</p>
+   <p>断面をどう分けるかではなく、境目に何を置くかだけを取り出して比べられる。そこがいちばん揉めるところだからだと思います。</p>
+  </div>
+ </article>
+
+ <div class="card sign" data-x="1230" data-side="r" data-body="b-bollard" data-t="ボラード・歩道の境界線">
+  <div class="in"><span class="yr">切替</span><span class="nm">ボラード・歩道の境界線</span><span class="meta">案とは別に、単独で切り替えられる</span></div>
+  <div class="sign-body" id="b-bollard" hidden>
+   <p class="pop-meta">表示の切り替え ／ ボラード・歩道の境界線</p>
+   <p>柵で仕切るのか、段差でわけるのか、あるいは何も置かないのか。境界の決め方だけを単独で切り替えられるようになっていました。</p>
+   <p>データの中には、案ごとに切り替えるための隠されたかたまりが数百ありました。名前に「消える」「現況」と付いたものが、その大半です。</p>
+  </div>
+ </div>
+
+ <article class="card" data-x="1330" data-side="r" data-name="車を通さない断面">
+  <div class="in">
+   <span class="no">07</span><span class="secmark">C ｜ 車を通さない断面</span>
+   <h2>車を、止めてみる</h2>
+   <p>車を通さない案も入っていました。ここから北は、その断面です。車道と歩道の区別が消えて、道の端から端までが人の場所になります。</p>
+   <p>足元の色が変わったのは、データにあった舗装の色の選択肢のひとつ、レンガです。線を消すと、道はこれだけ広く見えます。</p>
+  </div>
+ </article>
+
+ <div class="card sign" data-x="1430" data-side="l" data-body="b-kitchen" data-t="キッチンカー・屋台">
+  <div class="in"><span class="yr">道具</span><span class="nm">キッチンカー・屋台</span><span class="meta">道具の1番は、キッチンカー</span></div>
+  <div class="sign-body" id="b-kitchen" hidden>
+   <p class="pop-meta">道具 ／ キッチンカー・屋台</p>
+   <p>道具の1番はキッチンカーでした。この道に何を持ち込むかを考えたとき、いちばん先に置かれたのがこれだった、ということかもしれません。</p>
+   <p>TOWN DESIGN LABO がつくっているのも、この「動く建築」です。土地に固定しないから、道の使い方が変わったときに、いちばん早く付いていける。</p>
+  </div>
+ </div>
+
+ <article class="card" data-x="1530" data-side="l" data-name="このページについて">
+  <div class="in">
+   <span class="no">08</span><span class="kick">注記</span>
+   <h2>このページについて</h2>
+   <p>もとにしたのは、ある通りの検討でつくられた3Dデータ一式です。シーンの中から、道の組み立て方（路面の種類、置かれる道具、案ごとの切り替え設定）を読み出しました。<b>場所・案の名前・検討にあたった人や会社の名前は、いずれも出していません。</b>データそのものも公開していません。</p>
+   <p>断面のおおよその幅と、道具の並びかたは、読み取ったものに合わせています。長さは歩きながら読めるように引き伸ばしました。木の1本ずつの位置は手元にないので、等間隔で仮置きしています。人と建物の大きさは、ドット絵の見やすさを優先しました。</p>
+   <p>検討資料そのものを写したページではありません。ここにあるのは、道というものの組み立て方だけです。</p>
+   <p class="note">TOWN DESIGN LABO ／ 制作メモ。内容についてのご指摘は <a href="../#contact">お問い合わせ</a> から。</p>
+  </div>
+ </article>
+
+ <div class="card sign" data-x="1630" data-side="r" data-body="b-eye" data-t="保存された4つの視点">
+  <div class="in"><span class="yr">視点</span><span class="nm">保存された4つの視点</span><span class="meta">人の目の高さから見た景色</span></div>
+  <div class="sign-body" id="b-eye" hidden>
+   <p class="pop-meta">保存された視点 ／ 4つ</p>
+   <p>データには、見る位置が4つ保存されていました。人の目の高さから道を見た視点です。図面の上ではなく、立って見た景色で決めるためのものだと思われます。</p>
+   <p>このページのカメラは、そのうちのどれでもありません。道の上を、南から北へまっすぐ歩いています。</p>
+  </div>
+ </div>
+
+</div>
+
+<script src="../road/street-kit.js?v=84276022" defer></script>
+<script src="scene-street.js?v=50c2690e" defer></script>
+<script src="../road/engine.js?v=5c1a31a3" defer></script>
+</body>
+</html>
