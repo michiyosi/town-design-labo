@@ -628,23 +628,29 @@ function draw(cam, dt, now){
  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
  drawMesh(staticMesh, 0, 0, 0);
  var s = dt/1000;
- /* 区画。画面に入った瞬間に時刻を刻み、上から降りてきて着地する */
+ /* 区画。画面に入った瞬間に時刻を刻み、上から降りてきて着地する。
+    画面の外にある区画は毎回とばす（道が長いほど効く。以前は一度出したら
+    通り過ぎたあとも描き続けていた） */
  for(var q=0;q<chunkList.length;q++){
   var ch = chunkList[q];
-  if(ch.t0 === null){
-   var minX = (ch.x0 - ch.z1)*8 + cx, maxX = (ch.x1 - ch.z0)*8 + cx;
-   var minY = (ch.x0 + ch.z0)*4 - 24*8 + cy, maxY = (ch.x1 + ch.z1)*4 + cy;
-   if(maxX < -32 || minX > W + 32 || maxY < -32 || minY > H + 32) continue;
-   ch.t0 = (RM.matches || !running) ? now - 1000 : now;
-  }
+  var minX = (ch.x0 - ch.z1)*8 + cx, maxX = (ch.x1 - ch.z0)*8 + cx;
+  var minY = (ch.x0 + ch.z0)*4 - 64*8 + cy, maxY = (ch.x1 + ch.z1)*4 + cy;   /* 64＝いちばん高い物の高さの見込み */
+  if(maxX < -32 || minX > W + 32 || maxY < -32 || minY > H + 32) continue;
+  if(ch.t0 === null) ch.t0 = (RM.matches || !running) ? now - 1000 : now;
   var pr = Math.min(1, (now - ch.t0) / 420);
   drawMesh(ch.mesh, 0, pr >= 1 ? 0 : Math.round((1 - easeOut(pr)) * 16), 0);
  }
+ /* 画面の外にいる物は描かない。位置と時刻だけは進める（戻ってきたときにずれないように） */
+ var onScreen = function(mm){
+  var sx = (mm.x - mm.z)*8 + cx, sy = (mm.x + mm.z)*4 - mm.y*8 + cy;
+  return sx > -160 && sx < W + 160 && sy > -288 && sy < H + 160;
+ };
  for(var i=0;i<movers.length;i++){
   var m = movers[i];
   if(m.smoke){
    for(var p=0;p<m.puffs.length;p++){
     var pf = m.puffs[p]; pf.h += s*3; if(pf.h > 9){ pf.h = 0; pf.f = (pf.f+1)&1; }
+    if(!onScreen(m)) continue;
     var stage_ = pf.h < 3 ? 0 : (pf.h < 6 ? 1 : (pf.h < 8 ? 2 : 3));
     drawMesh(m.fr[stage_], m.x, m.y + Math.floor(pf.h), m.z + (pf.f ? 1 : 0));
    }
@@ -659,6 +665,7 @@ function draw(cam, dt, now){
    }
   }
   m.t += s;
+  if(!onScreen(m)) continue;
   var f = m.fr.length > 1 ? Math.floor(m.t*m.fps) % m.fr.length : 0;
   drawMesh(m.fr[f], snap(m.x), m.y, m.z);
  }
