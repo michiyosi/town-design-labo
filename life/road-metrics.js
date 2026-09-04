@@ -78,6 +78,9 @@
   /* 道のページ（/street/）へ出ていった */
   if((el = t.closest('a[href*="/street/"]'))) return ev('open_street', {label: trim(el.textContent)});
 
+  /* 会社のホームページ（トップ）へ出ていった */
+  if((el = t.closest('a[href="https://towndesignlabo.jp/"]'))) return ev('open_home', {label: trim(el.textContent)});
+
   if(t.closest('#drawbtn')) return ev('draw_random_post');
   if(t.closest('#tdbtn')) return ev('draw_today');
  }, true);
