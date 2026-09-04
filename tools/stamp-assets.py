@@ -11,7 +11,7 @@ TARGETS = {
     'life/index.html': ['../road/road.css', 'road-metrics.js', 'data-rp.js', 'data-ev.js', '../road/street-kit.js', 'road-scene.js', '../road/engine.js'],
     'life/story.html': ['road-metrics.js'],
     'road/index.html': ['road.css', 'scene-tdl.js', 'engine.js'],
-    'street/index.html': ['../road/road.css', '../road/street-kit.js', 'scene-street.js', '../road/engine.js'],
+    'street/index.html': ['../road/road.css', '../life/road-metrics.js', '../road/street-kit.js', 'scene-street.js', '../road/engine.js'],
 }
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 changed = []
