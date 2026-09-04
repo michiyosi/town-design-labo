@@ -51,7 +51,7 @@
  <button type="button" class="snd" id="snd" aria-pressed="false">SOUND <b>OFF</b></button>
 </div>
 <div class="hud hud-bl" id="stagehud">
- <span class="st-k">STAGE</span> <b id="stno">00</b><span class="st-sep">/</span><span id="sttotal">09</span>
+ <span class="st-k">STAGE</span> <b id="stno">00</b><span class="st-sep">/</span><span id="sttotal">10</span>
  <span class="st-name" id="stname">はじまり</span>
 </div>
 <div class="hud hud-br" id="hint">SCROLL<span class="arrow">▼</span></div>
@@ -211,7 +211,28 @@
   </div>
  </div>
 
- <div class="card aux" data-x="1256" data-side="r">
+ <article class="card" data-x="1330" data-side="r" data-name="これから">
+  <div class="in">
+   <span class="no">09</span><span class="kick">これから</span>
+   <h2>いま、気になっている道</h2>
+   <p class="period">2024年〜</p>
+   <p>広島市中区の並木通り。この道をどう使い直すかという検討でつくられた3Dデータが手に入ったので、開いて読んでみました。長さ362.4m、南北から13.9度ふれていて、南端から北端へ1.26m上っている道です。</p>
+   <p>ここから先の路面は、そのデータの中にあった案のひとつです。車道を少し絞って、そのぶんを歩道に足してある。13年やってきて分かったのは、場所は誰かのものだけれど、使い方はみんなで決められる、ということでした。ここから先は、その続きです。</p>
+   <p class="btns"><a class="btn btn-go" href="../namiki/">並木通りを歩いてみる ▶</a></p>
+  </div>
+ </article>
+
+ <div class="card aux" data-x="1500" data-side="l">
+  <div class="in">
+   <span class="kick">この区間について</span>
+   <ul class="stats"><li><b>362.4</b>m</li><li><b>200</b>本の木</li><li><b>11</b>種類の道具</li></ul>
+   <p>足元は、データにあった「再配分案2024」と、舗装の色の選択肢「Renga」を組み合わせた姿です。車1台ぶんの場所をベンチとテーブルに置き換えたものは、パークレットという名前で4基入っていました。並んでいる木はプラタナス。1本ずつ独立した植樹桝に立っていて、桝の形は9種類ありました。</p>
+   <p class="note">案の名前はデータの中の表記のまま。どれが最新かは確認できていません。木の1本ずつの位置はまだ手元にないので、等間隔で仮置きしています。</p>
+   <p class="btns"><a class="btn" href="../namiki/">くわしく見る（並木通りのページ）</a></p>
+  </div>
+ </div>
+
+ <div class="card aux" data-x="1660" data-side="r">
   <div class="in">
    <span class="kick">最後に、もう一度だけ</span>
    <p class="btns share"><span>この人生を誰かに:</span><a class="btn" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Ftowndesignlabo.jp%2Flife%2F">Xでシェア</a><a class="btn" target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ftowndesignlabo.jp%2Flife%2F">Facebookでシェア</a><a class="btn" target="_blank" rel="noopener" href="https://social-plugins.line.me/lineit/share?url=https%3A%2F%2Ftowndesignlabo.jp%2Flife%2F">LINEで送る</a></p>
@@ -224,7 +245,8 @@
 <script src="road-metrics.js?v=e6e3be7e" defer></script>
 <script src="data-rp.js?v=854fbdae" defer></script>
 <script src="data-ev.js?v=424fbaba" defer></script>
-<script src="road-scene.js?v=ae31a322" defer></script>
-<script src="../road/engine.js?v=d9d9f1d6" defer></script>
+<script src="../road/namiki-kit.js?v=7fed9eb4" defer></script>
+<script src="road-scene.js?v=ec19a95e" defer></script>
+<script src="../road/engine.js?v=5c1a31a3" defer></script>
 </body>
 </html>

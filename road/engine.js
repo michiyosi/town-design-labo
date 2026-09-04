@@ -417,6 +417,7 @@ function drawMesh(g, x, y, z){
    地面は1枚。物は x 48単位 × z 3帯の区画に分けて持ち、画面に入った区画から上から降りてきて組み上がる */
 var STATIC = [], movers = [], R = rng(20180501);
 var AUTO = SCENE.auto !== false;   // 場面が自前で並木・人・車を組むときは false にして、既定の飾りを止める
+var AEND = SCENE.autoTo != null ? SCENE.autoTo : L;   // 既定の飾り（街灯・ベンチ・木・歩く人）を置く終わり
 var CHW = 48, chunks = {};
 function put(model, x, z, y){
  var cx = Math.floor(x / CHW), cz = z < -20 ? 0 : (z > 20 ? 2 : 1), k = cx + ':' + cz;
@@ -456,24 +457,24 @@ function put(model, x, z, y){
  if(!AUTO) return;
  var fl = [C.red, C.yellow, C.wht, C.pink, C.orange];
  for(var i=0;i<260;i++){
-  var x = Math.floor(R()*L), z = Math.floor(18 + R()*44) * (R()<0.5 ? 1 : -1);
+  var x = Math.floor(R()*AEND), z = Math.floor(18 + R()*44) * (R()<0.5 ? 1 : -1);
   put(M.flower(fl[i%fl.length]), x, z);
  }
 })();
 
 /* 道ぞいの街灯とベンチ */
 AUTO && (function street(){
- for(var x=40-XPAD; x<L+XEND-20; x+=48){ put(M.lamp(), x, -14); put(M.lamp(), x+24, 13); }
- for(var i=0;i<12;i++){ put(M.bench(), 70 + i*96, 14); }
+ for(var x=40-XPAD; x<Math.min(L+XEND-20, AEND); x+=48){ put(M.lamp(), x, -14); put(M.lamp(), x+24, 13); }
+ for(var i=0;i<12 && 70+i*96 < AEND;i++){ put(M.bench(), 70 + i*96, 14); }
 })();
 /* 奥の木々（章の場面とかぶらない帯に置く） */
 AUTO && (function woods(){
  for(var i=0;i<70;i++){
-  var x = 10 + Math.floor(R()*(L-20)), z = (52 + Math.floor(R()*8)) * (R()<0.5 ? 1 : -1);
+  var x = 10 + Math.floor(R()*(AEND-20)), z = (52 + Math.floor(R()*8)) * (R()<0.5 ? 1 : -1);
   var k = R();
   put(k<0.5 ? M.tree(k<0.25 ? C.g3 : C.dg) : (k<0.85 ? M.pine() : M.sakura()), x, z);
  }
- for(var j=0;j<40;j++) put(M.bush(), Math.floor(R()*L), (20 + Math.floor(R()*28)) * (R()<0.5 ? 1 : -1));
+ for(var j=0;j<40;j++) put(M.bush(), Math.floor(R()*AEND), (20 + Math.floor(R()*28)) * (R()<0.5 ? 1 : -1));
  /* 延ばした分の道ぞいにも木を置く */
  for(var e=0;e<Math.floor((XPAD+XEND)/6);e++){
   var toEnd = XEND > 0 && (e % 2), ex = toEnd ? L + 10 + Math.floor(R()*(XEND-16)) : -10 - Math.floor(R()*(XPAD-16)), ez = (24 + Math.floor(R()*36)) * (R()<0.5 ? 1 : -1), ek = R();
@@ -512,7 +513,8 @@ AUTO && (function walkers(){
   var s = sh[i%sh.length], p = pa[i%pa.length], hat = (i%4===0) ? C.yellow : null;
   var fr = [M.person(s,p,hat,1), M.person(s,p,hat,2)];
   var dir = R()<0.5 ? 1 : -1;
-  movers.push(walker(fr, Math.floor(R()*L), i%2 ? 12 : -12, dir * (1.2 + R()*0.8)));
+  var wk = walker(fr, Math.floor(R()*AEND), i%2 ? 12 : -12, dir * (1.2 + R()*0.8));
+  wk.x1 = Math.min(wk.x1, AEND - 30); movers.push(wk);
  }
 })();
 
