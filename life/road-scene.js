@@ -63,8 +63,10 @@ function yearX(y){
  for(i=0;i<ev.length;i++){
   e = ev[i]; var year = parseInt(e.y, 10);
   e.im = leadFirst(e.im);
-  var x = Math.max(Math.round(yearX(year) - 8), last + 22); last = x; placed.push(x);
-  var side = oppositeOf(x), zz = 40 + 12 * (i % 2);
+  var x = Math.max(Math.round(yearX(year) - 8), last + 30); last = x; placed.push(x);
+  /* 続けて並ぶ標識は左右を互い違いにする。同じ側だと画面の上で 30単位では足りず、
+     板（240px＝約30単位ぶん）どうしが重なってしまう */
+  var side = (i % 2) ? 'r' : 'l', zz = 40 + 12 * (i % 3);
   var el = document.createElement('div');
   el.className = 'card sign' + (e.im && e.im.length ? ' has-photo' : ''); el.dataset.x = x; el.dataset.side = side; el.dataset.z = side === 'r' ? -zz : zz;
   var h = '<div class="in">';

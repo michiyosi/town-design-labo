@@ -551,7 +551,8 @@ var W = 0, H = 0, dpr = 1;
 var track = document.getElementById('track');
 var cards = [].slice.call(document.querySelectorAll('#cards .card')).map(function(el){
  var side = el.dataset.side;
- return {el:el, x:+el.dataset.x, z: el.dataset.z !== undefined ? +el.dataset.z : (side === 'r' ? -16 : (side === 'l' ? 16 : 0)), side:side, name:el.dataset.name || '', on:false, sign:el.classList.contains('sign') || el.classList.contains('photo'), photo:el.classList.contains('photo')};
+ var mv = el.classList.contains('sign') || el.classList.contains('photo') || el.classList.contains('faces');
+ return {el:el, op:1, movable:mv, x0:+el.dataset.x, x:+el.dataset.x, z: el.dataset.z !== undefined ? +el.dataset.z : (side === 'r' ? -16 : (side === 'l' ? 16 : 0)), side:side, name:el.dataset.name || '', on:false, sign:el.classList.contains('sign') || el.classList.contains('photo'), photo:el.classList.contains('photo')};
 });
 var stations = cards.filter(function(c){ return !c.sign && (c.el.dataset.name !== undefined || c.el.classList.contains('title')); });
 var sttotal = document.getElementById('sttotal'); if(sttotal) sttotal.textContent = (stations.length-1 < 10 ? '0' : '') + (stations.length-1);
@@ -565,6 +566,41 @@ function buildFlow(spx){
   c.fy = Math.max(sPx - h/2, bottom + 24); bottom = c.fy + h; last = bottom;
  }
  return last;
+}
+/* 板が画面の上で重ならないように、道ぞいの飾り（標識・写真の看板・顔ウォール）を
+   道に沿って少しずらす。画面の中での板どうしの位置関係はカメラに依らないので、
+   幅が決まったときに一度だけ解けばよい。数字の付いた章の板と付録の板は動かさない */
+function cardRect(c, w, h){
+ var sx = (c.x - c.z)*8, sy = (c.x + c.z)*4;
+ return [c.side === 'r' ? sx : (c.side === 'l' ? sx - w : sx - w/2),
+         c.photo ? sy - 76 - h : sy - h/2, w, h];
+}
+function rectHit(a, b, m){ return a[0] < b[0]+b[2]+m && b[0] < a[0]+a[2]+m && a[1] < b[1]+b[3]+m && b[1] < a[1]+a[3]+m; }
+function unstack(){
+ var i, k, q, taken = [], list = cards.slice().sort(function(a,b){ return a.x0 - b.x0; });
+ for(i=0;i<list.length;i++) list[i].x = list[i].x0;
+ for(i=0;i<list.length;i++){                                   /* 動かさない板の場所を先に押さえる */
+  var f = list[i]; if(f.movable) continue;
+  taken.push(cardRect(f, f.el.offsetWidth, f.el.offsetHeight));
+ }
+ /* 大きい板から先に場所を取る。小さい板のほうが逃げ場を見つけやすいため */
+ var mv = list.filter(function(c){ return c.movable; });
+ mv.sort(function(a,b){ return (b.el.offsetWidth*b.el.offsetHeight) - (a.el.offsetWidth*a.el.offsetHeight); });
+ for(i=0;i<mv.length;i++){
+  var c = mv[i];
+  var w = c.el.offsetWidth, h = c.el.offsetHeight, put = null;
+  for(k=0; k<=24 && !put; k++){
+   for(var sgn=0; sgn<2 && !put; sgn++){
+    if(k === 0 && sgn) continue;
+    c.x = c.x0 + (sgn ? -k : k) * 4;                           /* 前後に4単位ずつ、最大±96 */
+    var r = cardRect(c, w, h), ok = true;
+    for(q=0;q<taken.length;q++) if(rectHit(r, taken[q], 8)){ ok = false; break; }
+    if(ok) put = r;
+   }
+  }
+  if(!put){ c.x = c.x0; put = cardRect(c, w, h); }
+  taken.push(put);
+ }
 }
 function layout(){
  W = innerWidth; H = innerHeight; dpr = Math.min(devicePixelRatio || 1, 2);
@@ -583,6 +619,8 @@ function layout(){
  }
  var th = (CAM1 - CAM0) * SPX + H;
  track.style.height = Math.round(th) + 'px';
+ if(flow){ for(var ci=0;ci<cards.length;ci++) cards[ci].x = cards[ci].x0; }
+ else unstack();
 }
 var EASE = 0.12, cur = null, lastT = 0, prevCur = 0, heroT = 0, heroDir = 1;
 function targetCam(){ return Math.min(CAM1, CAM0 + (scrollY || 0) / SPX); }
@@ -592,7 +630,11 @@ function project(x, y, z, cx, cy){ return [(x - z)*8 + cx, (x + z)*4 - y*8 + cy]
 
 /* 板は道ぞいの点に留めてあり、街と一緒に右下から左上へ斜めに横切る。
    幅の足りない画面では横位置だけ留めて、縦にだけ流す */
-function placeCards(cx, cy){
+/* 道の遠くにある板は薄くする。画面が広いほど一度に見える板が増えて、
+   重なって読みにくくなるため。近い板だけをはっきり出す。
+   縦一列に流れる画面（幅の足りない端末）では効かせない */
+var FADE_NEAR = 52, FADE_FAR = 92;
+function placeCards(cx, cy, cam){
  var scrollPx = (scrollY || 0);
  for(var i=0;i<cards.length;i++){
   var c = cards[i], el = c.el, w = el.offsetWidth, h = el.offsetHeight, px, py;
@@ -605,6 +647,18 @@ function placeCards(cx, cy){
   }
   px = Math.round(px/4)*4; py = Math.round(py/4)*4;
   el.style.transform = 'translate3d(' + px + 'px,' + py + 'px,0)';
+  if(flow){
+   if(c.op !== 1){ c.op = 1; el.style.opacity = ''; el.style.pointerEvents = ''; }
+  } else {
+   var d = Math.abs(c.x - cam);
+   var op = d <= FADE_NEAR ? 1 : (d >= FADE_FAR ? 0 : (FADE_FAR - d) / (FADE_FAR - FADE_NEAR));
+   op = Math.round(op * 20) / 20;                    /* 20段。毎フレーム書き換えないように丸める */
+   if(op !== c.op){
+    c.op = op;
+    el.style.opacity = op < 1 ? op : '';
+    el.style.pointerEvents = op < 0.2 ? 'none' : '';
+   }
+  }
   var vis = py < H - 80 && py + h > 80 && px < W - 40 && px + w > 40;
   if(vis && !c.on){
    c.on = true; el.classList.add('on');
@@ -674,7 +728,7 @@ function draw(cam, dt, now){
  if(Math.abs(v) > 0.3){ heroDir = v > 0 ? 1 : -1; heroT += s; }
  var hf = Math.abs(v) > 0.3 ? 1 + (Math.floor(heroT*6) % 2) : 0;
  drawMesh(heroDir > 0 ? heroR[hf] : heroL[hf], snap(cam) + 12, 0, -12);  /* 少し先の歩道（車道の外側）を歩く */
- placeCards(cx, cy);
+ placeCards(cx, cy, cam);
  hud(cam);
 }
 
