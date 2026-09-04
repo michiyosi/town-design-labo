@@ -1,17 +1,18 @@
-/* 並木通りの道具箱。engine.js の場面（ROAD_SCENE.build）から呼ぶ。
-   広島市中区・並木通りの3Dデータから読み取った要素を、
-   等角ボクセルの物として持っている。/namiki/ と /life/ の両方で使う。
-       NAMIKI.models(api);      // api.M に物を足す
-       NAMIKI.P                 // 路面の色
+/* 道の道具箱。engine.js の場面（ROAD_SCENE.build）から呼ぶ。
+   通りの検討でよく出てくる要素（並木・植樹桝・街灯・パークレット・
+   ボラード・縁石・沿道の建物など）を、等角ボクセルの物として持っている。
+   /street/ と /life/ の両方で使う。
+       STREETKIT.models(api);   // api.M に物を足す
+       STREETKIT.P              // 路面の色
    engine.js より先に読むこと（場面ファイルよりもさらに先）。 */
-window.NAMIKI = (function(){
+window.STREETKIT = (function(){
 'use strict';
 
 /* 路面の色 */
 var P = {
  walk1:'#C9C2B6', walk2:'#BFB8AB',            // いまの歩道
  wide1:'#E7E0CD', wide2:'#DBD3BE',            // 広げた歩道
- brick1:'#C08457', brick2:'#B3784E',          // レンガ（データにあった舗装の色のひとつ）
+ brick1:'#C08457', brick2:'#B3784E',          // レンガ（舗装の色の選択肢のひとつ）
  lot1:'#CBD0D6',  lot2:'#C2C8D0',             // 沿道の敷地
  back1:'#B9C0C7', back2:'#B0B8C0',            // 奥の街区
  cross:'#767E88', road:'#6B7280', kerb:'#D6D1C6'
@@ -144,7 +145,7 @@ function models(api){
   for(var r = 0; r < 5; r++) for(var q = 0; q < 5; q++) if(g[r][q] === '#') m.box(-5 + q*2, 14 + (4-r)*2, 0, 2, 2, 1, C.ink);
   return m;
  };
- /* アーケードの入口（本通り側） */
+ /* アーケードの入口（商店街につながる側） */
  M.arcade = function(){
   var m = new Model(), col = '#B8C0CC';
   m.box(-2, 0, -22, 3, 13, 3, col); m.box(-2, 0, 19, 3, 13, 3, col);
@@ -156,7 +157,7 @@ function models(api){
  return M;
 }
 
-/* 並木そのもの。x0〜x1 の区間に、植樹桝つきの高木を左右へ互い違いに立てる */
+/* 並木。x0〜x1 の区間に、植樹桝つきの高木を左右へ互い違いに立てる */
 function trees(api, x0, x1, step, zn, zf, skip){
  var put = api.put, M = api.M, x;
  step = step || 28; zn = zn == null ? -13 : zn; zf = zf == null ? 13 : zf;

@@ -276,12 +276,12 @@ function withChapters(cb){
  document.head.appendChild(sc);
 }
 
-/* 終わりの「これから」の区間＝並木通り（広島市中区）。物は ../road/namiki-kit.js から */
-var NKX = 1288, NK0 = 1320, NK1 = 1712;   // わたる道の始まり／並木通りの始まり・終わり
+/* 終わりの「これから」の区間。物は ../road/street-kit.js から */
+var NKX = 1288, NK0 = 1320, NK1 = 1712;   // わたる道の始まり／通りの区間の始まり・終わり
 
 window.ROAD_SCENE = {
  L: 1800,
- autoTo: 1300,        // 既定の飾り（街灯・ベンチ・奥の木・歩く人）はここまで。この先は並木通りとして組む
+ autoTo: 1300,        // 既定の飾り（街灯・ベンチ・奥の木・歩く人）はここまで。この先は通りとして組む
  hero: null,
  /* 窓に出す章の本文を engine に渡す。url は "story.html?ch=3" のような形 */
  chapterHtml: function(url, cb){
@@ -292,12 +292,12 @@ window.ROAD_SCENE = {
   });
  },
  /* 空白の章（2013.9〜2015.4）の地面だけ色が抜ける。
-    終わりの「これから」の区間は、並木通りの路面になる */
+    終わりの「これから」の区間は、通りの路面になる */
  tile: function(tx, tz, c){
   if(tx >= 37 && tx <= 48 && Math.abs(tz) >= 2) return ((tx+tz)&1) ? '#CBD2C3' : '#BFC7B7';
   var x = tx * 8;
   if(x < NKX || x >= NK1) return null;
-  var P = window.NAMIKI && window.NAMIKI.P; if(!P) return null;
+  var P = window.STREETKIT && window.STREETKIT.P; if(!P) return null;
   var chk = (tx + tz) & 1;
   var road = (tz === -1 || tz === 0), walk = (tz === -2 || tz === 1);
   var lot = (tz === -4 || tz === -3 || tz === 2 || tz === 3);
@@ -308,7 +308,7 @@ window.ROAD_SCENE = {
   if(lot) return chk ? P.lot1 : P.lot2;
   return null;                                                          // 車道はアスファルトのまま
  },
- /* わたる道では白線を引かず、並木通りでは車道を少し絞る */
+ /* わたる道では白線を引かず、通りの区間では車道を少し絞る */
  mark: function(tx){
   var x = tx * 8;
   if(x >= NKX && x < NK0) return 'none';
@@ -453,13 +453,13 @@ window.ROAD_SCENE = {
   put(M.person(C.lime, C.ink, C.brown, 0), 1048, 20); put(M.person(C.pink, C.ink, null, 0), 1052, 20); put(M.person(C.blue, C.ink, null, 0), 1056, 20); put(M.person(C.yellow, C.brown, null, 0), 1044, 22);
   put(M.sakura(), 1090, 30); put(M.sakura(), 1100, 48);
 
-  /* ================= これから。並木通り（広島市中区） ================= */
-  var NK = window.NAMIKI, walker = api.walker, R = api.R, nx;
+  /* ================= これから。線を引き直した通り ================= */
+  var NK = window.STREETKIT, walker = api.walker, R = api.R, nx;
   if(!NK){ put(M.arch(C.yellow), 1748, 0); return; }   /* 道具箱が読めなかったときは、ここで終わる */
   NK.models(api);
   /* わたる道 */
   put(M.sign(C.blue), 1296, 18); put(M.sign(C.blue), 1310, -18);
-  /* 並木と街灯。木の位置はどの案でも動かさない */
+  /* 並木と街灯。木の位置はどの断面でも動かさない */
   NK.trees(api, NK0 + 10, NK1 - 6, 28);
   for(nx = NK0 + 24; nx < NK1 - 20; nx += 56) put(M.slamp(), nx, -17);
   for(nx = NK0 + 52; nx < NK1 - 20; nx += 56) put(M.slamp(), nx, 16);
