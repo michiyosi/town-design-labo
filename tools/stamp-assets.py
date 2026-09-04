@@ -8,9 +8,10 @@ GitHub Pages はどのファイルも同じ有効期限で配ってしまうの�
 import hashlib, os, re, sys
 
 TARGETS = {
-    'life/index.html': ['../road/road.css', 'road-metrics.js', 'data-rp.js', 'data-ev.js', 'road-scene.js', '../road/engine.js'],
+    'life/index.html': ['../road/road.css', 'road-metrics.js', 'data-rp.js', 'data-ev.js', '../road/namiki-kit.js', 'road-scene.js', '../road/engine.js'],
     'life/story.html': ['road-metrics.js'],
     'road/index.html': ['road.css', 'scene-tdl.js', 'engine.js'],
+    'namiki/index.html': ['../road/road.css', '../road/namiki-kit.js', 'scene-namiki.js', '../road/engine.js'],
 }
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 changed = []

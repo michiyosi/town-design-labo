@@ -276,8 +276,12 @@ function withChapters(cb){
  document.head.appendChild(sc);
 }
 
+/* 終わりの「これから」の区間＝並木通り（広島市中区）。物は ../road/namiki-kit.js から */
+var NKX = 1288, NK0 = 1320, NK1 = 1712;   // わたる道の始まり／並木通りの始まり・終わり
+
 window.ROAD_SCENE = {
- L: 1340,
+ L: 1800,
+ autoTo: 1300,        // 既定の飾り（街灯・ベンチ・奥の木・歩く人）はここまで。この先は並木通りとして組む
  hero: null,
  /* 窓に出す章の本文を engine に渡す。url は "story.html?ch=3" のような形 */
  chapterHtml: function(url, cb){
@@ -287,9 +291,28 @@ window.ROAD_SCENE = {
    cb(c ? c[1] : null);
   });
  },
- /* 空白の章（2013.9〜2015.4）の地面だけ色が抜ける */
+ /* 空白の章（2013.9〜2015.4）の地面だけ色が抜ける。
+    終わりの「これから」の区間は、並木通りの路面になる */
  tile: function(tx, tz, c){
   if(tx >= 37 && tx <= 48 && Math.abs(tz) >= 2) return ((tx+tz)&1) ? '#CBD2C3' : '#BFC7B7';
+  var x = tx * 8;
+  if(x < NKX || x >= NK1) return null;
+  var P = window.NAMIKI && window.NAMIKI.P; if(!P) return null;
+  var chk = (tx + tz) & 1;
+  var road = (tz === -1 || tz === 0), walk = (tz === -2 || tz === 1);
+  var lot = (tz === -4 || tz === -3 || tz === 2 || tz === 3);
+  var back = (tz === -6 || tz === -5 || tz === 4 || tz === 5);
+  if(x < NK0) return road ? P.road : ((walk || lot) ? P.cross : (back ? (chk ? P.back1 : P.back2) : null));   // わたる道
+  if(back) return chk ? P.back1 : P.back2;
+  if(walk || tz === -3 || tz === 2) return chk ? P.brick1 : P.brick2;    // レンガに変わった歩道
+  if(lot) return chk ? P.lot1 : P.lot2;
+  return null;                                                          // 車道はアスファルトのまま
+ },
+ /* わたる道では白線を引かず、並木通りでは車道を少し絞る */
+ mark: function(tx){
+  var x = tx * 8;
+  if(x >= NKX && x < NK0) return 'none';
+  if(x >= NK0 && x < NK1) return 7;
   return null;
  },
  build: function(api){
@@ -429,8 +452,47 @@ window.ROAD_SCENE = {
   put(M.cake(), 1060, 24);
   put(M.person(C.lime, C.ink, C.brown, 0), 1048, 20); put(M.person(C.pink, C.ink, null, 0), 1052, 20); put(M.person(C.blue, C.ink, null, 0), 1056, 20); put(M.person(C.yellow, C.brown, null, 0), 1044, 22);
   put(M.sakura(), 1090, 30); put(M.sakura(), 1100, 48);
-  put(M.arch(C.yellow), 1290, 0);
-  movers.push(anim([M.goalflag(0), M.goalflag(1)], 1300, 0, -12, 3));
+
+  /* ================= これから。並木通り（広島市中区） ================= */
+  var NK = window.NAMIKI, walker = api.walker, R = api.R, nx;
+  if(!NK){ put(M.arch(C.yellow), 1748, 0); return; }   /* 道具箱が読めなかったときは、ここで終わる */
+  NK.models(api);
+  /* わたる道 */
+  put(M.sign(C.blue), 1296, 18); put(M.sign(C.blue), 1310, -18);
+  /* 並木と街灯。木の位置はどの案でも動かさない */
+  NK.trees(api, NK0 + 10, NK1 - 6, 28);
+  for(nx = NK0 + 24; nx < NK1 - 20; nx += 56) put(M.slamp(), nx, -17);
+  for(nx = NK0 + 52; nx < NK1 - 20; nx += 56) put(M.slamp(), nx, 16);
+  /* 沿道の街並み */
+  NK.frontage(api, NK0 + 12, NK1 - 24, 40);
+  /* 車道から取り返した縁 */
+  for(nx = NK0; nx < NK1; nx += 8){ put(M.kerb(8), nx, -8); put(M.kerb(8), nx, 7); }
+  /* 車1台ぶんの場所を、座れる場所に置き換えたもの */
+  put(M.parklet(), NK0 + 80, -12); put(M.parklet(), NK0 + 192, -12); put(M.parklet(), NK0 + 304, -12);
+  put(M.parklet(), NK0 + 122, 12); put(M.parklet(), NK0 + 234, 12);
+  put(M.parasol(C.red), NK0 + 88, -13); put(M.parasol(C.cyan), NK0 + 130, 13); put(M.parasol(C.yellow), NK0 + 312, -13);
+  put(M.cafetable(), NK0 + 74, -14); put(M.cafetable(), NK0 + 240, 14); put(M.cafetable(), NK0 + 298, -14);
+  put(M.bench(), NK0 + 186, -15); put(M.bench(), NK0 + 228, 15); put(M.bench(), NK0 + 340, -15);
+  for(nx = NK0 + 16; nx < NK1 - 24; nx += 28){ put(M.planter(), nx, -19); put(M.planter(), nx + 14, 19); }
+  /* 動く建築。13年の仕事と、この道がつながるところ */
+  put(M.kei(C.wood, C.red), NK0 + 150, 13); put(M.foodtruck(C.orange), NK0 + 268, -14);
+  put(M.stall(C.red), NK0 + 166, 17); put(M.stall(C.blue), NK0 + 280, -18);
+  /* 人 */
+  var nsh = [C.red, C.blue, C.yellow, C.lime, C.wht, C.pink, C.cyan, C.purple], npa = [C.ink, C.brown, C.navy];
+  for(var k = 0; k < 14; k++){
+   put(M.person(nsh[k % 8], npa[k % 3], k % 5 === 0 ? C.yellow : null, 0), NK0 + 60 + k * 24, k % 2 ? 15 : -16);
+  }
+  for(var w = 0; w < 8; w++){
+   var ws = nsh[(w + 3) % 8], wp = npa[(w + 1) % 3];
+   var wk = walker([M.person(ws, wp, null, 1), M.person(ws, wp, null, 2)], NK0 + 40 + w * 44, w % 2 ? 14 : -15, (w % 2 ? 1 : -1) * (1.1 + R() * 0.6));
+   wk.x0 = NK0 + 20; wk.x1 = NK1 - 24; movers.push(wk);
+  }
+
+  /* ゴール。街を抜けて、島のはしへ */
+  put(M.sakura(), 1724, 26); put(M.sakura(), 1740, 44); put(M.tree(C.g3), 1730, -28); put(M.pine(), 1756, -40);
+  put(M.bench(), 1736, 14); put(M.lamp(), 1720, -14);
+  put(M.arch(C.yellow), 1748, 0);
+  movers.push(anim([M.goalflag(0), M.goalflag(1)], 1758, 0, -12, 3));
  }
 };
 })();

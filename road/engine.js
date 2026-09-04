@@ -416,6 +416,8 @@ function drawMesh(g, x, y, z){
 /* ---------- 街を組む ----------
    地面は1枚。物は x 48単位 × z 3帯の区画に分けて持ち、画面に入った区画から上から降りてきて組み上がる */
 var STATIC = [], movers = [], R = rng(20180501);
+var AUTO = SCENE.auto !== false;   // 場面が自前で並木・人・車を組むときは false にして、既定の飾りを止める
+var AEND = SCENE.autoTo != null ? SCENE.autoTo : L;   // 既定の飾り（街灯・ベンチ・木・歩く人）を置く終わり
 var CHW = 48, chunks = {};
 function put(model, x, z, y){
  var cx = Math.floor(x / CHW), cz = z < -20 ? 0 : (z > 20 ? 2 : 1), k = cx + ':' + cz;
@@ -434,9 +436,16 @@ function put(model, x, z, y){
   if(SCENE.tile){ var cc = SCENE.tile(tx, tz, c); if(cc) c = cc; }
   flat(STATIC, x0, z0, x0+8, z0+8, 0, c);
  }
- for(tx=-XPAD; tx<L+XEND; tx+=8) flat(STATIC, tx, -0.5, tx+4, 0.5, 0.02, C.line);              // 中央線
- flat(STATIC, -XPAD, -8.5, L+XEND, -8, 0.02, C.line); flat(STATIC, -XPAD, 8, L+XEND, 8.5, 0.02, C.line);   // 路側線
- for(tx=-XPAD; tx<L+XEND; tx+=8){ flat(STATIC, tx, -16, tx+8, -15.5, 0.02, C.sand); flat(STATIC, tx, 15.5, tx+8, 16, 0.02, C.sand); }
+ /* 白線。場面が SCENE.mark(tx) を持つときは、区間ごとに引き方を変えられる。
+    返り値 null＝そのまま／'none'＝引かない／数値＝車道の半分の幅 */
+ for(tx=-XPAD; tx<L+XEND; tx+=8){
+  var mk = SCENE.mark ? SCENE.mark(tx) : null;
+  if(mk === 'none') continue;
+  var hw = (typeof mk === 'number') ? mk : 8;
+  flat(STATIC, tx, -0.5, tx+4, 0.5, 0.02, C.line);                                                        // 中央線
+  flat(STATIC, tx, -hw-0.5, tx+8, -hw, 0.02, C.line); flat(STATIC, tx, hw, tx+8, hw+0.5, 0.02, C.line);   // 路側線
+  if(mk === null){ flat(STATIC, tx, -16, tx+8, -15.5, 0.02, C.sand); flat(STATIC, tx, 15.5, tx+8, 16, 0.02, C.sand); }   // 歩道のふち
+ }
  /* 島のふち（土）。見えるのは +x と +z の面 */
  var dirt = hex(C.dirt), sand = hex(C.sand);
  var XE = L + XEND, XS = -XPAD;
@@ -445,26 +454,27 @@ function put(model, x, z, y){
  quad(STATIC, [XE,-1,-ZW],[XE,0,-ZW],[XE,0,ZW],[XE,-1,ZW], sand, SH_X);
  quad(STATIC, [XS,-1,ZW],[XE,-1,ZW],[XE,0,ZW],[XS,0,ZW], sand, SH_Z);
  /* 花 */
+ if(!AUTO) return;
  var fl = [C.red, C.yellow, C.wht, C.pink, C.orange];
  for(var i=0;i<260;i++){
-  var x = Math.floor(R()*L), z = Math.floor(18 + R()*44) * (R()<0.5 ? 1 : -1);
+  var x = Math.floor(R()*AEND), z = Math.floor(18 + R()*44) * (R()<0.5 ? 1 : -1);
   put(M.flower(fl[i%fl.length]), x, z);
  }
 })();
 
 /* 道ぞいの街灯とベンチ */
-(function street(){
- for(var x=40-XPAD; x<L+XEND-20; x+=48){ put(M.lamp(), x, -14); put(M.lamp(), x+24, 13); }
- for(var i=0;i<12;i++){ put(M.bench(), 70 + i*96, 14); }
+AUTO && (function street(){
+ for(var x=40-XPAD; x<Math.min(L+XEND-20, AEND); x+=48){ put(M.lamp(), x, -14); put(M.lamp(), x+24, 13); }
+ for(var i=0;i<12 && 70+i*96 < AEND;i++){ put(M.bench(), 70 + i*96, 14); }
 })();
 /* 奥の木々（章の場面とかぶらない帯に置く） */
-(function woods(){
+AUTO && (function woods(){
  for(var i=0;i<70;i++){
-  var x = 10 + Math.floor(R()*(L-20)), z = (52 + Math.floor(R()*8)) * (R()<0.5 ? 1 : -1);
+  var x = 10 + Math.floor(R()*(AEND-20)), z = (52 + Math.floor(R()*8)) * (R()<0.5 ? 1 : -1);
   var k = R();
   put(k<0.5 ? M.tree(k<0.25 ? C.g3 : C.dg) : (k<0.85 ? M.pine() : M.sakura()), x, z);
  }
- for(var j=0;j<40;j++) put(M.bush(), Math.floor(R()*L), (20 + Math.floor(R()*28)) * (R()<0.5 ? 1 : -1));
+ for(var j=0;j<40;j++) put(M.bush(), Math.floor(R()*AEND), (20 + Math.floor(R()*28)) * (R()<0.5 ? 1 : -1));
  /* 延ばした分の道ぞいにも木を置く */
  for(var e=0;e<Math.floor((XPAD+XEND)/6);e++){
   var toEnd = XEND > 0 && (e % 2), ex = toEnd ? L + 10 + Math.floor(R()*(XEND-16)) : -10 - Math.floor(R()*(XPAD-16)), ez = (24 + Math.floor(R()*36)) * (R()<0.5 ? 1 : -1), ek = R();
@@ -473,7 +483,7 @@ function put(model, x, z, y){
 })();
 
 /* 海の上。船と白波 */
-(function seaside(){
+AUTO && (function seaside(){
  movers.push(drift([M.boat(C.wht)], 60, SEA_Y, -104, 1.2, 0, L));
  movers.push(drift([M.boat(C.cream)], 400, SEA_Y, 106, -0.9, 0, L));
  movers.push(drift([M.boat(C.wht)], 900, SEA_Y, -110, 1.5, 0, L));
@@ -483,12 +493,12 @@ function put(model, x, z, y){
  }
 })();
 /* 空。雲と鳥 */
-(function sky(){
+AUTO && (function sky(){
  for(var i=0;i<7;i++) movers.push(drift([M.cloud()], Math.floor(R()*L), 40 + Math.floor(R()*8), Math.floor(R()*80 - 40), 0.6 + R()*0.4, -40, L+40));
  for(var j=0;j<3;j++) movers.push(drift([M.bird(0), M.bird(1)], Math.floor(R()*L), 24, Math.floor(R()*40 - 20), 4 + R()*2, -20, L+20, 5));
 })();
 /* 道を走る車。左車線は +x へ、右車線は -x へ */
-(function traffic(){
+AUTO && (function traffic(){
  var cols = [C.blue, C.red, C.wht, C.yellow, C.lime, C.cyan];
  for(var i=0;i<5;i++) movers.push(drift([M.car(cols[i])], Math.floor(R()*L), 0, -4, 5 + R()*2, -30, L+30));
  movers.push(drift([M.bus()], 300, 0, -4, 4.5, -30, L+30));
@@ -497,13 +507,14 @@ function put(model, x, z, y){
  movers.push(drift([M.truck(C.wht).mirror()], 150, 0, 4, -4.5, -30, L+30));
 })();
 /* 歩く人 */
-(function walkers(){
+AUTO && (function walkers(){
  var sh = [C.red, C.blue, C.yellow, C.lime, C.wht, C.pink, C.cyan, C.purple], pa = [C.ink, C.brown, C.navy];
  for(var i=0;i<14;i++){
   var s = sh[i%sh.length], p = pa[i%pa.length], hat = (i%4===0) ? C.yellow : null;
   var fr = [M.person(s,p,hat,1), M.person(s,p,hat,2)];
   var dir = R()<0.5 ? 1 : -1;
-  movers.push(walker(fr, Math.floor(R()*L), i%2 ? 12 : -12, dir * (1.2 + R()*0.8)));
+  var wk = walker(fr, Math.floor(R()*AEND), i%2 ? 12 : -12, dir * (1.2 + R()*0.8));
+  wk.x1 = Math.min(wk.x1, AEND - 30); movers.push(wk);
  }
 })();
 
