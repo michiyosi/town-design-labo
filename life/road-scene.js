@@ -27,13 +27,15 @@ function yearX(y){
  /* 企画一覧PDFの全364件（data-ev.js）。年ごとにまとめて、年の標識から一覧の窓を開く */
  var ALL = window.EVALL || [], CATS = window.EVCATS || [], byY = {};
  function imgs(e){ return (e.im || []).map(function(v){ return typeof v === 'number' ? 'ev/' + v + '.jpg' : v; }); }
+ /* 一覧では72pxで出すので、原寸(420px)ではなく縮小版を読む */
+ function thumb(src){ return src.indexOf('ev/') === 0 ? src.replace('ev/', 'ev/t/') : src; }
  for(var a=0;a<ALL.length;a++){ (byY[ALL[a].y] = byY[ALL[a].y] || []).push(a); }
  /* 窓に出す中身（標識と、年の一覧から開いた企画で共通） */
  function popOf(e, extra){
   var pop = '<p class="pop-meta">' + esc(e.y) + (e.d ? '　' + esc(e.d) : '') + (e.p ? '<br>' + esc(e.p) : '') + '</p>';
   if(e.t) pop += '<p class="pop-t">' + esc(e.t) + '</p>';
   var im = imgs(e);
-  if(im.length){ pop += '<div class="pop-ph">'; for(var q=0;q<im.length;q++) pop += '<img src="' + asset(im[q]) + '" alt="">'; pop += '</div>'; }
+  if(im.length){ pop += '<div class="pop-ph">'; for(var q=0;q<im.length;q++) pop += '<img src="' + asset(im[q]) + '" alt="' + esc(e.n) + 'の写真 ' + (q+1) + '枚目">'; pop += '</div>'; }
   else pop += '<p class="pop-none">この企画の写真は、投稿に残っていません。</p>';
   if(e.po && e.po.length){
    for(var r=0;r<e.po.length;r++){
@@ -56,7 +58,7 @@ function yearX(y){
   var el = document.createElement('div');
   el.className = 'card sign' + (e.im && e.im.length ? ' has-photo' : ''); el.dataset.x = x; el.dataset.side = side; el.dataset.z = side === 'r' ? -zz : zz;
   var h = '<div class="in">';
-  if(e.im && e.im.length) h += '<img data-src="' + asset(e.im[0]) + '" alt="">';
+  if(e.im && e.im.length) h += '<img data-src="' + asset(e.im[0]) + '" alt="' + esc(e.n) + 'の写真">';
   h += '<span class="yr">' + esc(e.y) + '</span><b class="nm">' + esc(e.n) + '</b>';
   if(e.d) h += '<small class="meta">' + esc(e.d) + (e.p ? '<br>' + esc(e.p) : '') + '</small>';
   h += '</div>';
@@ -96,7 +98,7 @@ function yearX(y){
    h += '<h4 class="pop-cat">' + esc(CATS[c-1] || '') + '　' + ks.length + '件</h4><ul class="evl">';
    ks.forEach(function(k){
     var e = ALL[k], im = imgs(e);
-    h += '<li data-ei="' + k + '" role="button" tabindex="0">' + (im.length ? '<img src="' + asset(im[0]) + '" loading="lazy" alt="">' : '<span class="evi-no"></span>') + '<span><b>' + esc(e.n) + '</b><small>' + esc(e.d) + (e.p ? '<br>' + esc(e.p) : '') + '</small></span></li>';
+    h += '<li data-ei="' + k + '" role="button" tabindex="0">' + (im.length ? '<img src="' + asset(thumb(im[0])) + '" loading="lazy" alt="' + esc(e.n) + 'の写真">' : '<span class="evi-no"></span>') + '<span><b>' + esc(e.n) + '</b><small>' + esc(e.d) + (e.p ? '<br>' + esc(e.p) : '') + '</small></span></li>';
    });
    h += '</ul>';
   }
@@ -107,7 +109,9 @@ function yearX(y){
   var e = ALL[k]; if(!e) return;
   window.Road.openHtml(e.n, '<p class="btns"><button type="button" class="btn" data-year="' + e.y + '">◀ ' + e.y + '年の一覧に戻る</button></p>' + popOf(e, ''));
  }
+ function canWin(){ return !!(window.Road && window.Road.openHtml); }   /* WebGLが無い端末では窓が組まれない */
  function act(t){
+  if(!canWin()) return false;
   var b = t.closest('[data-year]'); if(b){ openYear(+b.getAttribute('data-year')); return true; }
   var li = t.closest('[data-ei]'); if(li){ openEvent(+li.getAttribute('data-ei')); return true; }
   return false;
@@ -125,6 +129,7 @@ var SCR = [[-400,-380],[40,-520],[720,-120]];
 var POSTS = [];   /* 街に立てる支柱の位置 */
 (function posters(){
  var wrap = document.getElementById('cards'); if(!wrap) return;
+ function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
  var byCh = {}, i;
  for(i=0;i<PHOTOS.length;i++){ (byCh[PHOTOS[i].ch] = byCh[PHOTOS[i].ch] || []).push(PHOTOS[i]); }
  for(var ch in byCh){
@@ -138,7 +143,7 @@ var POSTS = [];   /* 街に立てる支柱の位置 */
    z = Math.max(-60, Math.min(60, z));
    var el = document.createElement('figure');
    el.className = 'card photo' + (ph.g ? ' group' : ''); el.dataset.x = x; el.dataset.z = z; el.dataset.side = 'p'; el.dataset.ch = ch;
-   el.innerHTML = '<div class="in"><img data-src="' + ph.src + '" alt=""><figcaption>' + ph.cap + '</figcaption></div>';
+   el.innerHTML = '<div class="in"><img data-src="' + ph.src + '" alt="' + esc(ph.cap) + '"><figcaption>' + ph.cap + '</figcaption></div>';
    el.addEventListener('click', function(e){ var b = document.querySelector('a[data-win="story.html?ch=' + (+this.dataset.ch + 1) + '"]'); if(b){ e.preventDefault(); b.click(); } });
    wrap.appendChild(el);
    POSTS.push([x, z]);
@@ -164,8 +169,9 @@ var POSTS = [];   /* 街に立てる支柱の位置 */
  }
  function asset(q){ return (window.PREVIEW_ASSETS && window.PREVIEW_ASSETS[q]) || q; }   /* プレビュー用に画像を差し替える口 */
  function gal(ids, title){
-  var h = '<div class="pop-big" hidden><img alt=""></div><div class="pop-gal">';
-  for(var i=0;i<ids.length;i++) h += '<img src="' + asset('wall/t' + ids[i] + '.jpg') + '" data-full="' + asset('wall/g' + ids[i] + '.jpg') + '" alt="" loading="lazy">';
+  if(!window.Road || !window.Road.openHtml) return;
+  var h = '<div class="pop-big" hidden><img alt="拡大した写真"></div><div class="pop-gal">';
+  for(var i=0;i<ids.length;i++) h += '<img src="' + asset('wall/t' + ids[i] + '.jpg') + '" data-full="' + asset('wall/g' + ids[i] + '.jpg') + '" alt="当時の写真 ' + (i+1) + '枚目" loading="lazy">';
   h += '</div><p class="pop-src">写真は当時Facebookに公開したもの。押すと大きくなります。</p>';
   window.Road.openHtml(title, h);
   var box = document.querySelector('#win-html .pop-gal'), big = document.querySelector('#win-html .pop-big');
@@ -198,8 +204,16 @@ var POSTS = [];   /* 街に立てる支柱の位置 */
   }
   if(window.Road) window.Road.relayout();
  }
- if(window.WALL_DATA){ setTimeout(function(){ fill(window.WALL_DATA); }, 0); }
- else { try{ fetch('wall.json', {cache:'no-store'}).then(function(r){ return r.json(); }).then(fill).catch(function(){ for(var k in cards) cards[k].parentNode.removeChild(cards[k]); if(window.Road) window.Road.relayout(); }); }catch(e){} }
+ /* 顔の板は入口では要らない。顔の画像は329KBあるので、道に入ってから読む。
+    ただしWebGLが使えない端末では道に入る合図が来ないので、そのときは読み込みまで待って出す */
+ var wallStarted = false;
+ function loadWall(){
+  if(wallStarted) return; wallStarted = true;
+  if(window.WALL_DATA){ setTimeout(function(){ fill(window.WALL_DATA); }, 0); return; }
+  try{ fetch('wall.json', {cache:'no-store'}).then(function(r){ return r.json(); }).then(fill).catch(function(){ for(var k in cards) cards[k].parentNode.removeChild(cards[k]); if(window.Road) window.Road.relayout(); }); }catch(e){}
+ }
+ addEventListener('road:enter', loadWall, {once:true});
+ addEventListener('load', function(){ if(document.documentElement.classList.contains('nogl')) loadWall(); });
 
  /* おまけ: 13年から1枚引く／きょうと同じ日付 */
  function fbcard(p, label){
@@ -207,12 +221,13 @@ var POSTS = [];   /* 街に立てる支柱の位置 */
  }
  var db = document.getElementById('drawbtn'), tb = document.getElementById('tdbtn');
  if(db) db.addEventListener('click', function(){
-  var RP = window.RP || []; if(!RP.length) return;
+  var RP = window.RP || []; if(!RP.length || !window.Road || !window.Road.openHtml) return;
   var p = RP[Math.floor(Math.random()*RP.length)];
   window.Road.openHtml('13年から無作為に1枚', fbcard(p, '当時の投稿') + '<p class="btns"><button type="button" class="btn" id="draw-again">もう1枚引く</button></p>');
   var again = document.getElementById('draw-again'); if(again) again.addEventListener('click', function(){ db.click(); });
  });
  if(tb) tb.addEventListener('click', function(){
+  if(!window.Road || !window.Road.openHtml) return;
   var RP = window.RP || [], DC = window.DAYCNT || {}, n = new Date(), m = n.getMonth()+1, d = n.getDate();
   var key = ('0'+m).slice(-2) + ('0'+d).slice(-2), cnt = DC[key] || '00000000000000', cells = '';
   for(var i=0;i<14;i++){ var y = 2011+i; if(y===2011 && m<7) continue; if(y===2024 && m>1) continue; var c = +cnt.charAt(i); cells += '<li class="' + (c ? 'on' : '') + '"><b>' + y + '</b>' + (c ? c + '件' : '—') + '</li>'; }
@@ -224,13 +239,54 @@ var POSTS = [];   /* 街に立てる支柱の位置 */
   window.Road.openHtml('きょうと同じ日付の僕', h);
  });
 
- /* 呼びかけ先。cta.json に投稿URLがあれば、コメント欄への導線に変わる */
- try{ fetch('cta.json', {cache:'no-store'}).then(function(r){ return r.json(); }).then(function(c){ if(!c || !c.url) return; var a = document.getElementById('ctalink'); if(a) a.href = c.url; var p = document.getElementById('pill'); if(p) p.href = c.url; }).catch(function(){}); }catch(e){}
+ /* 呼びかけ先。既定はメッセージ。cta.json に投稿URLを入れると、リンクも文言もコメント欄向けに変わる */
+ var CTAW = {'ひとこと送る':'コメントする','メッセージで':'コメントに','メッセージで一行だけ':'コメントに一行だけ'};
+ try{ fetch('cta.json', {cache:'no-store'}).then(function(r){ return r.json(); }).then(function(c){
+  if(!c || !c.url) return;
+  var a = document.getElementById('ctalink'); if(a) a.href = c.url;
+  var p = document.getElementById('pill'); if(p) p.href = c.url;
+  [].forEach.call(document.querySelectorAll('.cta-w'), function(el){ var t = CTAW[el.textContent.trim()]; if(t) el.textContent = t; });
+ }).catch(function(){}); }catch(e){}
 })();
+
+/* 章の本文。枠（iframe）は拡張機能に止められることがあるので、
+   切り出しておいた本文（chapters.*.js）を必要になってから読んで、窓に直接入れる */
+var chapState = 0, chapWaiting = [];   /* 0=まだ 1=読み込み中 2=読めた 3=だめだった */
+function withChapters(cb){
+ if(chapState === 2) return cb(true);
+ if(chapState === 3) return cb(false);
+ chapWaiting.push(cb);
+ if(chapState === 1) return;
+ chapState = 1;
+ function finish(ok){ chapState = ok ? 2 : 3; var w = chapWaiting.splice(0); for(var i=0;i<w.length;i++) w[i](ok); }
+ var m = document.querySelector('meta[name="chapters-src"]');
+ if(!m || !m.content) return finish(false);
+ var sc = document.createElement('script');
+ sc.src = m.content;
+ sc.onload = function(){
+  if(!window.CHAPTERS) return finish(false);
+  if(!window.CHAPTERS_CSS) return finish(true);
+  var l = document.createElement('link');
+  l.rel = 'stylesheet'; l.href = window.CHAPTERS_CSS;
+  l.onload = function(){ finish(true); };
+  l.onerror = function(){ finish(true); };   /* 見た目が来なくても本文は読める */
+  document.head.appendChild(l);
+ };
+ sc.onerror = function(){ finish(false); };
+ document.head.appendChild(sc);
+}
 
 window.ROAD_SCENE = {
  L: 1340,
  hero: null,
+ /* 窓に出す章の本文を engine に渡す。url は "story.html?ch=3" のような形 */
+ chapterHtml: function(url, cb){
+  var k = String(url).split('ch=')[1]; k = k ? k.split('&')[0] : '';
+  withChapters(function(ok){
+   var c = ok && window.CHAPTERS ? window.CHAPTERS[k] : null;
+   cb(c ? c[1] : null);
+  });
+ },
  /* 空白の章（2013.9〜2015.4）の地面だけ色が抜ける */
  tile: function(tx, tz, c){
   if(tx >= 37 && tx <= 48 && Math.abs(tz) >= 2) return ((tx+tz)&1) ? '#CBD2C3' : '#BFC7B7';

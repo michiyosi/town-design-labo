@@ -416,6 +416,7 @@ function drawMesh(g, x, y, z){
 /* ---------- 街を組む ----------
    地面は1枚。物は x 48単位 × z 3帯の区画に分けて持ち、画面に入った区画から上から降りてきて組み上がる */
 var STATIC = [], movers = [], R = rng(20180501);
+var AUTO = SCENE.auto !== false;   // 場面が自前で並木・人・車を組むときは false にして、既定の飾りを止める
 var CHW = 48, chunks = {};
 function put(model, x, z, y){
  var cx = Math.floor(x / CHW), cz = z < -20 ? 0 : (z > 20 ? 2 : 1), k = cx + ':' + cz;
@@ -434,9 +435,16 @@ function put(model, x, z, y){
   if(SCENE.tile){ var cc = SCENE.tile(tx, tz, c); if(cc) c = cc; }
   flat(STATIC, x0, z0, x0+8, z0+8, 0, c);
  }
- for(tx=-XPAD; tx<L+XEND; tx+=8) flat(STATIC, tx, -0.5, tx+4, 0.5, 0.02, C.line);              // 中央線
- flat(STATIC, -XPAD, -8.5, L+XEND, -8, 0.02, C.line); flat(STATIC, -XPAD, 8, L+XEND, 8.5, 0.02, C.line);   // 路側線
- for(tx=-XPAD; tx<L+XEND; tx+=8){ flat(STATIC, tx, -16, tx+8, -15.5, 0.02, C.sand); flat(STATIC, tx, 15.5, tx+8, 16, 0.02, C.sand); }
+ /* 白線。場面が SCENE.mark(tx) を持つときは、区間ごとに引き方を変えられる。
+    返り値 null＝そのまま／'none'＝引かない／数値＝車道の半分の幅 */
+ for(tx=-XPAD; tx<L+XEND; tx+=8){
+  var mk = SCENE.mark ? SCENE.mark(tx) : null;
+  if(mk === 'none') continue;
+  var hw = (typeof mk === 'number') ? mk : 8;
+  flat(STATIC, tx, -0.5, tx+4, 0.5, 0.02, C.line);                                                        // 中央線
+  flat(STATIC, tx, -hw-0.5, tx+8, -hw, 0.02, C.line); flat(STATIC, tx, hw, tx+8, hw+0.5, 0.02, C.line);   // 路側線
+  if(mk === null){ flat(STATIC, tx, -16, tx+8, -15.5, 0.02, C.sand); flat(STATIC, tx, 15.5, tx+8, 16, 0.02, C.sand); }   // 歩道のふち
+ }
  /* 島のふち（土）。見えるのは +x と +z の面 */
  var dirt = hex(C.dirt), sand = hex(C.sand);
  var XE = L + XEND, XS = -XPAD;
@@ -445,6 +453,7 @@ function put(model, x, z, y){
  quad(STATIC, [XE,-1,-ZW],[XE,0,-ZW],[XE,0,ZW],[XE,-1,ZW], sand, SH_X);
  quad(STATIC, [XS,-1,ZW],[XE,-1,ZW],[XE,0,ZW],[XS,0,ZW], sand, SH_Z);
  /* 花 */
+ if(!AUTO) return;
  var fl = [C.red, C.yellow, C.wht, C.pink, C.orange];
  for(var i=0;i<260;i++){
   var x = Math.floor(R()*L), z = Math.floor(18 + R()*44) * (R()<0.5 ? 1 : -1);
@@ -453,12 +462,12 @@ function put(model, x, z, y){
 })();
 
 /* 道ぞいの街灯とベンチ */
-(function street(){
+AUTO && (function street(){
  for(var x=40-XPAD; x<L+XEND-20; x+=48){ put(M.lamp(), x, -14); put(M.lamp(), x+24, 13); }
  for(var i=0;i<12;i++){ put(M.bench(), 70 + i*96, 14); }
 })();
 /* 奥の木々（章の場面とかぶらない帯に置く） */
-(function woods(){
+AUTO && (function woods(){
  for(var i=0;i<70;i++){
   var x = 10 + Math.floor(R()*(L-20)), z = (52 + Math.floor(R()*8)) * (R()<0.5 ? 1 : -1);
   var k = R();
@@ -473,7 +482,7 @@ function put(model, x, z, y){
 })();
 
 /* 海の上。船と白波 */
-(function seaside(){
+AUTO && (function seaside(){
  movers.push(drift([M.boat(C.wht)], 60, SEA_Y, -104, 1.2, 0, L));
  movers.push(drift([M.boat(C.cream)], 400, SEA_Y, 106, -0.9, 0, L));
  movers.push(drift([M.boat(C.wht)], 900, SEA_Y, -110, 1.5, 0, L));
@@ -483,12 +492,12 @@ function put(model, x, z, y){
  }
 })();
 /* 空。雲と鳥 */
-(function sky(){
+AUTO && (function sky(){
  for(var i=0;i<7;i++) movers.push(drift([M.cloud()], Math.floor(R()*L), 40 + Math.floor(R()*8), Math.floor(R()*80 - 40), 0.6 + R()*0.4, -40, L+40));
  for(var j=0;j<3;j++) movers.push(drift([M.bird(0), M.bird(1)], Math.floor(R()*L), 24, Math.floor(R()*40 - 20), 4 + R()*2, -20, L+20, 5));
 })();
 /* 道を走る車。左車線は +x へ、右車線は -x へ */
-(function traffic(){
+AUTO && (function traffic(){
  var cols = [C.blue, C.red, C.wht, C.yellow, C.lime, C.cyan];
  for(var i=0;i<5;i++) movers.push(drift([M.car(cols[i])], Math.floor(R()*L), 0, -4, 5 + R()*2, -30, L+30));
  movers.push(drift([M.bus()], 300, 0, -4, 4.5, -30, L+30));
@@ -497,7 +506,7 @@ function put(model, x, z, y){
  movers.push(drift([M.truck(C.wht).mirror()], 150, 0, 4, -4.5, -30, L+30));
 })();
 /* 歩く人 */
-(function walkers(){
+AUTO && (function walkers(){
  var sh = [C.red, C.blue, C.yellow, C.lime, C.wht, C.pink, C.cyan, C.purple], pa = [C.ink, C.brown, C.navy];
  for(var i=0;i<14;i++){
   var s = sh[i%sh.length], p = pa[i%pa.length], hat = (i%4===0) ? C.yellow : null;
@@ -722,15 +731,55 @@ function openPop(i){
  winPrev.textContent = '◀ 前の企画'; winNext.textContent = '次の企画 ▶';
 }
 /* 場面側から使う口。窓に HTML を出す／板の高さが変わったあとに流れを組み直す */
-window.Road = {
+window.Road = Object.assign(window.Road || {}, {
  openHtml: function(title, html){ winIdx = -1; showHtml(title, html); winPrev.disabled = true; winNext.disabled = true; winPrev.textContent = '◀'; winNext.textContent = '▶'; },
  closeWin: function(){ closeWin(); },
  relayout: function(){ layout(); if(cur !== null) draw(snap(cur), 16.7, performance.now()); }
-};
+});
+/* 章の本文の写真を押したら大きく見せる。窓は最初に開くときに組み立てるので、
+   要素そのものではなく文書に付ける。窓の中の一覧（.pop-gal）とは別扱い */
+document.addEventListener('click', function(e){
+ var im = e.target && e.target.closest ? e.target.closest('#win-html .story img[data-full]') : null;
+ if(!im) return;
+ var host = document.getElementById('win-html'); if(!host) return;
+ var big = host.querySelector('.win-big');
+ if(!big){ big = document.createElement('div'); big.className = 'win-big'; big.innerHTML = '<img alt="拡大した写真">'; host.insertBefore(big, host.firstChild); }
+ big.hidden = false; big.querySelector('img').src = im.getAttribute('data-full'); host.scrollTop = 0;
+});
 popEls.forEach(function(el, i){
  el.addEventListener('click', function(){ winFrom = el; openPop(i); });
  el.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); winFrom = el; openPop(i); } });
 });
+/* 章の本文は別ページを枠の中に読み込んでいる。拡張機能や通信の都合で枠が読めない
+   ことがあるので、読めなかったら行き止まりにせず、新しいタブで開く道を出す */
+var frameTimer = null;
+function frameFailed(url){
+ winHtml = winHtml || document.getElementById('win-html');
+ winHtml.innerHTML = '<div class="win-fb"><p class="win-fb-t">この章を、枠の中に表示できませんでした。</p>'
+  + '<p>広告ブロックなどの拡張機能が、枠の読み込みを止めていることがあります。'
+  + '新しいタブなら、そのまま読めます。</p>'
+  + '<p class="btns"><a class="btn btn-go" href="' + url + '" target="_blank" rel="noopener">新しいタブで開く</a></p></div>';
+ winHtml.hidden = false; winFrame.hidden = true;
+}
+function openFrame(url){
+ clearTimeout(frameTimer);
+ var done = false;
+ winFrame.onload = function(){
+  /* 枠を差し込んだ直後、中身を入れる前の空ページでも load は起きる。
+     それを「読めなかった」と取り違えないよう、行き先が合っているときだけ調べる */
+  var d = null, here = '';
+  try{ d = winFrame.contentDocument; here = (d && d.location) ? d.location.href : ''; }catch(e){ }
+  if(here === 'about:blank' || here === '') return;
+  done = true; clearTimeout(frameTimer);
+  var ok = false;
+  try{ ok = !!(d && d.body && d.body.children.length); }
+  catch(e){ ok = true; }   /* 別オリジンで中を見られない＝読めている */
+  if(!ok) frameFailed(url);
+ };
+ winFrame.onerror = function(){ done = true; clearTimeout(frameTimer); frameFailed(url); };
+ winFrame.src = url;
+ frameTimer = setTimeout(function(){ if(!done) frameFailed(url); }, 6000);
+}
 function openWin(i){
  if(!winEl) buildWin();
  var b = winBtns[i]; if(!b) return;
@@ -740,13 +789,25 @@ function openWin(i){
  var card = b.closest('.card'), h = card ? card.querySelector('h1,h2') : null, no = card ? card.querySelector('.no') : null;
  winTitle.textContent = b.dataset.winTitle || (h ? h.textContent : '');
  winNo.textContent = no ? no.textContent : ''; winNo.hidden = !no;
- winFrame.src = b.dataset.win; winOpenLink.href = b.dataset.win;
+ winOpenLink.href = b.dataset.win;
  winPrev.disabled = i <= 0; winNext.disabled = i >= winBtns.length - 1;
  winEl.hidden = false; document.documentElement.classList.add('win-open');
  document.getElementById('win-x').focus();
+ /* 場面が本文を持っているなら、枠を使わずそのまま窓に入れる。
+    枠は拡張機能に止められることがあるので、持っていない場面だけの受け皿にする */
+ if(SCENE.chapterHtml){
+  winFrame.hidden = true; winHtml.hidden = false;
+  winHtml.innerHTML = '<p class="win-load">読み込んでいます…</p>';
+  SCENE.chapterHtml(b.dataset.win, function(html){
+   if(winIdx !== i || winMode !== 'frame') return;   /* 別の章に切り替わっていたら捨てる */
+   if(html){ winHtml.innerHTML = html; winHtml.scrollTop = 0; }
+   else frameFailed(b.dataset.win);
+  });
+ } else openFrame(b.dataset.win);
 }
 function closeWin(){
  if(!winEl || winEl.hidden) return;
+ clearTimeout(frameTimer);
  winEl.hidden = true; document.documentElement.classList.remove('win-open');
  winFrame.src = 'about:blank';
  if(winFrom && winFrom.focus) winFrom.focus();
@@ -845,17 +906,26 @@ function doWipe(done){
  }
  tick();
 }
+var entered = false;
 function enter(withSound){
  gate.classList.add('out');
  running = true; lastT = 0; cur = targetCam(); prevCur = cur;
  draw(snap(cur), 16.7, performance.now());
  if(withSound) setSound(true);
  doWipe(function(){});
+ signalEnter();
 }
+/* 入場の合図。顔ウォールの顔画像（329KB）など、道に入ってから要るものはこれを待つ */
+function signalEnter(){
+ if(entered) return; entered = true;
+ dispatchEvent(new Event('road:enter'));
+}
+window.Road = window.Road || {};
+window.Road.onEnter = function(fn){ if(entered) fn(); else addEventListener('road:enter', fn, {once:true}); };
 document.getElementById('enter').addEventListener('click', function(){ enter(true); });
 document.getElementById('enterq').addEventListener('click', function(){ enter(false); });
 /* 検証用: ?go=1 で入口を飛ばす、?wy=<scrollY> でその位置に立つ */
 var q = new URLSearchParams(location.search);
-if(q.get('go')){ gate.classList.add('out'); running = true; }
+if(q.get('go')){ gate.classList.add('out'); running = true; signalEnter(); }
 if(q.get('wy') !== null){ scrollTo(0, +q.get('wy')); }
 })();

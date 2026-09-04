@@ -264,3 +264,22 @@ html.win-open{overflow:hidden}
 .evl small{display:block;color:#4A5568;font-size:11px;line-height:14px;margin-top:2px}
 .btns.yrs{gap:4px}
 .btn.sm{padding:2px 8px;font-size:12px;line-height:20px;border-width:2px}
+
+/* 指で押す前提の大きさを確保する。見た目は変えず、当たり判定だけを44pxまで広げる
+   （HUDの小さな文字リンクや、道の上に重なるボタンで効く） */
+@media (pointer:coarse){
+ .hud a,.hud button,.win a,.win button,.btn,.card a,.card button{position:relative}
+ .hud a::after,.hud button::after,.win a::after,.win button::after,.btn::after,.card a::after,.card button::after{
+  content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:max(100%,44px);height:max(100%,44px)}
+}
+
+/* 章の窓が読めなかったときの受け皿 */
+.win-fb{padding:32px 24px;max-width:520px}
+.win-fb-t{font:900 20px/28px var(--f-head);margin:0 0 12px}
+.win-fb p{margin:0 0 16px;line-height:24px}
+
+/* 章の本文を窓に直接出すときの土台 */
+.win-load{padding:32px 24px;color:#4A5568}
+.win-big{margin:0 0 16px;background:var(--ink)}
+.win-big img{display:block;width:100%;height:auto}
