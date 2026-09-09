@@ -11,6 +11,8 @@
 |---|---|
 | `DXマーケティング後半編.pptx` | 後半スライド本番版・36枚（`deck/build-kouhan-full.js` から生成） |
 | `DXマーケティング後半編.pdf` | 上のPDF版。**当日はこちらで投影してよい**（フォント埋め込み済み。PowerPointが無い端末でも同じ見た目） |
+| `石央商工会DXセミナー_後半_台本.docx` | 当日の台本。スライド1枚ずつの「話すこと・動き・注意」、時間割、準備、トラブル時の差し替え |
+| `deck/tools/build-daihon.js` | 上の台本を生成する（文言を直すときはここ） |
 | `deck/build-kouhan-full.js` | 36枚の文言と構成。**文言を直すときはここを直して再生成する** |
 | `deck/deck.js` | 部品集（cover / card / profile / caseSlide / centerStatement / body / numberedPink / checklist / chip / labelBar / pinkPanel / twoColumn / bigLine / chipFlowGrid / flowRow / pinkTable / summary / worksheet / redBox） |
 | `deck/references/patterns.md` | 元デッキ30枚の型と座標 |

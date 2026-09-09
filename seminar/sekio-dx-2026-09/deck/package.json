@@ -6,6 +6,7 @@
     "build": "node build-kouhan-full.js"
   },
   "dependencies": {
+    "docx": "^9.7.1",
     "pptxgenjs": "3.12.0"
   }
 }
