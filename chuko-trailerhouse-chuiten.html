@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"></noscript>
-<link rel="stylesheet" href="/site.css?v=20260812a">
+<link rel="stylesheet" href="/site.css?v=20260911b">
 <link rel="stylesheet" href="/page.css?v=20260803f">
 <script type="application/ld+json">
 {
@@ -313,7 +313,7 @@ src="https://www.facebook.com/tr?id=1752804519503355&ev=PageView&noscript=1"
       </div>
     </div>
     <div class="dlbar">
-  <div class="dlbar-tx"><strong>価格表・仕様一覧・法規チェックリスト（PDF・全3ページ）</strong>
+  <div class="dlbar-tx"><strong>価格表・仕様一覧・法規チェックリスト（PDF・全5ページ）</strong>
   <span>参考価格、標準仕様の範囲、発注前に確かめる12項目。メールアドレスのみで受け取れます。</span></div>
   <a class="dlbar-btn" href="/price-download.html">受け取る &rarr;</a>
 </div>
@@ -388,7 +388,7 @@ src="https://www.facebook.com/tr?id=1752804519503355&ev=PageView&noscript=1"
       <h2>買う前に、ご相談ください。</h2>
       <p>購入後に判明する不具合や法規の問題は、費用が跳ね上がります。<br>契約前の段階でお声がけください。</p>
     </div>
-    <form id="cform" action="https://docs.google.com/forms/d/e/1FAIpQLSe0ioggwa5pgKEyCL_FwvP3mKaPQv50Lgj89eXzF6GyDkvoRg/formResponse" method="POST" target="gform-sink">
+    <form id="cform" action="https://docs.google.com/forms/d/e/1FAIpQLSe0ioggwa5pgKEyCL_FwvP3mKaPQv50Lgj89eXzF6GyDkvoRg/formResponse" method="POST">
       <h5>— Inquiry Form</h5>
       <div id="cform-fields">
         <div class="field"><label>ご相談の種類 *</label><select required name="entry.560292296"><option value="">選択してください</option><option value="導入を検討している">導入を検討している</option><option value="見積もりがほしい">見積もりがほしい</option><option value="一般的な質問・相談">一般的な質問・相談</option><option value="協業・営業のご提案">協業・営業のご提案</option></select></div><div class="field"><label>お名前 *</label><input required name="entry.1951315019" type="text" autocomplete="name"></div>
@@ -407,15 +407,13 @@ src="https://www.facebook.com/tr?id=1752804519503355&ev=PageView&noscript=1"
         </div>
         <div class="field"><label>ご相談内容</label><textarea name="entry.1424514303" placeholder="例：検討中の車両の年式・サイズ・価格／設置予定地／気になっている点 など"></textarea></div>
         <button type="submit" id="cform-submit">送信する</button>
-        <small>※ 送信内容はGoogleフォーム経由で受け付けます。内容を確認のうえ、2営業日以内にご返信します。<br>※ 送信をもって<a href="/privacy.html">プライバシーポリシー</a>にご同意いただいたものとみなします。</small>
+        <small>※ このフォームはGoogleフォームで受け付けています。送信すると、Googleの画面に移動します。Googleの画面に「回答を記録しました」と表示された場合、受け付けは完了しています。受付結果が確認できない場合は、<a href="tel:08056159786">お電話（080-5615-9786）</a>または<a href="mailto:info@towndesignlabo.jp">メール（info@towndesignlabo.jp）</a>でお問い合わせください。<br>※ 画面が切り替わらないときは、<a href="https://docs.google.com/forms/d/e/1FAIpQLSe0ioggwa5pgKEyCL_FwvP3mKaPQv50Lgj89eXzF6GyDkvoRg/viewform" target="_blank" rel="noopener">Googleフォームの画面</a>から送信いただくか、<a href="tel:08056159786">080-5615-9786</a> へお電話ください。<br>※ 受け付けた内容を確認のうえ、通常2営業日以内にご返信します。送信をもって<a href="/privacy.html">プライバシーポリシー</a>にご同意いただいたものとみなします。</small>
       </div>
-      <div id="cform-done" hidden>
-        <p class="cform-thanks">お問い合わせありがとうございます。<br>内容を確認のうえ、担当より2営業日以内にご連絡いたします。</p>
+      <div id="cform-status" role="status" aria-live="polite" hidden>
+        <p class="cform-thanks"><span id="cform-status-msg"></span><br>受付結果は、移動先のGoogleフォームの画面でご確認ください。うまくいかないときは <a href="https://docs.google.com/forms/d/e/1FAIpQLSe0ioggwa5pgKEyCL_FwvP3mKaPQv50Lgj89eXzF6GyDkvoRg/viewform" target="_blank" rel="noopener"><u>Googleフォームの画面</u></a>、または <a href="tel:08056159786"><u>080-5615-9786</u></a> へ。</p>
       </div>
       <input type="hidden" name="fvv" value="1">
-      <input type="hidden" name="pageHistory" value="0">
-      <iframe id="gform-sink" name="gform-sink" title="submission target" aria-hidden="true" class="is-hidden"></iframe>
-    </form>
+      <input type="hidden" name="pageHistory" value="0">    </form>
     <p class="lp-inq-alt">お急ぎの方はお電話でも承ります　<a href="tel:08056159786">080-5615-9786</a>（10:00–18:00 / 不定休）</p>
   </div>
 </section>
@@ -454,6 +452,6 @@ src="https://www.facebook.com/tr?id=1752804519503355&ev=PageView&noscript=1"
   </div>
 </footer>
 
-<script src="/site.js?v=20260730c" defer></script>
+<script src="/site.js?v=20260911d" defer></script>
 </body>
 </html>

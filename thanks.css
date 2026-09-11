@@ -1,0 +1,12 @@
+/* /thanks.html 専用スタイル（旧インラインCSSを外部化。CSP対応・見た目は従来どおり） */
+body{margin:0;font-family:"BIZ UDPGothic","Noto Sans JP",sans-serif;background:#fff;color:#111;
+  display:flex;min-height:100vh;align-items:center;justify-content:center;text-align:center}
+.box{padding:48px 24px;max-width:560px}
+.label{font-size:12px;letter-spacing:.18em;color:#888;margin-bottom:18px}
+h1{font-size:22px;font-weight:700;margin:0 0 14px}
+p{font-size:14px;line-height:2;color:#333;margin:0 0 26px}
+p a{color:#111}
+a.btn{display:inline-block;border:1px solid #111;padding:12px 34px;font-size:13px;color:#111;
+  text-decoration:none;letter-spacing:.12em}
+a.btn:hover{background:#111;color:#fff}
+.tel{margin-top:22px;font-size:12px;color:#666}
