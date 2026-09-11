@@ -12,19 +12,41 @@ gtag('config', 'AW-18326502333');
 /* GA4（回遊・滞在・スクロール深度の計測） */
 gtag('config', 'G-SD0J17P6ST');
 
-/* ---- 受け付けを証明できない計測は行わない ----
-   当サイトから Google フォームへ送信した結果（受理・却下）は、同一オリジンポリシーにより
-   ブラウザ側から読み取れない。したがって
-     ・/thanks.html への到達を「お問い合わせ成立」とみなす広告コンバージョン
-     ・同ページでの Meta Lead / GA4 generate_lead
-     ・拡張コンバージョン用のメール・電話の sessionStorage 保存と gtag への受け渡し
-   は停止した。計測するのは「送信操作が行われた」という非個人情報のイベントのみ。 */
-try { sessionStorage.removeItem('tdl_ud'); } catch (e) { /* 旧バージョンの残存キーを掃除するだけ */ }
+/* ---- 拡張コンバージョン用：ユーザー提供データの受け渡し ----
+   フォーム送信時にメール・電話を sessionStorage に一時保存し、
+   /thanks.html でコンバージョン発火の直前に gtag へ渡す。
+   値は gtag によりブラウザ内で SHA-256 ハッシュ化されてから送信され、
+   送信後は直ちに sessionStorage から削除する。                       */
+var TDL_UD_KEY = 'tdl_ud';
+function tdlNormalizePhone(v) {
+  if (!v) return '';
+  var s = String(v).trim();
+  if (s.charAt(0) === '+') return '+' + s.slice(1).replace(/\D/g, '');
+  var d = s.replace(/\D/g, '');
+  if (!d) return '';
+  if (d.charAt(0) === '0') return '+81' + d.slice(1);
+  if (d.slice(0, 2) === '81') return '+' + d;
+  return '+81' + d;
+}
+if (location.pathname === '/thanks.html') {
+  try {
+    var tdlRaw = sessionStorage.getItem(TDL_UD_KEY);
+    if (tdlRaw) {
+      var tdlUd = JSON.parse(tdlRaw);
+      var tdlPayload = {};
+      if (tdlUd.email) tdlPayload.email = tdlUd.email;
+      if (tdlUd.phone) tdlPayload.phone_number = tdlUd.phone;
+      if (tdlPayload.email || tdlPayload.phone_number) {
+        gtag('set', 'user_data', tdlPayload);
+      }
+      sessionStorage.removeItem(TDL_UD_KEY);
+    }
+  } catch (e) { /* 取得に失敗してもコンバージョン計測は継続する */ }
+}
 
-/* 送信操作イベント（受理の証明ではない。広告のコンバージョンには転用しない） */
-function tdlTrackAttempt(name) {
-  try { if (typeof gtag === 'function') gtag('event', name, { send_to: 'G-SD0J17P6ST' }); } catch (e) {}
-  try { if (typeof fbq === 'function') fbq('trackCustom', name); } catch (e) {}
+/* 送信完了ページ到達＝コンバージョン */
+if (location.pathname === '/thanks.html') {
+  gtag('event', 'conversion', {'send_to': 'AW-18326502333/2_pjCLO9kdYcEL334KJE'});
 }
 
 /* ---- Meta Pixel (external loader; CSP-safe, no inline) ---- */
@@ -38,6 +60,7 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '1752804519503355');
 fbq('track', 'PageView');
+if (location.pathname === '/thanks.html') { fbq('track', 'Lead'); }
 
 /* ---- Meta: フォーム入力開始をContactとして計測（低予算時の最適化用マイクロCV） ---- */
 document.addEventListener('DOMContentLoaded', function () {
@@ -70,26 +93,8 @@ if (hdr) window.addEventListener('scroll', () => hdr.classList.toggle('scrolled'
 const burger = document.getElementById('burger');
 const menu = document.getElementById('menu');
 if (burger && menu) {
-  /* 折り畳みメニューはモーダルではないので、focus trap は設けない。
-     スクロールとキーボード操作を妨げず、開閉状態だけを支援技術に伝える。 */
-  burger.setAttribute('aria-controls', menu.id || 'menu');
-  const setMenu = (open) => {
-    menu.classList.toggle('open', open);
-    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-  };
-  setMenu(menu.classList.contains('open'));
-  burger.addEventListener('click', () => setMenu(!menu.classList.contains('open')));
-  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
-  document.addEventListener('keydown', (e) => {
-    if (e.key !== 'Escape' || !menu.classList.contains('open')) return;
-    setMenu(false);
-    burger.focus();
-  });
-  /* 横並びメニューに戻る幅では、開いた状態を残さない */
-  const mqDesktop = window.matchMedia('(min-width: 881px)');
-  const syncMenuWidth = (e) => { if (e.matches) setMenu(false); };
-  if (mqDesktop.addEventListener) mqDesktop.addEventListener('change', syncMenuWidth);
-  else if (mqDesktop.addListener) mqDesktop.addListener(syncMenuWidth);
+  burger.addEventListener('click', () => menu.classList.toggle('open'));
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
 }
 
 const io = new IntersectionObserver((entries) => {
@@ -97,69 +102,33 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-/* ---- お問い合わせフォーム（Googleフォームへ通常POST） ----
-   送信先は Google のフォーム受付URL。応答はそのまま同じタブに表示されるため、
-   受け付けられたかどうかは Google の画面（例:「回答を記録しました」）で確認してもらう。
-   このスクリプトは連打の抑制と状況表示だけを担当し、成功・失敗の判定はしない。
-   JavaScript が無効でも、フォームは通常のPOSTとして送信できる。 */
+/* ---- Contact form -> Google Forms (hidden iframe POST) ---- */
 const cform = document.getElementById('cform');
+const gsink = document.getElementById('gform-sink');
+const cfFields = document.getElementById('cform-fields');
+const cfDone = document.getElementById('cform-done');
 const cfBtn = document.getElementById('cform-submit');
-const cfStatus = document.getElementById('cform-status');
-const cfStatusMsg = document.getElementById('cform-status-msg');
-if (cform) {
-  const cfBtnHTML = cfBtn ? cfBtn.innerHTML : '';
-  let cfSending = false;
-  let cfTimer = null;
-
-  const cfSay = (msg) => {
-    if (!cfStatus || !cfStatusMsg) return;
-    cfStatusMsg.textContent = msg;
-    cfStatus.hidden = false;
-  };
-  const cfReset = () => {
-    cfSending = false;
-    if (cfTimer) { clearTimeout(cfTimer); cfTimer = null; }
-    if (cfBtn) { cfBtn.disabled = false; cfBtn.innerHTML = cfBtnHTML; }
-  };
-
-  /* ---- きっかけ（流入元）の「その他」----
-     Googleフォーム側はチェックボックス形式で、「その他」の値は __other_option__、
-     自由記述は entry.2099901741.other_option_response という別の名前で送る必要がある。
-     「その他」以外を選んでいるときに自由記述を送ると不整合になるため、
-     選択中だけ hidden を有効化する（初期表示・変更時・送信直前に同期）。 */
-  const cfSource = cform.querySelector('[name="entry.2099901741"]');
-  const cfSourceOther = cform.querySelector('[name="entry.2099901741.other_option_response"]');
-  const cfSyncSource = () => {
-    if (!cfSource || !cfSourceOther) return;
-    cfSourceOther.disabled = cfSource.value !== '__other_option__';
-  };
-  if (cfSource && cfSourceOther) {
-    cfSyncSource();
-    cfSource.addEventListener('change', cfSyncSource);
-  }
-
-  cform.addEventListener('submit', function (e) {
-    cfSyncSource();
-    /* 連打の抑制。自動での再送信は行わない。 */
-    if (cfSending) { e.preventDefault(); return; }
-    cfSending = true;
-    if (cfBtn) { cfBtn.disabled = true; cfBtn.textContent = '送信中…'; }
-    cfSay('送信しています。まもなくGoogleの画面に移動します。「回答を記録しました」と表示された場合、受け付けは完了しています。');
-    try { tdlTrackAttempt('contact_submit_attempt'); } catch (err) { /* 計測失敗で送信を止めない */ }
-    /* 画面が切り替わらないまま時間が経った場合。受理・不受理は断定できない。 */
-    cfTimer = setTimeout(function () {
-      cfReset();
-      cfSay('しばらく待っても画面が切り替わりませんでした。受け付けられたかどうかは、この画面からは分かりません。入力内容はそのまま残しています。');
-    }, 15000);
+let cfSubmitted = false;
+if (cform && gsink) {
+  cform.addEventListener('submit', function () {
+    cfSubmitted = true;
+    /* 拡張コンバージョン用にメール・電話を一時保存（/thanks.html で使用後すぐ削除） */
+    try {
+      var udEmail = cform.querySelector('input[type="email"]');
+      var udTel = cform.querySelector('input[type="tel"]');
+      var ud = {};
+      if (udEmail && udEmail.value) ud.email = udEmail.value.trim().toLowerCase();
+      if (udTel && udTel.value) ud.phone = tdlNormalizePhone(udTel.value);
+      if (ud.email || ud.phone) sessionStorage.setItem(TDL_UD_KEY, JSON.stringify(ud));
+    } catch (e) { /* 保存に失敗しても送信は継続する */ }
+    if (cfBtn) { cfBtn.disabled = true; cfBtn.textContent = 'Sending…'; }
   });
-
-  /* 戻る操作やbfcacheでの復帰時に、送信ボタンが押せないまま残らないようにする。 */
-  window.addEventListener('pageshow', function (ev) {
-    const wasSending = cfSending;
-    cfReset();
-    if (ev.persisted && wasSending) {
-      cfSay('この画面に戻りました。送信が受け付けられたかどうかは、この画面からは分かりません。Googleフォームの画面でご確認ください。');
-    }
+  gsink.addEventListener('load', function () {
+    if (!cfSubmitted) return;
+    /* 送信成功 -> 計測用サンクスページへ（広告コンバージョンの発火点） */
+    if (cfFields) cfFields.hidden = true;
+    if (cfDone) cfDone.hidden = false;
+    window.location.href = '/thanks.html';
   });
 }
 

@@ -90,16 +90,10 @@ header.scrolled { border-bottom-color: var(--line); }
 .burger span { display: block; width: 22px; height: 1px; background: var(--ink); margin: 6px 0; transition: .25s; }
 
 @media (max-width: 880px) {
-  /* 画面の高さが足りないとき（横向きの小型端末など）に、メニュー下端の
-     「資料DL」「ご相談」が画面外へ出て押せなくなるのを防ぐ。
-     ヘッダー高さ76pxを引いた範囲に収め、あふれた分は内部スクロールする。 */
   .menu { display: none; position: absolute; top: 76px; left: 0; right: 0;
-    flex-direction: column; gap: 0; background: var(--bg); padding: 16px 24px 32px; border-bottom: 1px solid var(--line);
-    max-height: calc(100vh - 76px); max-height: calc(100dvh - 76px);
-    overflow-y: auto; overscroll-behavior: contain; }
+    flex-direction: column; gap: 0; background: var(--bg); padding: 16px 24px 32px; border-bottom: 1px solid var(--line); }
   .menu.open { display: flex; }
-  /* flex: 0 0 auto — 内部スクロール時に各リンクが押し潰されないようにする */
-  .menu a { padding: 16px 0; border-bottom: 1px solid var(--line); width: 100%; letter-spacing: .08em; flex: 0 0 auto; }
+  .menu a { padding: 16px 0; border-bottom: 1px solid var(--line); width: 100%; letter-spacing: .08em; }
   .menu .cta { align-self: flex-start; margin-top: 16px; }
   .burger { display: block; }
 }
@@ -907,7 +901,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .menu .submenu a:hover { background: var(--bg-soft); }
 @media (max-width: 860px) {
-  .menu .has-sub { display: block; flex: 0 0 auto; }
+  .menu .has-sub { display: block; }
   .menu .submenu {
     position: static; transform: none; opacity: 1; visibility: visible;
     border: none; box-shadow: none; padding: 0 0 0 16px; min-width: 0; background: transparent;
@@ -1169,23 +1163,3 @@ a.trust-row:hover .trust-thumb img { transform: scale(1.05); filter: grayscale(0
 .dlvoice blockquote{margin:0 0 14px;padding:0;font-size:14px;line-height:1.95;color:#2a2a2a;flex-grow:1}
 .dlvoice-co{font-weight:700;font-size:13px;color:#111}
 .dlvoice-meta{font-size:11px;letter-spacing:.05em;color:#8a8175;margin-top:2px}
-
-/* ===== 2026-09-11 P0: 狭い画面でメニューボタンが画面外へ押し出される問題 =====
-   原因は項目数ではなく、ヘッダー左側の占有幅。
-   .brand .b2（MOBILE ARCHITECTURE STUDIO · WEST JAPAN）は
-   white-space:nowrap のため、9px・letter-spacing .28em で約320px を占有する。
-   ロゴマーク30px＋gap10px＋.wrap の左右padding 40px を足すと約400pxとなり、
-   390px幅ではハンバーガーボタンが右へはみ出して押しづらくなる。
-   （実測：390pxでボタン右端が約403.6px、430pxでは表示された）
-   そこで 560px 以下ではタグラインを非表示にし、
-   あわせてブランド側が縮む・ボタン側が縮まない指定を明示する。
-   全ページ共通のヘッダーに効くが、情報は消えていない
-   （タグラインはフッターと会社概要に掲載がある）。 */
-@media (max-width: 560px) {
-  .nav { gap: 10px; }
-  .brand { min-width: 0; flex: 0 1 auto; }
-  .brand-tx { min-width: 0; }
-  .brand .b1 { overflow: hidden; text-overflow: ellipsis; }
-  .brand .b2 { display: none; }
-  .burger { flex: 0 0 auto; }
-}

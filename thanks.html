@@ -3,30 +3,56 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>お問い合わせについて | TOWN DESIGN LABO</title>
+<title>送信完了 | TOWN DESIGN LABO</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-<link rel="stylesheet" href="/thanks.css?v=20260911d">
+<style>
+  body{margin:0;font-family:"BIZ UDPGothic","Noto Sans JP",sans-serif;background:#fff;color:#111;
+    display:flex;min-height:100vh;align-items:center;justify-content:center;text-align:center}
+  .box{padding:48px 24px;max-width:560px}
+  .label{font-size:12px;letter-spacing:.18em;color:#888;margin-bottom:18px}
+  h1{font-size:22px;font-weight:700;margin:0 0 14px}
+  p{font-size:14px;line-height:2;color:#333;margin:0 0 26px}
+  a.btn{display:inline-block;border:1px solid #111;padding:12px 34px;font-size:13px;color:#111;
+    text-decoration:none;letter-spacing:.12em}
+  a.btn:hover{background:#111;color:#fff}
+  .tel{margin-top:22px;font-size:12px;color:#666}
+</style>
 <!-- Meta Pixel Code (loader in site.js) -->
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1752804519503355&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
-<!-- 計測タグは site.js に集約（Google広告・GA4・Meta Pixel のPageViewのみ）。
-     このページへの到達は送信の受け付けを意味しないため、コンバージョンは発火させない。 -->
-<script src="/site.js?v=20260911d" defer></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18326502333"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18326502333');
+</script>
+<!-- Event snippet for お問い合わせ送信 conversion page -->
+<script>
+  gtag('event', 'conversion', {'send_to': 'AW-18326502333/2_pjCLO9kdYcEL334KJE'});
+</script>
+<script src="/site.js?v=20260730c" defer></script>
 </head>
 <body>
 <div class="box">
   <div class="label">— TOWN DESIGN LABO</div>
-  <h1>お問い合わせについて</h1>
-  <p>このページは、お問い合わせの案内ページです。<br>
-  送信後に表示されるGoogleの画面に「回答を記録しました」と表示された場合、受け付けは完了しています。</p>
-  <p>受付結果が確認できないときや、送信し直したいときは、<br>
-  <a href="https://docs.google.com/forms/d/e/1FAIpQLSe0ioggwa5pgKEyCL_FwvP3mKaPQv50Lgj89eXzF6GyDkvoRg/viewform" target="_blank" rel="noopener">Googleフォームの画面</a>、
-  またはお電話・メールでご連絡ください。</p>
+  <h1>お問い合わせありがとうございます</h1>
+  <p>内容を確認のうえ、担当より2営業日以内にご連絡いたします。<br>
+  お急ぎの場合は、お電話でもご相談いただけます。</p>
   <a class="btn" href="/">トップページへ戻る</a>
-  <div class="tel">TEL 080-5615-9786（10:00–18:00／不定休）　info@towndesignlabo.jp</div>
+  <div class="tel">TEL 080-5615-9786（平日 9:00–18:00）</div>
 </div>
+<!-- GA4: 送信完了をリード（キーイベント）として計測。site.js(defer)でGA4設定後に発火 -->
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    if (typeof gtag === 'function') {
+      gtag('event', 'generate_lead', { 'send_to': 'G-SD0J17P6ST' });
+    }
+  });
+</script>
 </body>
 </html>
