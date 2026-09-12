@@ -1,0 +1,52 @@
+@font-face{font-family:TDLZen;src:url('fonts/ZenKaku-Medium.woff2') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:TDLZen;src:url('fonts/ZenKaku-Bold.woff2') format('woff2');font-weight:700;font-display:swap}
+.home.refined{--hm-sans:"Yu Gothic",YuGothic,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif;--hm-accent:#365c4a;--hm-accent-dark:#d1ddcf;--hm-muted:#555f59;--hm-line:#d4dad5;--hm-soft:#f2f4f1;font-weight:400;font-feature-settings:"palt";line-break:strict}
+.home.refined h1,.home.refined h2,.home.refined h3{font-family:TDLZen,"Yu Gothic",sans-serif;font-weight:500;letter-spacing:.025em;font-synthesis:none;text-wrap:pretty}
+.home.refined .hm-h1{font-size:clamp(38px,4.65vw,64px);line-height:1.42;letter-spacing:.035em}
+.home.refined h2{font-size:clamp(27px,2.85vw,38px);line-height:1.6}
+.home.refined h3{font-size:22px;line-height:1.65}
+.home.refined .hm-hero-intro>p{font-weight:400;font-size:17px;line-height:1.95;max-width:29em}
+.home.refined .hm-hero-intro .hm-sub{font-size:14px;line-height:1.9}
+.home.refined p{ text-wrap:pretty }
+.home.refined .hm-eyebrow{font-family:var(--hm-sans);font-size:12px;letter-spacing:.12em;font-weight:400;color:#365c4a;margin-bottom:18px}
+.home.refined .hm-approach .hm-eyebrow{color:#d1ddcf}
+.home.refined .hm-hero-kicker{letter-spacing:.08em;font-size:12px;color:#555f59;font-weight:400}
+.home.refined .hm-hero-band{font-weight:400}
+.home.refined .hm-hero-band li::before{display:none}
+.home.refined .hm-service-en,.home.refined .hm-tiny-label{font-weight:400;letter-spacing:.06em}
+.home.refined .hm-service-num,.home.refined .hm-approach-list article>span{font-family:Arial,sans-serif;font-weight:400;font-variant-numeric:tabular-nums;letter-spacing:-.04em}
+.home.refined .hm-service h3{font-weight:500}
+.home.refined .hm-service-price,.home.refined .hm-lease-price{font-weight:400;font-variant-numeric:tabular-nums;letter-spacing:-.025em}
+.home.refined .hm-textlink,.home.refined .hm-line-link,.home.refined .hm-btn{font-weight:400}
+.home.refined .hm-work h3{font-weight:500}
+.home.refined .direction-icon{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:square;stroke-linejoin:miter;vertical-align:middle}
+.home.refined .hm-textlink>span,.home.refined .hm-line-link>span{display:inline-flex;align-items:center}
+.home.refined .hm-textlink:hover .direction-icon{transform:translateX(3px)}
+.home.refined .hm-guide-card{border-top:1px solid #78917f;background:transparent;padding:24px 0}
+.home.refined .hm-guide-card h3{font-size:24px;font-weight:500}
+.home.refined .hm-guide-grid{gap:40px}
+.home.refined .hm-guide-card p{font-size:14px;line-height:1.95}
+.home.refined .hm-steps{grid-template-columns:repeat(5,minmax(0,1fr));gap:28px}
+.home.refined .hm-steps li,.home.refined .hm-steps li+li{border-left:0;border-top:1px solid #b0bdb2;padding:20px 0 0;display:block}
+.home.refined .hm-steps li>span{display:block;font-family:Arial,sans-serif;font-size:30px;font-weight:400;line-height:1.2;letter-spacing:-.055em;color:#365c4a;font-variant-numeric:tabular-nums}
+.home.refined .hm-steps h3{font-size:17px;font-weight:500;margin:18px 0 12px;white-space:nowrap}
+.home.refined .hm-steps p{font-size:14px;line-height:1.95;color:#555f59;letter-spacing:0}
+.home.refined #process .hm-sec-top{margin-bottom:38px}
+.home.refined .phrase{display:inline-block}
+.home.refined .hm-approach-list h3{font-size:20px;font-weight:500}
+.home.refined .hm-approach-list p{font-size:14px;line-height:1.95}
+.home.refined .hm-faq summary{font-weight:400}
+.home.refined .hm-company-table,.home.refined .hm-contact-info{font-size:14px;line-height:1.9}
+.home.refined .hm-form label{font-weight:400}
+.home.refined .hm-voice-body{font-size:14px;font-weight:400}
+.home.refined .hm-voice{box-shadow:none}
+.home.refined .menu a{font-weight:400}
+.home.refined .brand .b1{letter-spacing:.08em}
+.home.refined a:focus-visible,.home.refined button:focus-visible,.home.refined summary:focus-visible{outline:3px solid #a16a24;outline-offset:5px}
+@media(max-width:1239px) and (min-width:641px){.home.refined .hm-steps{grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}.home.refined .hm-steps li{padding-bottom:8px}.home.refined .hm-guide-grid{gap:24px}}
+@media(max-width:900px){.home.refined .hm-guide-grid{grid-template-columns:1fr}.home.refined .hm-guide-card{padding:20px 0}.home.refined .hm-guide-card p{max-width:46em}.home.refined .hm-guide-arrow{position:absolute;right:0;top:20px}}
+@media(max-width:640px){.home.refined .hm-h1{font-size:39px;line-height:1.5}.home.refined h2{font-size:27px}.home.refined .hm-hero-intro>p{font-size:15.5px}.home.refined .hm-hero-intro .hm-sub{font-size:14px}.home.refined .hm-steps{grid-template-columns:1fr;gap:0}.home.refined .hm-steps li,.home.refined .hm-steps li+li{display:grid;grid-template-columns:36px 1fr;gap:5px 18px;padding:24px 0}.home.refined .hm-steps li>span{grid-row:1/3;font-size:25px;padding-top:3px}.home.refined .hm-steps h3{font-size:18px;margin:0 0 7px}.home.refined .hm-steps p{font-size:14px;grid-column:2;line-height:1.95}.home.refined .hm-work h3{font-size:25px}.home.refined .hm-service h3{font-size:25px}.home.refined .hm-hero-kicker{font-size:11px}.home.refined .hm-guide-grid{gap:10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.home.refined *{transition:none!important;animation:none!important}}
+@media print{.preview-bar,.home #hdr,.home .sticky-cta{display:none!important}.home .hm-section{padding-block:24px}.home .hm-steps{grid-template-columns:repeat(2,1fr)}.home .hm-steps li{break-inside:avoid}.home.refined{color:#111;background:#fff}}
+
+@media(min-width:641px) and (max-width:780px){.home.refined .hm-steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
