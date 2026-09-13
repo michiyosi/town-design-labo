@@ -1,3 +1,20 @@
+/* ---- 設置前チェックからの引き継ぎ（?note=...）を、計測タグの初期化より前に回収 ----
+   hantei.html の結果画面から「この結果をもとに相談する」で遷移してきた場合、URLに
+   回答内容の要約が ?note= として付く。Google/Metaの自動計測（PageView等）に
+   この個人の回答内容が乗らないよう、gtag/fbqを読み込む前にURLから取り除く。 */
+(function () {
+  try {
+    var params = new URLSearchParams(window.location.search);
+    var note = params.get('note');
+    if (!note) return;
+    window.__tdlHanteiNote = note;
+    params.delete('note');
+    var qs = params.toString();
+    var cleanUrl = window.location.pathname + (qs ? '?' + qs : '') + window.location.hash;
+    window.history.replaceState(null, '', cleanUrl);
+  } catch (e) { /* URL操作に失敗しても計測タグの初期化は続ける */ }
+})();
+
 /* ---- Google 広告タグ（外部ローダー：CSP対応・インライン不使用） ---- */
 (function(){
   var s = document.createElement('script');
@@ -102,20 +119,15 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
    受け付けられたかどうかは Google の画面（例:「回答を記録しました」）で確認してもらう。
    このスクリプトは連打の抑制と状況表示だけを担当し、成功・失敗の判定はしない。
    JavaScript が無効でも、フォームは通常のPOSTとして送信できる。 */
-/* ---- 設置前チェックからの引き継ぎ（?note=...） ----
-   hantei.html の結果画面から「この結果をもとに相談する」で遷移してきた場合、
-   回答内容の要約をご相談内容欄にあらかじめ入れておく。 */
-(function () {
-  var params = new URLSearchParams(window.location.search);
-  var note = params.get('note');
-  if (!note) return;
+/* ---- 設置前チェックからの引き継ぎ（?note=...）の反映 ----
+   URLからの取り込み・除去はこのファイルの先頭（計測タグの初期化より前）で
+   済ませてある（window.__tdlHanteiNote）。ここではDOM要素に反映するだけ。 */
+if (window.__tdlHanteiNote) {
   var msg = document.getElementById('cf-message');
-  if (msg && !msg.value) msg.value = note;
-  params.delete('note');
-  var qs = params.toString();
-  var cleanUrl = window.location.pathname + (qs ? '?' + qs : '') + window.location.hash;
-  window.history.replaceState(null, '', cleanUrl);
-})();
+  if (msg) {
+    msg.value = msg.value ? (msg.value + '\n' + window.__tdlHanteiNote) : window.__tdlHanteiNote;
+  }
+}
 
 const cform = document.getElementById('cform');
 const cfBtn = document.getElementById('cform-submit');
@@ -241,9 +253,18 @@ if (document.getElementById('lb')) {
   lb.addEventListener('click', function(e){ if (e.target === lb) closeLB(); });
   document.addEventListener('keydown', function(e){
     if (!lb.classList.contains('open')) return;
-    if (e.key === 'Escape') closeLB();
-    else if (e.key === 'ArrowLeft') lbStep(-1);
-    else if (e.key === 'ArrowRight') lbStep(1);
+    if (e.key === 'Escape') { closeLB(); return; }
+    if (e.key === 'ArrowLeft') { lbStep(-1); return; }
+    if (e.key === 'ArrowRight') { lbStep(1); return; }
+    if (e.key !== 'Tab') return;
+    /* フォーカスをモーダル内（表示中のボタンのみ）に閉じ込める */
+    var focusable = [lbClose, lbPrev, lbNext].filter(function (b) {
+      return b && b.style.visibility !== 'hidden';
+    });
+    if (!focusable.length) return;
+    var first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 
   /* ---- CSP: onclick属性の代替（イベント委譲） ---- */

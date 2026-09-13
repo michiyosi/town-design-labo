@@ -1,5 +1,5 @@
-/* 可動建築／固定建築 判定ツール（CSP対応・インライン不使用）
-   判定根拠：平成9年3月31日 住指発第170号／日本建築行政会議『建築確認のための
+/* 設置前チェック（可動建築／固定建築の確認ツール、CSP対応・インライン不使用）
+   参照根拠：平成9年3月31日 住指発第170号／日本建築行政会議『建築確認のための
    基準総則・集団規定の適用事例』2022年度版 P16／国土交通省 構造改革特区回答／
    各特定行政庁の取扱い文書。最終判断は所在地を管轄する特定行政庁が行う。 */
 (function () {
@@ -235,13 +235,15 @@
 
     h += '</details><div class="ht-note"><strong>このツールは、事前相談の準備用です。</strong>設置可否は、この結果だけでは決まりません。所在地の担当窓口で個別に確認してください。</div>';
 
-    var noteLines = [];
+    var allLines = [];
+    var priorityLines = [];
     for (k = 0; k < Q.length; k++) {
-      var vk = verdictOf(k);
-      if (vk !== 'ok') noteLines.push(Q[k].req + '「' + Q[k].opts[answers[k]].label + '」');
+      var line = Q[k].req + '「' + Q[k].opts[answers[k]].label + '」';
+      allLines.push(line);
+      if (verdictOf(k) !== 'ok') priorityLines.push(line);
     }
-    var contactNote = '設置前チェックの結果（' + grade + '）。' +
-      (noteLines.length ? '先に確認したい項目：' + noteLines.join('、') + '。' : '確認事項は特にありませんでした。') +
+    var contactNote = '設置前チェック（8問）の回答：' + allLines.join('、') + '。' +
+      (priorityLines.length ? '先に確認したい項目：' + priorityLines.join('、') + '。' : '') +
       'この内容をもとに相談したいです。';
 
     h += '<div class="ht-after">';
