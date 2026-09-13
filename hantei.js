@@ -184,6 +184,7 @@
     stage.innerHTML = h;
     bar.style.width = Math.round((idx / Q.length) * 100) + '%';
     step.textContent = 'Q' + (idx + 1) + ' / ' + Q.length;
+    stage.focus();
   }
 
   function verdictOf(i) { return Q[i].opts[answers[i]].v; }
@@ -234,8 +235,17 @@
 
     h += '</details><div class="ht-note"><strong>このツールは、事前相談の準備用です。</strong>設置可否は、この結果だけでは決まりません。所在地の担当窓口で個別に確認してください。</div>';
 
+    var noteLines = [];
+    for (k = 0; k < Q.length; k++) {
+      var vk = verdictOf(k);
+      if (vk !== 'ok') noteLines.push(Q[k].req + '「' + Q[k].opts[answers[k]].label + '」');
+    }
+    var contactNote = '設置前チェックの結果（' + grade + '）。' +
+      (noteLines.length ? '先に確認したい項目：' + noteLines.join('、') + '。' : '確認事項は特にありませんでした。') +
+      'この内容をもとに相談したいです。';
+
     h += '<div class="ht-after">';
-    h += '<a class="pbtn solid" href="/#contact">この結果をもとに相談する &rarr;</a>';
+    h += '<a class="pbtn solid" href="/?note=' + encodeURIComponent(contactNote) + '#contact">この結果をもとに相談する &rarr;</a>';
     h += '<a class="pbtn" href="/price-download.html">価格表・法規チェックリスト（PDF）</a>';
     h += '<button type="button" class="ht-reset" data-reset="1">もう一度やり直す</button>';
     h += '</div></div>';
@@ -243,6 +253,7 @@
     stage.innerHTML = h;
     bar.style.width = '100%';
     step.textContent = '回答の整理';
+    stage.focus();
     track('hantei_complete', { result_grade: grade, ng_count: ng, warn_count: warn });
   }
 

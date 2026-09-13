@@ -102,6 +102,21 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
    受け付けられたかどうかは Google の画面（例:「回答を記録しました」）で確認してもらう。
    このスクリプトは連打の抑制と状況表示だけを担当し、成功・失敗の判定はしない。
    JavaScript が無効でも、フォームは通常のPOSTとして送信できる。 */
+/* ---- 設置前チェックからの引き継ぎ（?note=...） ----
+   hantei.html の結果画面から「この結果をもとに相談する」で遷移してきた場合、
+   回答内容の要約をご相談内容欄にあらかじめ入れておく。 */
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var note = params.get('note');
+  if (!note) return;
+  var msg = document.getElementById('cf-message');
+  if (msg && !msg.value) msg.value = note;
+  params.delete('note');
+  var qs = params.toString();
+  var cleanUrl = window.location.pathname + (qs ? '?' + qs : '') + window.location.hash;
+  window.history.replaceState(null, '', cleanUrl);
+})();
+
 const cform = document.getElementById('cform');
 const cfBtn = document.getElementById('cform-submit');
 const cfStatus = document.getElementById('cform-status');
@@ -186,7 +201,8 @@ if (document.getElementById('lb')) {
   const lbCount = document.getElementById('lbCount');
   const lbPrev = document.getElementById('lbPrev');
   const lbNext = document.getElementById('lbNext');
-  let lbKey = null, lbIdx = 0;
+  const lbClose = document.getElementById('lbClose');
+  let lbKey = null, lbIdx = 0, lbPrevFocus = null;
   function lbRender() {
     const g = galleries[lbKey]; if (!g) return;
     const multi = g.imgs.length > 1;
@@ -202,14 +218,18 @@ if (document.getElementById('lb')) {
   }
   function openLB(key) {
     if (!galleries[key]) return true;
+    lbPrevFocus = document.activeElement;
     lbKey = key; lbIdx = 0; lbRender();
     lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    if (lbClose && typeof lbClose.focus === 'function') lbClose.focus();
     return false;
   }
   function closeLB() {
     lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    if (lbPrevFocus && typeof lbPrevFocus.focus === 'function') lbPrevFocus.focus();
+    lbPrevFocus = null;
   }
   function lbStep(d) {
     const g = galleries[lbKey]; if (!g) return;
@@ -217,7 +237,7 @@ if (document.getElementById('lb')) {
   }
   lbPrev.addEventListener('click', function(e){ e.stopPropagation(); lbStep(-1); });
   lbNext.addEventListener('click', function(e){ e.stopPropagation(); lbStep(1); });
-  document.getElementById('lbClose').addEventListener('click', closeLB);
+  lbClose.addEventListener('click', closeLB);
   lb.addEventListener('click', function(e){ if (e.target === lb) closeLB(); });
   document.addEventListener('keydown', function(e){
     if (!lb.classList.contains('open')) return;

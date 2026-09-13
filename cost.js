@@ -113,7 +113,7 @@
     var h = '';
 
     h += '<div class="cs-cards">';
-    h += '<div class="cs-card"><span>初期費用</span><strong>' + man(initial) + '</strong><em>' + yen(initial) + '（税込）</em></div>';
+    h += '<div class="cs-card"><span>初期費用</span><strong>' + man(initial) + '</strong><em>' + yen(initial) + '（税込）</em>' + (etc === 0 ? '<em>陸送・登録・設置工事など未入力（算出済み分のみ）</em>' : '') + '</div>';
     h += '<div class="cs-card"><span>年間の固定費</span><strong>' + man(annual) + '</strong><em>' + yen(annual) + '／年</em></div>';
     if (biz) {
       var cls = monthly > 0 ? 'is-pos' : 'is-neg';
@@ -160,7 +160,7 @@
     h += '<div class="cs-note"><strong>この試算は、意思決定の材料です。</strong>本体価格は当社の公表参考価格、税・保険料は公表されている標準税率と基準料率にもとづいて計算しています。' +
          '一方で、陸送費・登録費・設置工事費は条件によって大きく変わるため、既定値は空にしてあります。ページ下部に公開料金表にもとづく目安レンジを掲載していますので、近い額を入力してお使いください。' +
          'また、車両として扱われるか建築物として扱われるかで、かかる税がまるごと入れ替わります。' +
-         'まずは<a href="/hantei.html">判定ツール</a>でどちら側かを確かめてください。</div>';
+         'まずは<a href="/hantei.html">設置前チェック</a>でどちら側かを整理してください。</div>';
 
     $('cs-out').innerHTML = h;
   }
